@@ -3,7 +3,10 @@ gcc C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\D-1\D-1_s-1.c
 make -f C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\D-1\makefile
 
 #REF http://stackoverflow.com/questions/2826029/passing-additional-variables-from-command-line-to-make
-make -f C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\D-1\makefile C_SRCS_TRUNK=D-1_s-1 ROOT_DIR=C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\D-1
+make -f C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\D-1\makefile C_SRCS_TRUNK=D-1_s-1 ROOT_DIR=C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\D-1 -I..\..\utils
+make -f C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\D-1\makefile C_SRCS_TRUNK=D-1_s-1 ROOT_DIR=C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\D-1 C_FILES=utils.c
+
+C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\D-1\m
 
 make -f C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\D-1\makefile clean
 
