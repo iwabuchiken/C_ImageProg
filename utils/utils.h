@@ -45,5 +45,7 @@ char** str_split_V2(char*, const char, int*);
 
 char* basename(char*, const char);
 
+char** tokenize(char *, const char *);
+
 #endif /* UTILS_H_ */
 

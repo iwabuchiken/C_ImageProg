@@ -4,6 +4,15 @@
  *  Created on: 2015/08/22
  *      Author: kbuchi
  */
+#ifndef STDIO_H_
+#define STDIO_H_
+#include <stdio.h>
+#endif
+
+#ifndef STDLIB_H_
+#define STDLIB_H_
+#include <stdlib.h>
+#endif
 
 #ifndef UTILS_H_
 #include "utils.h"
@@ -187,5 +196,90 @@ char* basename(char* full_path, const char path_delimiter) {
 //		return tokens[i];
 
 	}
+
+}
+
+char** tokenize(char *str, const char *delim) {
+//void tokenize(char *str, const char *delim) {
+
+	char *token;
+
+	///////////////////////////////
+	//
+	// count: how many tokens
+	//REF http://stackoverflow.com/questions/9210528/split-string-with-delimiters-in-c answered Feb 9 '12 at 12:09
+	//
+	 ///////////////////////////////
+    char* tmp        = str;
+    char* last_comma = 0;
+//    char delim[2];
+//    delim[0] = a_delim;
+//    delim[1] = 0;
+
+    size_t count     = 0;
+
+    printf("[%s:%d] tmp = %s(&tmp=%p)\n", __FILE__, __LINE__, tmp, &tmp);
+    printf("[%s:%d] tmp = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, tmp, tmp);
+    printf("[%s:%d] str = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, str, str);
+    printf("[%s:%d] &str = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, &str, &str);
+
+    printf("[%s:%d] delim = '%s'\n", __FILE__, __LINE__, delim);
+    printf("[%s:%d] delim[0] = '%c'\n", __FILE__, __LINE__, delim[0]);
+
+
+    while (*tmp)
+    {
+//    	printf("[%s:%d] *tmp = '%c'\n", __FILE__, __LINE__, *tmp);
+//    	printf("[%s:%d] *tmp = %s\n", __FILE__, __LINE__, *tmp);
+
+        if (delim[0] == *tmp)
+//        if (delim == *tmp)
+//        if (a_delim == *tmp)
+        {
+        	printf("[%s:%d] delim[0] = '%c' / *tmp = '%c'\n",
+        						__FILE__, __LINE__, delim[0], *tmp);
+//        	printf("[%s:%d] delim = '%s' / *tmp = '%s'\n", __FILE__, __LINE__, delim, *tmp);
+
+            count++;
+            last_comma = tmp;
+
+            printf("[%s:%d] last_comma = %s\n", __FILE__, __LINE__, last_comma);
+
+        }
+        tmp++;
+    }
+
+    printf("[%s:%d] count = %d\n", __FILE__, __LINE__, count);
+
+    printf("[%s:%d] &last_comma => %p(%%d=%d)\n",
+    					__FILE__, __LINE__, &last_comma, &last_comma);
+    printf("[%s:%d] &str => %p(%%d=%d)\n", __FILE__, __LINE__, &str, &str);
+    printf("[%s:%d] strlen(str) - 1 => %d\n", __FILE__, __LINE__, strlen(str) - 1);
+//    printf("[%s:%d] str => %d\n", __FILE__, __LINE__, &str + strlen(str) - 1);
+
+    printf("[%s:%d] str + strlen(str) - 1 => %s\n", __FILE__, __LINE__, str + strlen(str) - 1);
+    printf("[%s:%d] str + strlen(str) - 2 => %s\n", __FILE__, __LINE__, str + strlen(str) - 2);
+    printf("[%s:%d] last_comma - (str + strlen(str) - 1) => %%d=%d\n",
+    					__FILE__, __LINE__, last_comma - (str + strlen(str) - 1));
+//    printf("[%s:%d] &(str + strlen(str) - 1) => %p\n",
+//    						__FILE__, __LINE__, (&str) + strlen(str) - 1));
+//    						__FILE__, __LINE__, &str + strlen(str) - 1));
+//    						__FILE__, __LINE__, &(str + strlen(str) - 1));
+
+
+
+	token = strtok(str, delim);
+
+	printf("[%s:%d] str => %s\n", __FILE__, __LINE__, str);
+
+	printf("[%s:%d] token => %s\n", __FILE__, __LINE__, token);
+
+	while ( token != NULL ) {
+	      printf( "%s\n", token );
+	      token = strtok( NULL, delim );
+//	      token = strtok( NULL, " " );
+	}
+
+	return NULL;
 
 }

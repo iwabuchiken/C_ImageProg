@@ -14,9 +14,22 @@
 #include "../../utils/utils.h"
 #endif
 
+void D_1_s_1_first(void);
+void D_1_s_1_strtok(void);
+//char** tokenize(char *, const char *);
+//void tokenize(char *, const char *);
+
 int main(int argc, char *argv[])
 //int main(void)
 {
+
+	D_1_s_1_strtok();
+//	D_1_s_1_first();
+
+	return 0;
+}
+
+void D_1_s_1_first() {
 
 	char time_label[30];
 
@@ -45,7 +58,7 @@ int main(int argc, char *argv[])
 
 	printf("[%s:%d] month[0] => %s (num = %d)\n", __FILE__, __LINE__, tokens[0], num);
 
-	printf("[%s:%d] basename => %s\n", __FILE__, __LINE__, basename(__FILE__, '\\'));
+//	printf("[%s:%d] basename => %s\n", __FILE__, __LINE__, basename(__FILE__, '\\'));
 
 
 	///////////////////////////////
@@ -58,5 +71,60 @@ int main(int argc, char *argv[])
 	printf("[%s:%d] done: %s\n", __FILE__, __LINE__, time_label);
 
 
-	return 0;
 }
+
+void D_1_s_1_strtok() {
+
+	char str[] = "Our polish postfix calculate function will be mindlessly simplest";
+	char str2[] = "Our polish postfix calculate function will be mindlessly simplest";
+//	char str[] = "Our polish postfix calculate function will be mindlessly simple";
+//	char str[] = "You can use the strtok() function to split a string (and specify the delimiter to use)";
+
+	const char s[2] = " ";
+
+	printf("[%s:%d] str => %s\n", __FILE__, __LINE__, str);
+
+
+	tokenize(str, s);
+
+	printf("[%s:%d] str is now => %s\n", __FILE__, __LINE__, str);
+
+	tokenize(str2, s);
+//	tokenize(str, s);
+//	tokenize(str, s);
+
+//	char *token;
+//
+//	token = strtok(str, s);
+//
+//	printf("[%s:%d] str => %s\n", __FILE__, __LINE__, str);
+//
+//	printf("[%s:%d] token => %s\n", __FILE__, __LINE__, token);
+//
+//	while ( token != NULL ) {
+//	      printf( "%s\n", token );
+//	      token = strtok( NULL, " " );
+//   }
+
+}
+
+//char** tokenize(char *str, const char *delim) {
+////void tokenize(char *str, const char *delim) {
+//
+//	char *token;
+//
+//
+//
+//	token = strtok(str, delim);
+//
+//	printf("[%s:%d] str => %s\n", __FILE__, __LINE__, str);
+//
+//	printf("[%s:%d] token => %s\n", __FILE__, __LINE__, token);
+//
+//	while ( token != NULL ) {
+//	      printf( "%s\n", token );
+//	      token = strtok( NULL, delim );
+////	      token = strtok( NULL, " " );
+//	}
+//
+//}
