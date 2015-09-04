@@ -16,14 +16,74 @@
 
 void D_1_s_1_first(void);
 void D_1_s_1_strtok(void);
+void D_1_s_2_strchr(void);
 //char** tokenize(char *, const char *);
 //void tokenize(char *, const char *);
+
+void D_1_s_2_strchr() {
+
+	const char str[] = "ab.cd.";
+//	const char str[] = "http://www.tutorialspoint.com";
+	const char ch = '.';
+	char *ret;
+
+	ret = strchr(str, ch);
+
+	printf("[%s:%d] str = %s / ch = %c / ret = %s\n", __FILE__, __LINE__, str, ch, ret);
+
+	ret ++;
+
+	ret = strchr(ret, ch);
+
+	printf("[%s:%d] str = %s / ch = %c / ret = %s\n", __FILE__, __LINE__, str, ch, ret);
+
+	///////////////////////////////
+	//
+	//
+	//
+	 ///////////////////////////////
+	ret = strchr(str, ch);
+
+	int count = 0;
+
+	while(ret != NULL) {
+
+		count ++;
+
+		// validate length
+		if (ret + 1 > str + strlen(str) - 1) {
+
+			printf("[%s:%d] yes: ret + 1 > str + strlen(str) - 1\n", __FILE__, __LINE__);
+
+			break;
+
+		} else {
+
+			printf("[%s:%d] no: ret => %s\n", __FILE__, __LINE__, ret);
+
+		}
+
+		ret ++;
+
+		ret = strchr(ret, ch);
+
+	}
+
+	printf("[%s:%d] count => %d\n", __FILE__, __LINE__, count);
+
+
+//	printf("String after |%c| is - |%s|\n", ch, ret);
+
+//	return(0);
+
+}//D_1_s_2_strchr
 
 int main(int argc, char *argv[])
 //int main(void)
 {
 
-	D_1_s_1_strtok();
+	D_1_s_2_strchr();
+//	D_1_s_1_strtok();
 //	D_1_s_1_first();
 
 	return 0;
