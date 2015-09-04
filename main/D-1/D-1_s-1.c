@@ -14,11 +14,96 @@
 #include "../../utils/utils.h"
 #endif
 
+void D_1_s_2_s2_split(void);
 void D_1_s_1_first(void);
 void D_1_s_1_strtok(void);
 void D_1_s_2_strchr(void);
+
 //char** tokenize(char *, const char *);
 //void tokenize(char *, const char *);
+
+void D_1_s_2_s2_split(void) {
+
+	char str[] = __FILE__;
+//	char str[] = "You\\can\\use";
+//	char str[] = "You\\can\\use\\the\\strtok()\\function\\to\\split\\a\\string\\(and\\specify\\the\\delimiter\\to\\use)";
+//	char months[] = "You can use the strtok() function to split a string (and specify the delimiter to use)";
+//	char months[] = "JAN,FEB,MAR,APR,MAY,JUN,JUL,AUG,SEP,OCT,NOV,DEC";
+
+	char *tmp = malloc((sizeof(char) * (strlen(str) + 1)));
+	strcpy(tmp, str);
+
+	char** tokens;
+
+	char delim_char = '\\';
+//	char delim_char = ' ';
+
+	int num;
+
+	printf("str=[%s] (%d)\n\n", str, strlen(str));
+
+	tokens = str_split_V3(tmp, delim_char, &num);
+//	tokens = str_split_V3(str, delim_char, &num);
+
+	printf("[%s:%d] tokens = %s / num = %d\n", __FILE__, __LINE__, tokens[0], num);
+//	printf("[%s:%d] tokens = %s\n", __FILE__, __LINE__, tokens);
+
+
+	int offset = 0;
+
+	while(*(tokens + offset) != NULL) {
+//	while(*tokens != NULL) {
+//	while(tokens != NULL) {
+
+		printf("[%s:%d] tokens => %s\n", __FILE__, __LINE__, *(tokens + offset));
+//		printf("[%s:%d] tokens => %s\n", __FILE__, __LINE__, *tokens);
+
+		offset ++;
+
+//		tokens ++;
+
+	}
+
+	///////////////////////////////
+	//
+	// for loop
+	//
+	 ///////////////////////////////
+	int i;
+
+//	printf("[%s:%d] tokens[0] => %s\n", __FILE__, __LINE__, tokens[0]);
+//	printf("[%s:%d] tokens[1] => %s\n", __FILE__, __LINE__, tokens[1]);
+//	printf("[%s:%d] tokens[1] => %s\n", __FILE__, __LINE__, *tokens[1]);	//=> stops
+//	printf("[%s:%d] tokens[1] => %s\n", __FILE__, __LINE__, tokens[1]);
+
+
+	for (i = 0; i < num; ++i) {
+
+//		printf("[%s:%d] tokens[%d] => %s\n", __FILE__, __LINE__, i, *(tokens[i]));
+		printf("[%s:%d] tokens[%d] => %s\n", __FILE__, __LINE__, i, tokens[i]);
+
+
+	}
+
+	printf("[%s:%d] (after) str => %s\n", __FILE__, __LINE__, str);
+
+	///////////////////////////////
+	//9
+	// strcpy
+	//
+	 ///////////////////////////////
+//	char *tmp = malloc((sizeof(char) * (strlen(str) - 1)));
+//	char *tmp = malloc((sizeof(char) * (strlen(str))));
+//	char *tmp = malloc((sizeof(char) * (strlen(str) + 1)));
+//
+//	strcpy(tmp, str);
+//
+//	printf("[%s:%d] tmp = [%s] (%d)\n", __FILE__, __LINE__, tmp, strlen(tmp));
+//
+//	printf("[%s:%d] strlen(str) => %d\n", __FILE__, __LINE__, strlen(str));
+
+
+}//D_1_s_2_s2_split
 
 void D_1_s_2_strchr() {
 
@@ -82,7 +167,8 @@ int main(int argc, char *argv[])
 //int main(void)
 {
 
-	D_1_s_2_strchr();
+	D_1_s_2_s2_split();
+//	D_1_s_2_strchr();
 //	D_1_s_1_strtok();
 //	D_1_s_1_first();
 

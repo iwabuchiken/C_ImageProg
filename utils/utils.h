@@ -43,6 +43,8 @@ char** str_split(char*, const char);
 
 char** str_split_V2(char*, const char, int*);
 
+char** str_split_V3(char*, const char, int*);
+
 char* basename(char*, const char);
 
 char** tokenize(char *, const char *);
