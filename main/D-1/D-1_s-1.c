@@ -14,13 +14,38 @@
 #include "../../utils/utils.h"
 #endif
 
+void D_1_s_2_s3_basename(void);
 void D_1_s_2_s2_split(void);
+void D_1_s_2_strchr(void);
+
 void D_1_s_1_first(void);
 void D_1_s_1_strtok(void);
-void D_1_s_2_strchr(void);
 
 //char** tokenize(char *, const char *);
 //void tokenize(char *, const char *);
+
+///////////////////////////////
+//
+// functions
+//
+ ///////////////////////////////
+void D_1_s_2_s3_basename() {
+
+//	char full_path[] = "The following example shows the usage of strcpy() function";
+	char full_path[] = __FILE__;
+
+	const char path_delimiter = '\\';
+
+	char *bname = basename(full_path, path_delimiter);
+
+	printf("[%s:%d] full path => %s\n", __FILE__, __LINE__, full_path);
+
+	printf("[%s:%d] base name => %s\n", __FILE__, __LINE__, bname);
+
+	printf("[%s:%d] done\n", basename(__FILE__, '\\'), __LINE__);
+
+
+}//D_1_s_2_s3_basename
 
 void D_1_s_2_s2_split(void) {
 
@@ -167,7 +192,8 @@ int main(int argc, char *argv[])
 //int main(void)
 {
 
-	D_1_s_2_s2_split();
+	D_1_s_2_s3_basename();
+//	D_1_s_2_s2_split();
 //	D_1_s_2_strchr();
 //	D_1_s_1_strtok();
 //	D_1_s_1_first();
