@@ -161,7 +161,7 @@ char** str_split_V3(char* a_str, const char a_delim, int* num) {
     char** result    = 0;
     size_t count     = 0;
 
-    printf("[%s:%d] a_str => %d\n", __FILE__, __LINE__, strlen(a_str));
+//    printf("[%s:%d] a_str => %d\n", __FILE__, __LINE__, strlen(a_str));
 
 //    char *a_str_dup = malloc((sizeof(char) * (strlen(a_str) + 2)));
 ////    char *a_str_dup = malloc((sizeof(char) * (strlen(a_str) + 1)));
@@ -174,7 +174,7 @@ char** str_split_V3(char* a_str, const char a_delim, int* num) {
 //    char* tmp        = a_str_dup;
     char* tmp        = a_str;
 
-    printf("[%s:%d] tmp => %s\n", __FILE__, __LINE__, tmp);
+//    printf("[%s:%d] tmp => %s\n", __FILE__, __LINE__, tmp);
 
 
     char* last_comma = 0;
@@ -200,7 +200,7 @@ char** str_split_V3(char* a_str, const char a_delim, int* num) {
        knows where the list of returned strings ends. */
     count++;
 
-    printf("[%s:%d] count => done (count = %d)\n", __FILE__, __LINE__, count);
+//    printf("[%s:%d] count => done (count = %d)\n", __FILE__, __LINE__, count);
 
     ///////////////////////////////
 	//
@@ -211,9 +211,9 @@ char** str_split_V3(char* a_str, const char a_delim, int* num) {
 
     result = malloc(sizeof(char*) * count);
 
-    printf("[%s:%d] malloc => done\n", __FILE__, __LINE__);
-
-    printf("[%s:%d] a_str = %s / delim = %c\n", __FILE__, __LINE__, a_str, a_delim);
+//    printf("[%s:%d] malloc => done\n", __FILE__, __LINE__);
+//
+//    printf("[%s:%d] a_str = %s / delim = %c\n", __FILE__, __LINE__, a_str, a_delim);
 //    printf("[%s:%d] a_str = %s / delim = %c\n", __FILE__, __LINE__, a_str, delim);
 
 
@@ -222,25 +222,25 @@ char** str_split_V3(char* a_str, const char a_delim, int* num) {
         size_t idx  = 0;
         char* token = strtok(a_str, delim);
 
-        printf("[%s:%d] strtok => 1st\n", __FILE__, __LINE__);
+//        printf("[%s:%d] strtok => 1st\n", __FILE__, __LINE__);
 
 
         while (token)
         {
-        	printf("[%s:%d] assert(idx < count)\n", __FILE__, __LINE__);
+//        	printf("[%s:%d] assert(idx < count)\n", __FILE__, __LINE__);
 
             assert(idx < count);
             *(result + idx++) = strdup(token);
             token = strtok(0, delim);
         }
 
-        printf("[%s:%d] assert(idx == count - 1)\n", __FILE__, __LINE__);
+//        printf("[%s:%d] assert(idx == count - 1)\n", __FILE__, __LINE__);
 
         assert(idx == count - 1);
         *(result + idx) = 0;
     }
 
-    printf("[%s:%d] result => set\n", __FILE__, __LINE__);
+//    printf("[%s:%d] result => set\n", __FILE__, __LINE__);
 
 
     return result;

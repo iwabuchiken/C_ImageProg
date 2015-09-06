@@ -1,0 +1,111 @@
+/*****************************************************************************/
+/*                                                                           */
+/*     test0.c: bmp.c で定義された関数群のデバッグのためのドライバ           */
+/*                                                                           */
+/*             Kazutoshi Ando (Shizuoka Univ.)                               */
+/*                                                                           */
+/*                  2004.08.17                                              */
+/*                  2008.10.15                                              */
+/*                                                                           */
+/*****************************************************************************/
+#include  "bmp.h"
+
+main(int argc, char** argv) {
+  /* 画像データを格納する構造体変数へのポインタ  */
+  img *tmp1,*tmp2;
+
+  tmp1=(img *)malloc(sizeof(img));
+  tmp2=(img *)malloc(sizeof(img));
+
+ 
+  /* コマンドライン引数で与えられた文字列を filename に設定 */
+  char filename[20]; 
+  strcpy(filename,argv[1]);
+
+  ReadBmp(filename,tmp1);
+
+  VMirror(tmp2,tmp1);
+  WriteBmp("vmirror.bmp",tmp2);
+  PrintBmpInfo("vmirror.bmp");
+
+  /*
+  VMirror(tmp1,tmp2);
+  WriteBmp("vmirror2.bmp",tmp1);
+  PrintBmpInfo("vmirror2.bmp");
+
+  ReadBmp(filename,tmp1);
+
+  HMirror(tmp2,tmp1);
+  WriteBmp("hmirror.bmp",tmp2);
+  PrintBmpInfo("hmirror.bmp");
+
+  HMirror(tmp1,tmp2);
+  WriteBmp("hmirror2.bmp",tmp1);
+  PrintBmpInfo("hmirror2.bmp");
+
+  ReadBmp(filename,tmp1);
+
+  Rotate90(1,tmp2,tmp1);
+  WriteBmp("out90.bmp",tmp2);
+  PrintBmpInfo("out90.bmp");
+
+  Rotate90(2,tmp2,tmp1);
+  WriteBmp("out180.bmp",tmp2);
+  PrintBmpInfo("out180.bmp");
+
+  Rotate90(3,tmp2,tmp1);
+  WriteBmp("out270.bmp",tmp2);
+  PrintBmpInfo("out270.bmp");
+
+  Rotate90(4,tmp2,tmp1);
+  WriteBmp("out360.bmp",tmp2);
+  PrintBmpInfo("out360.bmp");
+
+
+  ReadBmp(filename,tmp1);
+
+  Mosaic(10,tmp2,tmp1);
+  WriteBmp("out1.bmp",tmp2);
+  PrintBmpInfo("out1.bmp");
+
+  ReadBmp(filename,tmp1);
+  Gray(tmp2,tmp1);
+  WriteBmp("outg.bmp",tmp2);
+  PrintBmpInfo("outg.bmp");
+
+  ReadBmp(filename,tmp1);
+  Diminish(tmp2,tmp1,1);
+  WriteBmp("dim1.bmp",tmp2);
+  PrintBmpInfo("dim1.bmp");
+
+  ReadBmp(filename,tmp1);
+  Diminish(tmp2,tmp1,2);
+  WriteBmp("dim2.bmp",tmp2);
+  PrintBmpInfo("dim2.bmp");
+
+  ReadBmp(filename,tmp1);
+  Diminish(tmp2,tmp1,3);
+  WriteBmp("dim3.bmp",tmp2);
+  PrintBmpInfo("dim3.bmp");
+
+  ReadBmp(filename,tmp1);
+  Diminish(tmp2,tmp1,4);
+  WriteBmp("dim4.bmp",tmp2);
+  PrintBmpInfo("dim4.bmp");
+
+  ReadBmp(filename,tmp1);
+  Diminish(tmp2,tmp1,5);
+  WriteBmp("dim5.bmp",tmp2);
+  PrintBmpInfo("dim5.bmp");
+
+  ReadBmp(filename,tmp1);
+  Diminish(tmp2,tmp1,6);
+  WriteBmp("dim6.bmp",tmp2);
+  PrintBmpInfo("dim6.bmp");
+
+  ReadBmp(filename,tmp1);
+  Diminish(tmp2,tmp1,7);
+  WriteBmp("dim7.bmp",tmp2);
+  PrintBmpInfo("dim7.bmp");
+  */
+}
