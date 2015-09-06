@@ -24,12 +24,59 @@
 //
  ///////////////////////////////
 void s_3__1(void);
+void s_3__3_Join(void);
 
 ///////////////////////////////
 //
 // functions
 //
  ///////////////////////////////
+void s_3__3_Join() {
+
+//	char tokens[][10] = {
+//
+//			"abc",
+//			"defgh",
+//			"ijklmn"
+//	};
+
+	int numOf_Tokens = 4;
+
+	char *tokens[4];
+//	char *tokens[3];
+
+	tokens[0] = malloc(sizeof(char) * 10);
+	tokens[1] = malloc(sizeof(char) * 10);
+	tokens[2] = malloc(sizeof(char) * 10);
+	tokens[3] = malloc(sizeof(char) * 10);
+
+	strcpy(tokens[0], "abc");
+	strcpy(tokens[1], "defgh");
+	strcpy(tokens[2], "ijklmno");
+	strcpy(tokens[3], "pqr");
+
+	char joint = ' ';
+//	char joint = '_';
+	char* str_Joint = "***";
+//	char* str_Joint = "_";
+//	char* str_Joint = "";
+
+	printf("[%s:%d] strlen(str_Joint) = %d\n", basename(__FILE__, '\\'), __LINE__, strlen(str_Joint));
+
+
+//	(char** tokens, const int numOf_Tokens, const char joint)
+	char* str_Jointed = join(tokens, numOf_Tokens, str_Joint);
+//	char* str_Jointed = join(tokens, numOf_Tokens, joint);
+
+	printf("[%s:%d] str_Jointed => %s\n", basename(__FILE__, '\\'), __LINE__, str_Jointed);
+
+
+	printf("[%s:%d] s_3__3_Join => done\n", basename(__FILE__, '\\'), __LINE__);
+
+
+}//s_3__3_Join
+
+
 void s_3__1(void) {
 
 	img *tmp1,*tmp2;
@@ -81,9 +128,8 @@ int main(int argc, char *argv[])
 //int main(void)
 {
 
-	s_3__1();
-//	D_1_s_2_s2_split();
-//	D_1_s_2_strchr();
+	s_3__3_Join();
+//	s_3__1();
 //	D_1_s_1_strtok();
 //	D_1_s_1_first();
 

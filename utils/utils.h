@@ -49,5 +49,8 @@ char* basename(char*, const char);
 
 char** tokenize(char *, const char *);
 
+char* join(char**, const int, char*);
+//char* join(char**, const int, const char);
+
 #endif /* UTILS_H_ */
 

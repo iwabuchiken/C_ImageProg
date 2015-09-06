@@ -423,3 +423,133 @@ char** tokenize(char *str, const char *delim) {
 	return NULL;
 
 }
+
+char* join
+(char** tokens, const int numOf_Tokens, char* joint) {
+//(char** tokens, const int numOf_Tokens, const char joint) {
+
+	int i, tmp_i;
+
+	int total_chars = 0;
+
+	///////////////////////////////
+	//
+	// total num of chars
+	//
+	 ///////////////////////////////
+	tmp_i = 0;
+
+//	printf("[%s:%d] strlen(joint) = %d\n", basename(__FILE__, '\\'), __LINE__, strlen(joint));
+
+	for (i = 0; i < numOf_Tokens; ++i) {
+
+		printf("[%s:%d] tokens[i] = %s\n", basename(__FILE__, '\\'), __LINE__, tokens[i]);
+
+//		printf("[%s:%d] *tokens[i] = %s\n", basename(__FILE__, '\\'), __LINE__, *tokens[i]);
+//
+		tmp_i = strlen(tokens[i]);
+//		tmp_i = sizeof(tokens[i]) / sizeof(char);
+//
+		printf("[%s:%d] tmp_i = %d\n", basename(__FILE__, '\\'), __LINE__, tmp_i);
+//
+		total_chars += tmp_i;
+
+	}
+
+	printf("[%s:%d] total_chars = %d\n", basename(__FILE__, '\\'), __LINE__, total_chars);
+//	printf("[%s:%d] total_chars = %d\n", basename(__FILE__, '\\'), __LINE__, tmp_i);
+
+	///////////////////////////////
+	//
+	// total length
+	//
+	 ///////////////////////////////
+	int len_String = 0;
+
+	// if joint is blank
+	if (strlen(joint) == 0) {	// joint = ""
+//	if (joint == ' ') {
+
+		len_String = total_chars + 1;	// total chars + '\0' char
+
+	} else {
+
+		// total chars + '\0' char + joint chars
+		len_String = (total_chars + 1) + (numOf_Tokens - 1);
+
+	}
+
+	///////////////////////////////
+	//
+	// malloc
+	//
+	 ///////////////////////////////
+	char* str_Jointed = malloc(sizeof(char) * len_String);
+
+	///////////////////////////////
+	//
+	// joint
+	//
+	 ///////////////////////////////
+	char* str_Joint = joint;
+//	char str_Joint[2];
+//
+//	str_Joint[0] = joint;
+//	str_Joint[1] = '\0';
+
+
+	int index = 0;
+
+	// first token
+	strcpy(str_Jointed, tokens[0]);
+
+	// 2nd token to the second last token
+	if (numOf_Tokens > 1) {
+
+		for (i = 1; i < numOf_Tokens - 1; ++i) {
+//		for (i = 1; i < numOf_Tokens; ++i) {
+
+			// joint
+//
+			strcat(str_Jointed, str_Joint);
+//			str_Jointed[strlen(str_Jointed)] = joint;
+//			str_Jointed[strlen(str_Jointed) + 1] = '\0';
+
+			strcat(str_Jointed, tokens[i]);
+
+			printf("[%s:%d] str_Jointed = %s (len = %d)\n",
+							basename(__FILE__, '\\'),
+							__LINE__,
+							str_Jointed, strlen(str_Jointed));
+
+//			// joint
+//			str_Jointed[strlen(str_Jointed)] = joint;
+//			str_Jointed[strlen(str_Jointed) + 1] = '\0';
+
+		}
+
+	}
+
+	// the last token
+	if (numOf_Tokens > 2) {
+
+		// joint
+		strcat(str_Jointed, str_Joint);
+//		str_Jointed[strlen(str_Jointed)] = joint;
+//		str_Jointed[strlen(str_Jointed) + 1] = '\0';
+
+		strcat(str_Jointed, tokens[i]);
+
+		printf("[%s:%d] str_Jointed => %s\n", basename(__FILE__, '\\'), __LINE__, str_Jointed);
+
+	}
+
+	///////////////////////////////
+	//
+	// return
+	//
+	 ///////////////////////////////
+//	return NULL;
+	return str_Jointed;
+
+}
