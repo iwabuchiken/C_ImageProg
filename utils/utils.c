@@ -248,51 +248,96 @@ char** str_split_V3(char* a_str, const char a_delim, int* num) {
 
 char* basename(char* full_path, const char path_delimiter) {
 
-	char** tokens;
+	char *tmp = malloc((sizeof(char) * (strlen(full_path) + 1)));
+	strcpy(tmp, full_path);
 
-	char delim_char = '\\';
+	char **tokens;
 
 	int num;
 
-	printf("[%s:%d] delim_char = %c\n", __FILE__, __LINE__, delim_char);
+//	printf("full_path = [%s] (%d)\n\n", full_path, strlen(full_path));
 
+	tokens = str_split_V3(tmp, path_delimiter, &num);
 
-	// split
-//	tokens = str_split_V2(full_path, delim_char, num);
-	tokens = str_split_V2(full_path, delim_char, &num);
+//	printf("[%s:%d] num => %d\n", __FILE__, __LINE__, num);
 
-	printf("[%s:%d] split done => %s (num = %d)\n", __FILE__, __LINE__, full_path, num);
-//	printf("[%s:%d] split done => %s (num = %d)\n", __FILE__, __LINE__, full_path, *num);
+	///////////////////////////////
+	//
+	// basename
+	//
+	 ///////////////////////////////
+	char * bname = malloc(sizeof(char) * (strlen(tokens[num - 1]) + 1));
+//	char * bname = malloc(sizeof(char) * tokens[num - 1] + 1);
 
+	strcpy(bname, tokens[num - 1]);
 
-	// get the last token
-	if (num <= 1) {
+//	printf("[%s:%d] bname => %s\n", __FILE__, __LINE__, bname);
 
-		printf("[%s:%d] num <= 1: tokens[0] = %s\n", __FILE__, __LINE__, tokens[0]);
+	///////////////////////////////
+	//
+	// free
+	//
+	 ///////////////////////////////
+	int i;
 
-		return tokens[0];
+	for (i = 0; i < num - 1; ++i) {
 
-//		return tokens[0];
-
-	} else {
-
-		printf("[%s:%d] num > 1: tokens[0] = %s\n", __FILE__, __LINE__, tokens[0]);
-
-		return tokens[0];
-
-//		int i;
-//
-//		for (i = 0; i < num - 2; ++i) {
-//
-//			free(*(tokens + i));
-//
-//		}
-//
-//		return tokens[i];
+		free(tokens[i]);
 
 	}
 
-}
+	///////////////////////////////
+	//
+	// return
+	//
+	 ///////////////////////////////
+	return bname;
+
+//	char** tokens;
+//
+//	char delim_char = '\\';
+//
+//	int num;
+//
+//	printf("[%s:%d] delim_char = %c\n", __FILE__, __LINE__, delim_char);
+//
+//
+//	// split
+////	tokens = str_split_V2(full_path, delim_char, num);
+//	tokens = str_split_V2(full_path, delim_char, &num);
+//
+//	printf("[%s:%d] split done => %s (num = %d)\n", __FILE__, __LINE__, full_path, num);
+////	printf("[%s:%d] split done => %s (num = %d)\n", __FILE__, __LINE__, full_path, *num);
+//
+//
+//	// get the last token
+//	if (num <= 1) {
+//
+//		printf("[%s:%d] num <= 1: tokens[0] = %s\n", __FILE__, __LINE__, tokens[0]);
+//
+//		return tokens[0];
+//
+////		return tokens[0];
+//
+//	} else {
+//
+//		printf("[%s:%d] num > 1: tokens[0] = %s\n", __FILE__, __LINE__, tokens[0]);
+//
+//		return tokens[0];
+//
+////		int i;
+////
+////		for (i = 0; i < num - 2; ++i) {
+////
+////			free(*(tokens + i));
+////
+////		}
+////
+////		return tokens[i];
+//
+//	}
+
+}//basename(char* full_path, const char path_delimiter)
 
 char** tokenize(char *str, const char *delim) {
 //void tokenize(char *str, const char *delim) {
