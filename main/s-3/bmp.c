@@ -225,16 +225,26 @@ void PrintBmpInfo(char *filename) {
   memcpy(&Bmp_yppm,Bmp_headbuf+42,sizeof(Bmp_yppm));
 
 
-  printf("�ե�����̾       = %s \n",filename);
-  printf("�ե����륿����   = %c%c \n",Bmp_type[0],Bmp_type[1]);
-  printf("�ե����륵����   = %ld (byte)\n",Bmp_size);
-  printf("��               = %ld (pixel)\n",Bmp_width);
-  printf("�⤵             = %ld (pixel)\n",Bmp_height);
-  printf("��               = %d (bit)\n",Bmp_color);
-  printf("����             = %ld\n",Bmp_comp);
-  printf("������ʬ�Υ����� = %ld (byte)\n",Bmp_image_size);
-  printf("��ʿ������       = %ld (ppm)\n",Bmp_xppm);
-  printf("��ľ������       = %ld (ppm)\n",Bmp_yppm);
+  printf("file name = %s \n",filename);
+  printf("file type = %c%c \n",Bmp_type[0],Bmp_type[1]);
+  printf("file size = %ld (byte)\n",Bmp_size);
+  printf("width = %ld (pixel)\n",Bmp_width);
+  printf("height = %ld (pixel)\n",Bmp_height);
+  printf("color = %d (bit)\n",Bmp_color);
+  printf("compression = %ld\n",Bmp_comp);
+  printf("image size = %ld (byte)\n",Bmp_image_size);
+  printf("resolution, horizontal = %ld (ppm)\n",Bmp_xppm);
+  printf("resolution, vertical = %ld (ppm)\n",Bmp_yppm);
+//  printf("�ե�����̾       = %s \n",filename);
+//  printf("�ե����륿����   = %c%c \n",Bmp_type[0],Bmp_type[1]);
+//  printf("�ե����륵����   = %ld (byte)\n",Bmp_size);
+//  printf("��               = %ld (pixel)\n",Bmp_width);
+//  printf("�⤵             = %ld (pixel)\n",Bmp_height);
+//  printf("��               = %d (bit)\n",Bmp_color);
+//  printf("����             = %ld\n",Bmp_comp);
+//  printf("������ʬ�Υ����� = %ld (byte)\n",Bmp_image_size);
+//  printf("��ʿ������       = %ld (ppm)\n",Bmp_xppm);
+//  printf("��ľ������       = %ld (ppm)\n",Bmp_yppm);
 
   fclose(Bmp_Fp);
 }

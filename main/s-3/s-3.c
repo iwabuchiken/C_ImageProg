@@ -52,6 +52,15 @@ void s_3__1(void) {
 
 	printf("[%s:%d] ReadBmp => done: %s\n", basename(__FILE__, '\\'), __LINE__, filename);
 
+	///////////////////////////////
+	//
+	// mirror
+	//
+	 ///////////////////////////////
+	VMirror(tmp2,tmp1);
+	WriteBmp("vmirror.bmp",tmp2);
+	PrintBmpInfo("vmirror.bmp");
+
 
 	///////////////////////////////
 	//
