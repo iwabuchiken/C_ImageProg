@@ -14,15 +14,126 @@
 #include <stdlib.h>
 #endif
 
+#ifndef TIME_H_
+#define TIME_H_
+#include <time.h>
+#endif
+
 #ifndef UTILS_H_
 #include "utils.h"
 #endif
 
 char* get_Time_Label(char* time_label) {
 
+	//REF http://stackoverflow.com/questions/5141960/get-the-current-time-in-c answered Feb 28 '11 at 12:33
+	time_t rawtime;
+	struct tm * timeinfo;
+
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
+
+	//ref http://stackoverflow.com/questions/5141960/get-the-current-time-in-c answered May 29 at 4:59
+//	sprintf(time_label, "[%d %d %d %d:%d:%d]",timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+
 //	char time_label[30];
 
 	sprintf(time_label, "%s", "2015-08");
+
+	return time_label;
+
+}
+
+char* get_Time_Label__Now() {
+
+	char* time_label = malloc(sizeof(char) * 20);
+
+	//REF http://stackoverflow.com/questions/5141960/get-the-current-time-in-c answered Feb 28 '11 at 12:33
+	time_t rawtime;
+	struct tm * timeinfo;
+
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
+
+	printf("Current local time and date: %s", asctime(timeinfo));
+
+//	//ref http://stackoverflow.com/questions/5498628/time-in-c-language answered Mar 31 '11 at 10:50
+//	struct timespec ts = { 0 };
+//
+//	  clock_gettime(CLOCK_REALTIME, &ts);
+//
+//	  printf("sec: %ld nsec: %ld\n", ts.tv_sec, ts.tv_nsec);
+
+	//ref http://stackoverflow.com/questions/5141960/get-the-current-time-in-c answered May 29 at 4:59
+//	sprintf(time_label, "[%d]",timeinfo->tm_mday);
+
+	/****************************
+	 * month
+	 *****************************/
+	char month[3];
+
+	if (timeinfo->tm_mon + 1 < 10) {
+
+		month[0] = '0';
+		month[1] = '0' + timeinfo->tm_mon + 1;
+		month[2] = '\0';
+
+	} else {
+
+		sprintf(month, "%d", timeinfo->tm_mon + 1);
+
+	}
+
+	/****************************
+	 * date
+	 *****************************/
+	char date[3];
+
+	if (timeinfo->tm_mday < 10) {
+
+		date[0] = '0';
+		date[1] = '0' + timeinfo->tm_mday;
+		date[2] = '\0';
+
+	} else {
+
+		sprintf(date, "%d", timeinfo->tm_mday);
+
+	}
+
+
+
+//	sprintf(time_label, "[%d%s%s_%d%d%d]",
+//	sprintf(time_label, "[%d%s%2d_%d%d%d]",
+//	sprintf(time_label, "[%d%s%d_%d%d%d]",
+	sprintf(time_label, "%d%02d%02d_%02d%02d%02d",
+//	sprintf(time_label, "[%d%02d%02d_%02d%02d%02d]",
+//	sprintf(time_label, "[%d%d%d_%d%d%d]",
+
+			//ref http://www.tutorialspoint.com/c_standard_library/c_function_localtime.htm "This function returns a pointe"
+					timeinfo->tm_year + 1900,
+					timeinfo->tm_mon + 1,
+//					month,
+//					date,
+					timeinfo->tm_mday,
+
+					timeinfo->tm_hour,
+					timeinfo->tm_min,
+					timeinfo->tm_sec);
+
+//	char time_label[30];
+
+//	sprintf(time_label, "%s", "2015-08");
+
+	//ref http://stackoverflow.com/questions/5833094/get-a-timestamp-in-c-in-microseconds
+//	struct timeval tv;
+//	gettimeofday(&tv,NULL);
+//
+//	printf("[%s:%d] tv.sec => %d\n", basename(__FILE__, '\\'), __LINE__, tv.tv_sec);
+//
+//	unsigned long time_in_micros = 1000000 * tv.tv_sec + tv.tv_usec;
+//
+//	printf("[%s:%d] micro => %ld\n", basename(__FILE__, '\\'), __LINE__, time_in_micros);
+
 
 	return time_label;
 

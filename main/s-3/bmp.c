@@ -1,71 +1,53 @@
 /*****************************************************************************/
 /*                                                                           */
-/*     bmp.c: bmp �ե��������Υ饤�֥��                                   */
+/*     bmp.c: bmp ファイル処理のライブラリ                                   */
 /*                                                                           */
 /*             Kazutoshi Ando (Shizuoka Univ.)                               */
 /*                                                                           */
 /*                  Ver. 2004.11.30                                          */
-/*                      WriteBmp: �إå�����η������.                    */
+/*                      WriteBmp: ヘッダ情報の欠落を修正.                    */
 /*                  Ver. 2004.11.26                                          */
-/*                      Diminish:  ��Ĵ(?)�롼������ɲ�.                    */
-/*                      PrintBmpInfo: bmp�ե�����ʳ��Υե�������ɤ���Ȥ�  */
-/*                               ��, ���顼����Ϥ���褦���ѹ�.             */
+/*                      Diminish:  減調(?)ルーチンを追加.                    */
+/*                      PrintBmpInfo: bmpファイル以外のファイルを読んだとき  */
+/*                               に, エラーを出力するように変更.             */
 /*                  Ver. 2004.08.20                                          */
-/*                      ReadBmp: 24bit����bmp�ե�����ʳ��Υե������        */
-/*                               �ɤ���Ȥ���, ���顼����Ϥ���褦���ѹ�.   */
-/*                      PrintBmpInfo: ��ʿ, ��ľ�����٤���Ϥ���褦���ѹ�.  */
-/*                      WriteBmp: �إå�����η������.                    */
+/*                      ReadBmp: 24bit色のbmpファイル以外のファイルを        */
+/*                               読んだときに, エラーを出力するように変更.   */
+/*                      PrintBmpInfo: 水平, 垂直解像度を出力するように変更.  */
+/*                      WriteBmp: ヘッダ情報の欠落を修正.                    */
 /*                  Ver. 2004.08.18                                          */
-/*                        Gray ���ɲ�.                                       */
+/*                        Gray を追加.                                       */
 /*                  Ver. 2004.08.17                                          */
-/*                        4byte �����˹�碌�뤿��η׻��������,            */
-/*                        Rotate90, Shrink, Mosaic ���ɲ�.                   */
-/*                        ���顼��å������ν������ɸ�२�顼���Ϥ��ѹ�.    */
+/*                        4byte 境界に合わせるための計算式を改良,            */
+/*                        Rotate90, Shrink, Mosaic を追加.                   */
+/*                        エラーメッセージの出力先を標準エラー出力に変更.    */
 /*                  Ver. 2003.11.04                                          */
 /*                  Ver. 2010.10.19                                          */
-/*                        long int �� int �ǽ��Ϥ��Ƥ���ȷٹ𤬤Ǥ�Τǽ���        */
+/*                        long int を int で出力していると警告がでるので修正        */
 /*                                                                           */
 /*****************************************************************************/
-//#include "bmp.h"
-#ifndef BMP_H_
-#include  "bmp.h"
-#endif
-
-#ifndef STDIO_H_
-#define STDIO_H_
-#include <stdio.h>
-#endif
-
-#ifndef STDLIB_H_
-#define STDLIB_H_
-#include <stdlib.h>
-#endif
-
-#ifndef STRING_H_
-#define STRING_H_
-#include <string.h>
-#endif
+#include "bmp.h"
 
 /* 
-   �ؿ�̾: ReadBmp 
-   ���  : char *filename, img *imgp
-   �֤���: void
-   ư��  : bmp�����Υե����� filename �򳫤���, ���β���ǡ�����
-           2�������� imgp->data �˳�Ǽ����. Ʊ����, �إå������ɤ߹��ޤ줿
-           �������ȹ⤵�򥰥?�Х��ѿ� Bmp_width ��Bmp_height �˥��åȤ���.
+   関数名: ReadBmp
+   引数  : char *filename, img *imgp
+   返り値: void
+   動作  : bmp形式のファイル filename を開いて, その画像データを
+           2次元配列 imgp->data に格納する. 同時に, ヘッダから読み込まれた
+           画像の幅と高さをグローバル変数 Bmp_width とBmp_height にセットする.
 */
 void ReadBmp(char *filename, img *imgp) {
   int i,j;
   int Real_width;
-  FILE *Bmp_Fp=fopen(filename,"rb");  /* �Х��ʥ�⡼���ɤ߹����Ѥ˥����ץ�  */
-  unsigned char *Bmp_Data;           /* ����ǡ�����1��ʬ��Ǽ               */
+  FILE *Bmp_Fp=fopen(filename,"rb");  /* バイナリモード読み込み用にオープン  */
+  unsigned char *Bmp_Data;           /* 画像データを1行分格納               */
 
   if(Bmp_Fp==NULL){
     fprintf(stderr,"Error: file %s couldn\'t open for read!.\n",filename);
     exit(1);
   }
 
-  /* �إå��ɤ߹��� */
+  /* ヘッダ読み込み */
   fread(Bmp_headbuf,sizeof(unsigned char),HEADERSIZE,Bmp_Fp);
         
   memcpy(&Bmp_type,Bmp_headbuf,sizeof(Bmp_type));
@@ -92,15 +74,15 @@ void ReadBmp(char *filename, img *imgp) {
     exit(1);
   }
     
-  Real_width = imgp->width*3 + imgp->width%4; /* 4byte �����ˤ��碌�뤿��˼ºݤ���η׻� */
+  Real_width = imgp->width*3 + imgp->width%4; /* 4byte 境界にあわせるために実際の幅の計算 */
 
- /* �����ΰ��ưŪ����. ���Ԥ������ϥ��顼��å���������Ϥ��ƽ�λ */
+ /* 配列領域の動的確保. 失敗した場合はエラーメッセージを出力して終了 */
  if((Bmp_Data = (unsigned char *)calloc(Real_width,sizeof(unsigned char)))==NULL) {
    fprintf(stderr,"Error: Memory allocation failed for Bmp_Data!\n");
    exit(1);
  }           
  
-  /* ����ǡ����ɤ߹��� */
+  /* 画像データ読み込み */
   for(i=0;i<imgp->height;i++) {
     fread(Bmp_Data,1,Real_width,Bmp_Fp);
     for (j=0;j<imgp->width;j++) {
@@ -110,26 +92,26 @@ void ReadBmp(char *filename, img *imgp) {
     }
   }
 
-  /* ưŪ�˳��ݤ��������ΰ�β��� */
+  /* 動的に確保した配列領域の解放 */
   free(Bmp_Data);
 
-  /* �ե����륯�?�� */
+  /* ファイルクローズ */
   fclose(Bmp_Fp); 
 }
 
 /* 
-   �ؿ�̾: WriteBmp 
-   ���  : char *filename, img *tp
-   �֤���: void
-   ư��  : 2�������� tp->data �����Ƥ����ǡ����Ȥ���, 24�ӥå�
-           bmp�����Υե����� filename �˽񤭽Ф�. 
+   関数名: WriteBmp
+   引数  : char *filename, img *tp
+   返り値: void
+   動作  : 2次元配列 tp->data の内容を画像データとして, 24ビット
+           bmp形式のファイル filename に書き出す.
 */
 void WriteBmp(char *filename, img *tp) {
 
   int i,j;
   int Real_width;
-  FILE *Out_Fp = fopen(filename,"wb");  /* �ե����륪���ץ� */  
-  unsigned char *Bmp_Data;     /* ����ǡ�����1��ʬ��Ǽ               */
+  FILE *Out_Fp = fopen(filename,"wb");  /* ファイルオープン */
+  unsigned char *Bmp_Data;     /* 画像データを1行分格納               */
   
   if(Out_Fp==NULL){
     fprintf(stderr,"Error: file %s couldn\'t open for write!\n",filename);
@@ -141,15 +123,15 @@ void WriteBmp(char *filename, img *tp) {
   Bmp_info_header_size=40;
   Bmp_planes=1;
 
-  Real_width = tp->width*3 + tp->width%4;  /* 4byte �����ˤ��碌�뤿��˼ºݤ���η׻� */
+  Real_width = tp->width*3 + tp->width%4;  /* 4byte 境界にあわせるために実際の幅の計算 */
 
-  /* �����ΰ��ưŪ����. ���Ԥ������ϥ��顼��å���������Ϥ��ƽ�λ */
+  /* 配列領域の動的確保. 失敗した場合はエラーメッセージを出力して終了 */
   if((Bmp_Data = (unsigned char *)calloc(Real_width,sizeof(unsigned char)))==NULL) {
    fprintf(stderr,"Error: Memory allocation failed for Bmp_Data!\n");
    exit(1);
  }
 
-  /* �إå�����ν��� */
+  /* ヘッダ情報の準備 */
   Bmp_xppm=Bmp_yppm=0;
   Bmp_image_size = tp->height*Real_width;
   Bmp_size       = Bmp_image_size + HEADERSIZE;
@@ -170,10 +152,10 @@ void WriteBmp(char *filename, img *tp) {
   Bmp_headbuf[46]=Bmp_headbuf[47]=Bmp_headbuf[48]=Bmp_headbuf[49]=0;
   Bmp_headbuf[50]=Bmp_headbuf[51]=Bmp_headbuf[52]=Bmp_headbuf[53]=0;
   
-  /* �إå�����񤭽Ф� */
+  /* ヘッダ情報書き出し */
   fwrite(Bmp_headbuf,sizeof(unsigned char),HEADERSIZE,Out_Fp); 
 
-  /* ����ǡ����񤭽Ф� */
+  /* 画像データ書き出し */
   for (i=0;i<tp->height;i++) {
     for (j=0;j<tp->width;j++) {
       Bmp_Data[j*3]   = tp->data[tp->height-i-1][j].b;
@@ -186,23 +168,23 @@ void WriteBmp(char *filename, img *tp) {
     fwrite(Bmp_Data,sizeof(unsigned char),Real_width,Out_Fp);
   }
 
-  /* ưŪ�˳��ݤ��������ΰ�β��� */
+  /* 動的に確保した配列領域の解放 */
   free(Bmp_Data);
 
-  /* �ե����륯�?�� */
+  /* ファイルクローズ */
   fclose(Out_Fp);
 }
 
 /* 
-   �ؿ�̾: PrintBmpInfo
-   ���  : char *filename
-   �֤���: void
-   ư��  : ����Ȥ���Ϳ������ե�����̾���� bmp �����β���ե�����
-           ��°������̤˽��Ϥ���. 
+   関数名: PrintBmpInfo
+   引数  : char *filename
+   返り値: void
+   動作  : 引数として与えられるファイル名を持つ bmp 形式の画像ファイル
+           の属性を画面に出力する.
 */
 void PrintBmpInfo(char *filename) {
 
-  FILE *Bmp_Fp=fopen(filename,"rb");        /* �Х��ʥ�⡼���ɤ߹����Ѥ˥����ץ�  */
+  FILE *Bmp_Fp=fopen(filename,"rb");        /* バイナリモード読み込み用にオープン  */
   if(Bmp_Fp==NULL){
     fprintf(stderr,"Error: file %s couldn\'t open for write!\n",filename);
     exit(1);
@@ -225,36 +207,26 @@ void PrintBmpInfo(char *filename) {
   memcpy(&Bmp_yppm,Bmp_headbuf+42,sizeof(Bmp_yppm));
 
 
-  printf("file name = %s \n",filename);
-  printf("file type = %c%c \n",Bmp_type[0],Bmp_type[1]);
-  printf("file size = %ld (byte)\n",Bmp_size);
-  printf("width = %ld (pixel)\n",Bmp_width);
-  printf("height = %ld (pixel)\n",Bmp_height);
-  printf("color = %d (bit)\n",Bmp_color);
-  printf("compression = %ld\n",Bmp_comp);
-  printf("image size = %ld (byte)\n",Bmp_image_size);
-  printf("resolution, horizontal = %ld (ppm)\n",Bmp_xppm);
-  printf("resolution, vertical = %ld (ppm)\n",Bmp_yppm);
-//  printf("�ե�����̾       = %s \n",filename);
-//  printf("�ե����륿����   = %c%c \n",Bmp_type[0],Bmp_type[1]);
-//  printf("�ե����륵����   = %ld (byte)\n",Bmp_size);
-//  printf("��               = %ld (pixel)\n",Bmp_width);
-//  printf("�⤵             = %ld (pixel)\n",Bmp_height);
-//  printf("��               = %d (bit)\n",Bmp_color);
-//  printf("����             = %ld\n",Bmp_comp);
-//  printf("������ʬ�Υ����� = %ld (byte)\n",Bmp_image_size);
-//  printf("��ʿ������       = %ld (ppm)\n",Bmp_xppm);
-//  printf("��ľ������       = %ld (ppm)\n",Bmp_yppm);
+  printf("ファイル名       = %s \n",filename);
+  printf("ファイルタイプ   = %c%c \n",Bmp_type[0],Bmp_type[1]);
+  printf("ファイルサイズ   = %ld (byte)\n",Bmp_size);
+  printf("幅               = %ld (pixel)\n",Bmp_width);
+  printf("高さ             = %ld (pixel)\n",Bmp_height);
+  printf("色               = %d (bit)\n",Bmp_color);
+  printf("圧縮             = %ld\n",Bmp_comp);
+  printf("画像部分のサイズ = %ld (byte)\n",Bmp_image_size);
+  printf("水平解像度       = %ld (ppm)\n",Bmp_xppm);
+  printf("垂直解像度       = %ld (ppm)\n",Bmp_yppm);
 
   fclose(Bmp_Fp);
 }
 
 /* 
-   �ؿ�̾: HMirror 
-   ���  : img *sp, img *tp
-   �֤���: void 
-   ư��  : 2�������� tp->data �β�����ʿ����ζ��Ǥ�Ȥä���Τ�
-           2�������� sp->data �˳�Ǽ����. 
+   関数名: HMirror
+   引数  : img *sp, img *tp
+   返り値: void
+   動作  : 2次元配列 tp->data の画像を水平方向の鏡映をとったものを
+           2次元配列 sp->data に格納する.
 */
 void HMirror(img* sp, img *tp) {
   int i,j;
@@ -267,11 +239,11 @@ void HMirror(img* sp, img *tp) {
 }
 
 /* 
-   �ؿ�̾: VMirror 
-   ���  : img *sp, img *tp
-   �֤���: void 
-   ư��  : 2�������� tp->data �β�����ľ����ζ��Ǥ�Ȥä���Τ�
-           2�������� sp->data �˳�Ǽ����. 
+   関数名: VMirror
+   引数  : img *sp, img *tp
+   返り値: void
+   動作  : 2次元配列 tp->data の画像を垂直方向の鏡映をとったものを
+           2次元配列 sp->data に格納する.
 */
 void VMirror(img *sp, img *tp) {
   int i,j;
@@ -285,12 +257,12 @@ void VMirror(img *sp, img *tp) {
 
 
 /* 
-   �ؿ�̾: Rotate90
-   ���  : int a, img *sp, img *tp
-   �֤���: void 
-   ư��  : 2�������� tp->data �β���� 90��a �ٻ��ײ��˲�ž������Τ�
-           2�������� sp->data �˳�Ǽ����. �����, �������ȹ⤵��, 
-           sp->height �� sp->width ������. 
+   関数名: Rotate90
+   引数  : int a, img *sp, img *tp
+   返り値: void
+   動作  : 2次元配列 tp->data の画像を 90×a 度時計回りに回転したものを
+           2次元配列 sp->data に格納する. さらに, 画像の幅と高さを,
+           sp->height と sp->width に設定.
 */
 void Rotate90(int a, img *sp, img *tp) {
   int i,j;
@@ -323,11 +295,11 @@ void Rotate90(int a, img *sp, img *tp) {
 
 
 /* 
-   �ؿ�̾: Shrink
-   ���  : int a, img *sp, img *tp
-   �֤���: void 
-   ư��  : 2�������� tp->data �β������ȹ⤵�� 1/a �ܤ��������
-           2�������� sp->data �˳�Ǽ����. 
+   関数名: Shrink
+   引数  : int a, img *sp, img *tp
+   返り値: void
+   動作  : 2次元配列 tp->data の画像の幅と高さを 1/a 倍した画像を
+           2次元配列 sp->data に格納する.
 */
 void Shrink(int a, img *sp, img *tp) {
   int i,j,k,l,w,h,count;
@@ -356,12 +328,12 @@ void Shrink(int a, img *sp, img *tp) {
 }
 
 /* 
-   �ؿ�̾: Mosaic
-   ���  : int a, img *sp, img *tp
-   �֤���: void 
-   ư��  : 2�������� tp->data �β���˥⥶�����򤫤��������
-           2�������� sp->data �˳�Ǽ����. �⥶�������礭����
-           a��a �Ǥ���. 
+   関数名: Mosaic
+   引数  : int a, img *sp, img *tp
+   返り値: void
+   動作  : 2次元配列 tp->data の画像にモザイクをかけた画像を
+           2次元配列 sp->data に格納する. モザイクの大きさは
+           a×a である.
 */
 void Mosaic(int a, img *sp, img *tp) {
   int i,j,k,l,w,h,t_height,t_width,count;
@@ -400,11 +372,11 @@ void Mosaic(int a, img *sp, img *tp) {
 }
 
 /* 
-   �ؿ�̾: Gray
-   ���  : img *sp, img *tp
-   �֤���: void 
-   ư��  : 2�������� tp->data �β���򥰥쥤���������Ѵ�����, 
-           2�������� sp->data �˳�Ǽ����. 
+   関数名: Gray
+   引数  : img *sp, img *tp
+   返り値: void
+   動作  : 2次元配列 tp->data の画像をグレイスケール変換して,
+           2次元配列 sp->data に格納する.
 */
 void Gray(img *sp, img *tp) {
   int i,j;
@@ -423,11 +395,11 @@ void Gray(img *sp, img *tp) {
 }
 
 /* 
-   �ؿ�̾: Diminish
-   ���  : img *sp, img *tp, unsigned char x
-   �֤���: void 
-   ư��  : 2�������� tp->data �β����Ĵ�� (��RGB�ε��٤ˤĤ��� 
-           2^x �ȥޥ�������) ��, 2�������� sp->data �˳�Ǽ����. 
+   関数名: Diminish
+   引数  : img *sp, img *tp, unsigned char x
+   返り値: void
+   動作  : 2次元配列 tp->data の画像を減調し (各RGBの輝度について
+           2^x とマスクを取っ) て, 2次元配列 sp->data に格納する.
 */
 void Diminish(img *sp, img *tp, unsigned char x) {
   int i,j;

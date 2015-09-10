@@ -6,15 +6,16 @@ make -f C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-3\makefile
 make -f C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-3\makefile C_SRCS_TRUNK=s-3 ROOT_DIR=C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-3 -I..\..\utils
 make -f C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-3\makefile C_SRCS_TRUNK=s-3 ROOT_DIR=C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-3 C_FILES=utils.c
 
+pushd C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-3
+pushd C:\WORKS\WS\Eclipse_Luna\C_ImageProg
+
 C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-3\m
+
+C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-3\s-3.exe
 
 make -f C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-3\makefile clean
 
 dir C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-3
-
-C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-3\s-3.exe
-
-pushd C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-3
 
 ex1_1.exe
 

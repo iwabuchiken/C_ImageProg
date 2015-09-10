@@ -23,6 +23,7 @@
 // protos
 //
  ///////////////////////////////
+void s_3__4(int, char **);
 void s_3__1(void);
 void s_3__3_Join(void);
 
@@ -124,11 +125,92 @@ void s_3__1(void) {
 
 }
 
+void s_3__4(int argc, char *argv[]) {
+
+	img *tmp1,*tmp2;
+
+	// malloc
+	tmp1=(img *)malloc(sizeof(img));
+	tmp2=(img *)malloc(sizeof(img));
+
+	printf("[%s:%d] img instances => malloc-ed\n", basename(__FILE__, '\\'), __LINE__);
+
+	printf("[%s:%d] argv[0] = %s\n", basename(__FILE__, '\\'), __LINE__, argv[0]);
+
+
+
+	///////////////////////////////
+	//
+	// image files
+	//
+	 ///////////////////////////////
+	char filename[] = "C:\\WORKS\\WS\\Eclipse_Luna\\C_ImageProg\\main\\s-3\\dog.bmp";
+//	char filename[] = "dog.bmp";
+
+	ReadBmp(filename,tmp1);
+
+	printf("[%s:%d] ReadBmp => done: %s\n", basename(__FILE__, '\\'), __LINE__, filename);
+
+	///////////////////////////////
+	//
+	// mirror
+	//
+	 ///////////////////////////////
+//	VMirror(tmp2,tmp1);
+	int rot_num;
+
+	if (argc < 2) {
+
+		rot_num = 1;
+
+	} else {
+
+		rot_num = argc;
+
+	}
+
+	char time_label[20];
+
+	printf("[%s:%d] time => %s\n",
+					basename(__FILE__, '\\'),
+					__LINE__,
+					get_Time_Label__Now());
+//					get_Time_Label(time_label));
+
+
+	Rotate90(rot_num, tmp2,tmp1);
+
+	char dst[50];
+
+	sprintf(dst, "%s_%s.bmp", "rotate_90", get_Time_Label__Now());
+
+	WriteBmp(dst,tmp2);
+//	WriteBmp("rotate_90.bmp",tmp2);
+	PrintBmpInfo(filename);
+//	PrintBmpInfo("rotate90.bmp");
+
+
+	///////////////////////////////
+	//
+	// free
+	//
+	 ///////////////////////////////
+	free(tmp1);
+	free(tmp2);
+
+	printf("[%s:%d] img instances => freed\n", basename(__FILE__, '\\'), __LINE__);
+
+
+	printf("[%s:%d] done\n", basename(__FILE__, '\\'), __LINE__);
+
+}
+
 int main(int argc, char *argv[])
 //int main(void)
 {
 
-	s_3__3_Join();
+	s_3__4(argc, argv);
+//	s_3__3_Join();
 //	s_3__1();
 //	D_1_s_1_strtok();
 //	D_1_s_1_first();
