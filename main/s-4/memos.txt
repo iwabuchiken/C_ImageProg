@@ -1,0 +1,23 @@
+gcc C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4\s-4.c
+
+make -f C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4\makefile
+
+#REF http://stackoverflow.com/questions/2826029/passing-additional-variables-from-command-line-to-make
+make -f C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4\makefile C_SRCS_TRUNK=s-4 ROOT_DIR=C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4 -I..\..\utils
+make -f C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4\makefile C_SRCS_TRUNK=s-4 ROOT_DIR=C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4 C_FILES=utils.c
+
+[main]----------------------------------------------------
+pushd C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4
+pushd C:\WORKS\WS\Eclipse_Luna\C_ImageProg
+
+C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4\m
+
+C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4\s-4.exe
+
+make -f C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4\makefile clean
+
+dir C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4
+
+ex1_1.exe
+
+s-4.exe
