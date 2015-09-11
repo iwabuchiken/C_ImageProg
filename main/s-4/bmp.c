@@ -28,6 +28,21 @@
 /*****************************************************************************/
 #include "bmp.h"
 
+#ifndef STDIO_H_
+#define STDIO_H_
+#include <stdio.h>
+#endif
+
+#ifndef STDLIB_H_
+#define STDLIB_H_
+#include <stdlib.h>
+#endif
+
+#ifndef STRING_H_
+#define STRING_H_
+#include <string.h>
+#endif
+
 /* 
    関数名: ReadBmp
    引数  : char *filename, img *imgp
@@ -419,3 +434,57 @@ void Diminish(img *sp, img *tp, unsigned char x) {
     }
   }
 }
+
+/****************************
+ * draw a horizontal line to the image<br>
+ * 	=> the sizes of the 2 image data need to be the same<br>
+ * @param sp => target image to draw lines<br>
+ * @param tp => source image data<br>
+ *****************************/
+int DrawBand(img *sp, img *tp) {
+//int DrawBand(img *sp) {
+
+//	printf("[%s:%d] height => %ld\n", basename(__FILE__, '\\'), __LINE__, sp->height);
+
+	int i,j;
+	long k;
+
+	int h = sp->height, w = sp->width;
+
+	int range = 100;
+
+	int range_Start = sp->height / 2;
+
+	int range_End = (sp->height > (range_Start + range)) ? (range_Start + range) : sp->height;
+//	int range_End = (sp->height > (range_Start + 20)) ? (range_Start + 20) : sp->height;
+
+	printf("[%s:%d] range_Start => %d / range_End => %d\n",
+			basename(__FILE__, '\\'), __LINE__,
+			range_Start, range_End);
+
+	for(i=0;i<sp->height;i++) {
+
+		// target lines?
+		if (!(i > range_Start && i < range_End)) {
+
+			continue;
+
+		}
+
+		for(j=0;j<sp->width;j++) {
+
+			sp->data[i][tp->width-j-1]=tp->data[i][j];
+//			tp->data[i][tp->width-j-1]=sp->data[i][j];
+//			tp->data[i][tp->width-j-1]=tp->data[i][j];
+//			sp->data[i][sp->width-j-1]=sp->data[i][j];
+
+		}
+
+	}
+
+	return 1;
+
+//	sp->height=sp->height;
+//	sp->width=sp->width;
+
+}//void DrawBand(img *sp)
