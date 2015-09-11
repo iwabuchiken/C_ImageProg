@@ -68,6 +68,12 @@ typedef struct {
   color data[MAXHEIGHT][MAXWIDTH];
 } img;
 
+enum Col {
+
+	RED, GREEN, BLUE
+
+};
+
 void ReadBmp(char *filename, img *imgp);
 void WriteBmp(char *filename, img *tp);
 void PrintBmpInfo(char *filename);
@@ -79,7 +85,8 @@ void Mosaic(int a, img *sp, img *tp);
 void Gray(img *sp, img *tp);
 void Diminish(img *sp, img *tp, unsigned char x);
 
-int DrawBand(img *sp, img *tp);
+int DrawBand(img *sp, img *tp, int col);
+//int DrawBand(img *sp, img *tp);
 //int DrawBand(img *sp);
 
 #endif	//#ifndef BMP_H_

@@ -43,6 +43,16 @@
 #include <string.h>
 #endif
 
+#ifndef UTILS_H_
+#include "../../utils/utils.h"
+#endif
+
+//enum Col {
+//
+//	RED, GREEN, BLUE
+//
+//};
+//
 /* 
    関数名: ReadBmp
    引数  : char *filename, img *imgp
@@ -441,7 +451,9 @@ void Diminish(img *sp, img *tp, unsigned char x) {
  * @param sp => target image to draw lines<br>
  * @param tp => source image data<br>
  *****************************/
-int DrawBand(img *sp, img *tp) {
+int DrawBand(img *sp, img *tp, int col) {
+//int DrawBand(img *sp, img *tp, Col col) {
+//int DrawBand(img *sp, img *tp) {
 //int DrawBand(img *sp) {
 
 //	printf("[%s:%d] height => %ld\n", basename(__FILE__, '\\'), __LINE__, sp->height);
@@ -462,6 +474,11 @@ int DrawBand(img *sp, img *tp) {
 			basename(__FILE__, '\\'), __LINE__,
 			range_Start, range_End);
 
+	///////////////////////////////
+	//
+	// change pixels
+	//
+	 ///////////////////////////////
 	for(i=0;i<sp->height;i++) {
 
 		// target lines?
@@ -473,10 +490,40 @@ int DrawBand(img *sp, img *tp) {
 
 		for(j=0;j<sp->width;j++) {
 
-			sp->data[i][tp->width-j-1]=tp->data[i][j];
-//			tp->data[i][tp->width-j-1]=sp->data[i][j];
-//			tp->data[i][tp->width-j-1]=tp->data[i][j];
-//			sp->data[i][sp->width-j-1]=sp->data[i][j];
+			switch(col) {
+
+			case RED:
+
+				sp->data[i][tp->width-j-1].g = 0;
+				sp->data[i][tp->width-j-1].b = 0;
+
+				break;
+
+			case GREEN:
+
+				sp->data[i][tp->width-j-1].r = 0;
+				sp->data[i][tp->width-j-1].b = 0;
+
+				break;
+
+			case BLUE:
+
+				sp->data[i][tp->width-j-1].r = 0;
+				sp->data[i][tp->width-j-1].g = 0;
+
+				break;
+
+			}
+
+//			imgp->data[imgp->height-i-1][j].r = Bmp_Data[j*3+2];
+
+////			sp->data[i][tp->width-j-1].r = sp->data[i][tp->width-j-1].r;
+//			sp->data[i][tp->width-j-1].g = 0;
+//			sp->data[i][tp->width-j-1].b = 0;
+////			sp->data[i][tp->width-j-1]=tp->data[i][j];
+////			tp->data[i][tp->width-j-1]=sp->data[i][j];
+////			tp->data[i][tp->width-j-1]=tp->data[i][j];
+////			sp->data[i][sp->width-j-1]=sp->data[i][j];
 
 		}
 

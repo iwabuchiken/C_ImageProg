@@ -83,7 +83,20 @@ void s_4__1_DrawLine(int argc, char* argv[]) {
 	/****************************
 	 * draw line
 	 *****************************/
-	int result = DrawBand(tmp3, tmp2);
+//	enum Col col;
+//
+//	if (argc > 1) {
+//
+//
+//
+//	} else {
+//
+//	}
+
+	enum Col col = GREEN;
+//	enum Col col = BLUE;
+	int result = DrawBand(tmp3, tmp2, col);
+//	int result = DrawBand(tmp3, tmp2);
 
 	sprintf(dst,
 			"C:\\WORKS\\WS\\Eclipse_Luna\\C_ImageProg\\main\\s-4\\%s_%s__line.bmp",
@@ -183,6 +196,8 @@ void s_4__1_DrawLine(int argc, char* argv[]) {
 int main(int argc, char *argv[]) {
 
 	s_4__1_DrawLine(argc, argv);
+
+	printf("[%s:%d] main => done\n", basename(__FILE__, '\\'), __LINE__);
 
 	return 0;
 }
