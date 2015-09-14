@@ -52,5 +52,7 @@ char** tokenize(char *, const char *);
 char* join(char**, const int, char*);
 //char* join(char**, const int, const char);
 
+int get_MaxVal_In_Array(int *array, int numOf_Array);
+
 #endif /* UTILS_H_ */
 

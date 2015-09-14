@@ -32,6 +32,12 @@
 //#include <string.h>
 //#include <stdlib.h>
 
+//#ifndef MAIN_H_
+////#define MAIN_H_
+//#include "main.h"
+//#endif
+
+
 #define HEADERSIZE   54               /* �إå��Υ����� 54 = 14 + 40         */
 #define PALLETSIZE 1024               /* �ѥ�åȤΥ�����                    */
 #define MAXWIDTH   1000               /* ��(pixel)�ξ��                     */
@@ -88,5 +94,9 @@ void Diminish(img *sp, img *tp, unsigned char x);
 int DrawBand(img *sp, img *tp, int col);
 //int DrawBand(img *sp, img *tp);
 //int DrawBand(img *sp);
+
+void Histo(int histo[256], img *tmp1);
+//int Histo(int histo[256], img *tmp1);
+//int Histo(int *histo, img *tmp1);
 
 #endif	//#ifndef BMP_H_

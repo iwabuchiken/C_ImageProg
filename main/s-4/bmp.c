@@ -26,7 +26,9 @@
 /*                        long int を int で出力していると警告がでるので修正        */
 /*                                                                           */
 /*****************************************************************************/
+//#ifndef BMP_H_
 #include "bmp.h"
+//#endif
 
 #ifndef STDIO_H_
 #define STDIO_H_
@@ -45,6 +47,11 @@
 
 #ifndef UTILS_H_
 #include "../../utils/utils.h"
+#endif
+
+#ifndef MAIN_H_
+//#define MAIN_H_
+#include "main.h"
 #endif
 
 //enum Col {
@@ -535,3 +542,99 @@ int DrawBand(img *sp, img *tp, int col) {
 //	sp->width=sp->width;
 
 }//void DrawBand(img *sp)
+
+void Histo(int histo[256], img *tmp1) {
+//int Histo(int histo[256], img *tmp1) {
+
+	printf("[%s:%d] histo!\n", basename(__FILE__, '\\'), __LINE__);
+
+	int i, j;
+
+	int counter = 0;
+
+	///////////////////////////////
+	//
+	// init
+	//
+	 ///////////////////////////////
+	for (i = 0; i < 256; ++i) {
+
+		histo[i] = 0;
+
+	}
+
+
+	///////////////////////////////
+	//
+	// build: raw data
+	//
+	 ///////////////////////////////
+	for(i=0;i<tmp1->height;i++) {
+
+		for (j=0;j<tmp1->width;j++) {
+
+//			printf("[%s:%d] val = %d\n", basename(__FILE__, '\\'), __LINE__, tmp1->data[tmp1->height-i-1][j].b);
+//
+//			counter ++;
+//
+//			if (counter > 100) {
+//
+//				return -2;
+//
+//			}
+
+			histo[tmp1->data[tmp1->height-i-1][j].b] ++;
+//			(*histo[tmp1->data[tmp1->height-i-1][j].b]) ++;	//=> invalid type argument of unary '*' (have 'int')
+//			histo[tmp1->data[tmp1->height-i-1][j].b] ++;
+
+//			tmp1->data[tmp1->height-i-1][j].b = Bmp_Data[j*3];
+//			tmp1->data[tmp1->height-i-1][j].g = Bmp_Data[j*3+1];
+//			tmp1->data[tmp1->height-i-1][j].r = Bmp_Data[j*3+2];
+
+		}
+
+	}//for(i=0;i<tmp1->height;i++)
+
+	///////////////////////////////
+	//
+	// modify
+	//
+	 ///////////////////////////////
+	///////////////////////////////
+	//
+	// get: max
+	//
+	 ///////////////////////////////
+	int max = get_MaxVal_In_Array(histo, MAX_BMP_VAL);
+
+	printf("[%s:%d] max => %d\n", basename(__FILE__, '\\'), __LINE__, max);
+
+	///////////////////////////////
+	//
+	// modify
+	//
+	 ///////////////////////////////
+	for (i = 0; i < MAX_BMP_VAL; ++i) {
+
+		histo[i] = (float)histo[i] / max * MAX_BMP_VAL;
+
+	}
+
+//	///////////////////////////////
+//	//
+//	// report
+//	//
+//	 ///////////////////////////////
+//	printf("[%s:%d] modified =======================\n", basename(__FILE__, '\\'), __LINE__);
+//
+//	for (i = 100; i < 120; ++i) {
+//
+//		printf("[%s:%d] histo[%d] => %d\n", basename(__FILE__, '\\'), __LINE__, i, histo[i]);
+//
+//
+//	}
+
+
+//	return -1;
+
+}//int Histo(int *histo)

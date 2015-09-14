@@ -12,7 +12,7 @@ pushd C:\WORKS\WS\Eclipse_Luna\C_ImageProg
 
 C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4\m
 
-C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4\s-4.exe
+C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4\main.exe
 
 make -f C:\WORKS\WS\Eclipse_Luna\C_ImageProg\main\s-4\makefile clean
 

@@ -54,7 +54,7 @@ char* get_Time_Label__Now() {
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
 
-	printf("Current local time and date: %s", asctime(timeinfo));
+//	printf("Current local time and date: %s", asctime(timeinfo));
 
 //	//ref http://stackoverflow.com/questions/5498628/time-in-c-language answered Mar 31 '11 at 10:50
 //	struct timespec ts = { 0 };
@@ -664,3 +664,27 @@ char* join
 	return str_Jointed;
 
 }
+
+int get_MaxVal_In_Array
+(int *array, int numOf_Array) {
+
+	int i;
+
+//	printf("[%s:%d] get_MaxVal_In_Array\n", basename(__FILE__, '\\'), __LINE__);
+
+	int tmp = array[0];
+
+	for (i = 0; i < numOf_Array; ++i) {
+
+		if (tmp < array[i]) {
+
+			tmp = array[i];
+
+		};
+
+	}//for (int i = 0; i < numOf_Array; ++i)
+
+	return tmp;
+
+
+}//int get_MaxVal_In_Array(int *array, int numOf_Array)
