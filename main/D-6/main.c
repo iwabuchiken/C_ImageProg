@@ -51,6 +51,12 @@ C:\mingw-w64\x86_64-6.2.0-posix-seh-rt_v5-rev1\mingw64\bin
  ///////////////////////////////
 //void s_5__1_ColorHisto(int argc, char* argv[]);
 
+/* 画像 No.n を shift だけ明るくする */
+void brighten( int n, int shift );
+
+void s_2_1_brighten( int n, int shift );
+
+
 ///////////////////////////////
 //
 // functions
@@ -138,6 +144,53 @@ C:\mingw-w64\x86_64-6.2.0-posix-seh-rt_v5-rev1\mingw64\bin
 //
 //}//s_5__1_ColorHisto
 
+void s_2_1_brighten( int n, int shift ) {
+
+	//debug
+//	int i;
+
+	///////////////////////
+
+	// p.7
+	// C:\WORKS_2\WS\Eclipse_Luna\prog978-4-7856-3179-6 (nagao)\chap01
+
+	///////////////////////
+
+	int image_shift = -50;
+	int image_num = 0;
+
+	printf("[%s:%d] starting... ==> s_2_1_brighten\n", __FILE__, __LINE__);
+
+	putchar('\n');
+
+
+
+    load_image( 0, "" ); /* �ｿｽ鞫廸o.0�ｿｽﾉフ�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ鞫懶ｿｽ�ｿｽﾇみ搾ｿｽ�ｿｽ�ｿｽ */
+
+//    //debug
+//    for (i = 0; i < 10; ++i) {
+//
+//    	printf("[%s:%d] image[0][0][%d] => %d\n", __FILE__, __LINE__,
+//    			i,
+//    			image[0][0][i]);
+//
+//	}
+//    printf("[%s:%d] image[0][0][0] => %d\n", __FILE__, __LINE__, image[0][0][0]);
+
+    /****************************
+	 *
+	 * brighten
+	 *
+	 *****************************/
+	printf("[%s:%d] brightening...\n", basename(__FILE__, '\\'), __LINE__);
+
+	brighten( image_num, image_shift);
+//	brighten( 0, 100);
+
+    save_image( 0, "" ); /* �ｿｽ鞫廸o.0�ｿｽﾌ画像�ｿｽ�ｿｽ�ｿｽt�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽﾉ出�ｿｽﾍゑｿｽ�ｿｽ�ｿｽ   */
+
+}//s_2_1_brighten( int n, int shift )
+
 void s_1_1_copyimage() {
 
 	//debug
@@ -155,7 +208,7 @@ void s_1_1_copyimage() {
 
 
 
-    load_image( 0, "" ); /* �摜No.0�Ƀt�@�C������摜��ǂݍ��� */
+    load_image( 0, "" ); /* �ｿｽ鞫廸o.0�ｿｽﾉフ�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ鞫懶ｿｽ�ｿｽﾇみ搾ｿｽ�ｿｽ�ｿｽ */
 
     //debug
     for (i = 0; i < 10; ++i) {
@@ -168,7 +221,7 @@ void s_1_1_copyimage() {
 //    printf("[%s:%d] image[0][0][0] => %d\n", __FILE__, __LINE__, image[0][0][0]);
 
 
-    save_image( 0, "" ); /* �摜No.0�̉摜���t�@�C���ɏo�͂���   */
+    save_image( 0, "" ); /* �ｿｽ鞫廸o.0�ｿｽﾌ画像�ｿｽ�ｿｽ�ｿｽt�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽﾉ出�ｿｽﾍゑｿｽ�ｿｽ�ｿｽ   */
 
 }//void s_1_1_copyimage
 
@@ -183,7 +236,11 @@ int main(int argc, char *argv[]) {
 	// operations
 
 	///////////////////////
-	s_1_1_copyimage();
+	int image_num = 0;
+	int brighten_shift = 100;
+
+	s_2_1_brighten( image_num, brighten_shift );
+//	s_1_1_copyimage();
 
 
 
@@ -201,3 +258,19 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
+void brighten( int n, int shift )
+/* 画像 No.n を shift だけ明るくする */
+{
+    int x,y,brightness;
+
+    for(y=0;y<height[n];y++)
+        for(x=0;x<width[n];x++){
+            brightness = image[n][x][y] + shift;
+
+            if ( brightness > 255 ) brightness = 255;
+
+            if ( brightness < 0 ) brightness = 0;
+
+            image[n][x][y] = brightness;
+        }
+}

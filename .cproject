@@ -24,8 +24,8 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.521668142" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.base.303828519" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.base">
 								<option id="gnu.c.compiler.option.include.paths.183936085" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;C:\mingw-w64\i686-4.9.2-posix-dwarf-rt_v3-rev1\mingw32\i686-w64-mingw32\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\mingw-w64\x86_64-6.2.0-posix-seh-rt_v5-rev1\mingw64\x86_64-w64-mingw32\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\mingw-w64\i686-4.9.2-posix-dwarf-rt_v3-rev1\mingw32\i686-w64-mingw32\include&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.341358778" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>

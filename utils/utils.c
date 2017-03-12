@@ -609,7 +609,7 @@ char* join
 //	str_Joint[1] = '\0';
 
 
-	int index = 0;
+//	int index = 0;
 
 	// first token
 	strcpy(str_Jointed, tokens[0]);
