@@ -151,6 +151,20 @@ void s_3_1_brighten( int n, int shift );
 //
 //}//s_5__1_ColorHisto
 
+/*
+ * s_3_1_brighten( int n, int shift )
+ *
+ * <usage> 2017/03/14 17:01:18
+ * generate random integers
+ * - create a text file
+ * - edit the stings
+ * 		- "\r\n"	=> "\t"
+ * 		- "\*"	=> "\r\n"
+ * 		- "^\t\t"	=> ""
+ * 		- "\t$"	=> ""
+ * 		- C/P	=> to a spreadsheet
+ *
+ */
 void s_3_1_brighten( int n, int shift ) {
 
 	//debug
@@ -192,7 +206,10 @@ void s_3_1_brighten( int n, int shift ) {
 	//debug
 	int i;
 
-	for (i = 0; i < 10; ++i) {
+	int max = 50;
+//	int max = 5;
+
+	for (i = 0; i < max; ++i) {
 
 		image_shift = get_random_integer(1, 10, time(NULL));
 //		image_shift = get_random_integer(1, 6);

@@ -471,12 +471,12 @@ char** tokenize(char *str, const char *delim) {
     size_t count     = 0;
 
     printf("[%s:%d] tmp = %s(&tmp=%p)\n", __FILE__, __LINE__, tmp, &tmp);
-    printf("[%s:%d] tmp = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, tmp, tmp);
-//    printf("[%s:%d] tmp = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, (unsigned int)tmp, (unsigned int)tmp);
-//    printf("[%s:%d] tmp = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, (long)tmp, (long)tmp);
 //    printf("[%s:%d] tmp = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, tmp, tmp);
-    printf("[%s:%d] str = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, str, str);
-    printf("[%s:%d] &str = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, &str, &str);
+////    printf("[%s:%d] tmp = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, (unsigned int)tmp, (unsigned int)tmp);
+////    printf("[%s:%d] tmp = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, (long)tmp, (long)tmp);
+////    printf("[%s:%d] tmp = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, tmp, tmp);
+//    printf("[%s:%d] str = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, str, str);
+//    printf("[%s:%d] &str = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, &str, &str);
 
     printf("[%s:%d] delim = '%s'\n", __FILE__, __LINE__, delim);
     printf("[%s:%d] delim[0] = '%c'\n", __FILE__, __LINE__, delim[0]);
@@ -506,9 +506,9 @@ char** tokenize(char *str, const char *delim) {
 
     printf("[%s:%d] count = %d\n", __FILE__, __LINE__, (int) count);
 
-    printf("[%s:%d] &last_comma => %p(%%d=%d)\n",
-    					__FILE__, __LINE__, &last_comma, (int) &last_comma);
-    printf("[%s:%d] &str => %p(%%d=%d)\n", __FILE__, __LINE__, (void *)&str, (unsigned int)&str);
+//    printf("[%s:%d] &last_comma => %p(%%d=%d)\n",
+//    					__FILE__, __LINE__, &last_comma, (int) &last_comma);
+//    printf("[%s:%d] &str => %p(%%d=%d)\n", __FILE__, __LINE__, (void *)&str, (unsigned int)&str);
     printf("[%s:%d] strlen(str) - 1 => %d\n", __FILE__, __LINE__, (int)strlen(str) - 1);
 //    printf("[%s:%d] str => %d\n", __FILE__, __LINE__, &str + strlen(str) - 1);
 
@@ -697,6 +697,15 @@ int get_MaxVal_In_Array
 int get_random_integer(int start, int end, time_t seed) {
 //int get_random_integer(int start, int end) {
 
+	FILE *f_dst;
+
+//	char fname_dst[40];
+	char* fname_dst = "random_integers.txt";
+
+	char text[20];
+
+//	sprintf(fname_dst, "%s.%s.txt", "random_integers", get_Time_Label__Now());
+
 	//ref http://www.sat.t.u-tokyo.ac.jp/~omi/random_variables_generation.html#Prepare_rand "1から6の整数の乱数が欲しい"
 //	int i;
 
@@ -713,6 +722,61 @@ int get_random_integer(int start, int end, time_t seed) {
 //
 //	printf("[%s:%d] rnd => %f\n", basename(__FILE__, '\\'), __LINE__, rnd);
 
+	// experi
+	int rnd;
+//	double rnd;
+//	double rnd = rand();
+
+	int histo[10];
+//	double histo[10];
+
+	int i;
+
+	// init array
+	for (i = 0; i < 10; ++i) {
+
+		histo[i] = 0;
+
+	}//for (i = 0; i < 10; ++i)
+
+
+	for (i = 0; i < 10; ++i) {
+
+//		rnd = rand() % 10 + 1;
+		rnd = rand() % 10;
+
+		histo[rnd] += 1;
+//		histo[i] += 1;
+
+	}//for (i = 0; i < 10; ++i)
+
+	// file
+	//ref https://www.tutorialspoint.com/cprogramming/c_file_io.htm "you must create this directory on"
+
+	f_dst = fopen(fname_dst, "a+");
+//	f_dst = fopen(fname_dst, "w+");
+
+//	fprintf(f_dst, get_Time_Label__Now());
+//	fprintf(f_dst, "\n");
+//	fclose(f_dst);
+
+	printf("[%s:%d] file => closed (%s)\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+
+
+	for (i = 0; i < 10; ++i) {
+
+//		printf("[%s:%d] histo[%d] => %d\n", basename(__FILE__, '\\'), __LINE__, i, histo[i]);
+
+		sprintf(text, "%d", histo[i]);
+
+		fprintf(f_dst, text);
+		fprintf(f_dst, "\n");
+
+
+	}//for (i = 0; i < 10; ++i)
+
+	// mark for the end of the random number set
+	fprintf(f_dst, "*\n\n");
 
 
 	return rand() % end + start;
