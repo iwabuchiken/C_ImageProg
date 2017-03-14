@@ -54,5 +54,9 @@ char* join(char**, const int, char*);
 
 int get_MaxVal_In_Array(int *array, int numOf_Array);
 
+//int get_random_integer(int start, int end);
+int get_random_integer(int start, int end, time_t seed);
+
+
 #endif /* UTILS_H_ */
 

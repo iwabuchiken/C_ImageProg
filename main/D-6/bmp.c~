@@ -279,7 +279,7 @@ void HMirror(img* sp, img *tp) {
 */
 void VMirror(img *sp, img *tp) {
   int i,j;
-  long k;
+//  long k;
   for(i=0;i<tp->height;i++) 
     for(j=0;j<tp->width;j++) 
       sp->data[i][tp->width-j-1]=tp->data[i][j];
@@ -466,9 +466,9 @@ int DrawBand(img *sp, img *tp, int col) {
 //	printf("[%s:%d] height => %ld\n", basename(__FILE__, '\\'), __LINE__, sp->height);
 
 	int i,j;
-	long k;
+//	long k;
 
-	int h = sp->height, w = sp->width;
+//	int h = sp->height, w = sp->width;
 
 	int range = 100;
 
@@ -550,7 +550,7 @@ void Histo(int histo[256], img *tmp1) {
 
 	int i, j;
 
-	int counter = 0;
+//	int counter = 0;
 
 	///////////////////////////////
 	//

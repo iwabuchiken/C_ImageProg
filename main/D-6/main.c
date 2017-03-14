@@ -36,7 +36,12 @@ C:\mingw-w64\x86_64-6.2.0-posix-seh-rt_v5-rev1\mingw64\bin
 
 #ifndef BMP_H_
 //#define BMP_H_
-#include  "bmp.h"
+#include  "bmp.h~"
+#endif
+
+#ifndef TIME_H_
+#define TIME_H_
+#include <time.h>
 #endif
 
 #ifndef MAIN_H_
@@ -55,6 +60,8 @@ C:\mingw-w64\x86_64-6.2.0-posix-seh-rt_v5-rev1\mingw64\bin
 void brighten( int n, int shift );
 
 void s_2_1_brighten( int n, int shift );
+
+void s_3_1_brighten( int n, int shift );
 
 
 ///////////////////////////////
@@ -143,6 +150,68 @@ void s_2_1_brighten( int n, int shift );
 //	printf("[%s:%d] s_5__1_ColorHisto => done\n", basename(__FILE__, '\\'), __LINE__);
 //
 //}//s_5__1_ColorHisto
+
+void s_3_1_brighten( int n, int shift ) {
+
+	//debug
+//	int i;
+
+	///////////////////////
+
+	// p.7
+	// C:\WORKS_2\WS\Eclipse_Luna\prog978-4-7856-3179-6 (nagao)\chap01
+
+	///////////////////////
+
+	int image_shift = -50;
+	int image_num = 0;
+
+	printf("[%s:%d] starting... ==> s_3_1_brighten\n", __FILE__, __LINE__);
+
+	putchar('\n');
+
+    load_image( 0, "" ); /* �ｿｽ鞫廸o.0�ｿｽﾉフ�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ鞫懶ｿｽ�ｿｽﾇみ搾ｿｽ�ｿｽ�ｿｽ */
+
+//    //debug
+//    for (i = 0; i < 10; ++i) {
+//
+//    	printf("[%s:%d] image[0][0][%d] => %d\n", __FILE__, __LINE__,
+//    			i,
+//    			image[0][0][i]);
+//
+//	}
+//    printf("[%s:%d] image[0][0][0] => %d\n", __FILE__, __LINE__, image[0][0][0]);
+
+    /****************************
+	 *
+	 * brighten
+	 *
+	 *****************************/
+	printf("[%s:%d] brightening...\n", basename(__FILE__, '\\'), __LINE__);
+
+	//debug
+	int i;
+
+	for (i = 0; i < 10; ++i) {
+
+		image_shift = get_random_integer(1, 10, time(NULL));
+//		image_shift = get_random_integer(1, 6);
+
+		printf("[%s:%d] random => %d\n", basename(__FILE__, '\\'), __LINE__, image_shift);
+
+	}
+//	image_shift = get_random_integer(1, 6);
+
+	//debug
+	return;
+
+	brighten( image_num, image_shift);
+//	brighten( 0, 100);
+
+    save_image( 0, "" ); /* �ｿｽ鞫廸o.0�ｿｽﾌ画像�ｿｽ�ｿｽ�ｿｽt�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽﾉ出�ｿｽﾍゑｿｽ�ｿｽ�ｿｽ   */
+
+}//s_3_1_brighten( int n, int shift )
+
 
 void s_2_1_brighten( int n, int shift ) {
 
@@ -239,7 +308,11 @@ int main(int argc, char *argv[]) {
 	int image_num = 0;
 	int brighten_shift = 100;
 
-	s_2_1_brighten( image_num, brighten_shift );
+	srand((unsigned)time(NULL));
+
+	s_3_1_brighten( image_num, brighten_shift );
+
+//	s_2_1_brighten( image_num, brighten_shift );
 //	s_1_1_copyimage();
 
 

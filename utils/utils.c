@@ -27,10 +27,10 @@ char* get_Time_Label(char* time_label) {
 
 	//REF http://stackoverflow.com/questions/5141960/get-the-current-time-in-c answered Feb 28 '11 at 12:33
 	time_t rawtime;
-	struct tm * timeinfo;
+//	struct tm * timeinfo;
 
 	time ( &rawtime );
-	timeinfo = localtime ( &rawtime );
+//	timeinfo = localtime ( &rawtime );
 
 	//ref http://stackoverflow.com/questions/5141960/get-the-current-time-in-c answered May 29 at 4:59
 //	sprintf(time_label, "[%d %d %d %d:%d:%d]",timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
@@ -221,7 +221,8 @@ char** str_split_V2(char* a_str, const char a_delim, int* num) {
        knows where the list of returned strings ends. */
     count++;
 
-    printf("[%s:%d] count => done (count = %d)\n", __FILE__, __LINE__, count);
+    printf("[%s:%d] count => done (count = %d)\n", __FILE__, __LINE__, (int) count);
+//    printf("[%s:%d] count => done (count = %d)\n", __FILE__, __LINE__, count);
 
     ///////////////////////////////
 	//
@@ -471,6 +472,9 @@ char** tokenize(char *str, const char *delim) {
 
     printf("[%s:%d] tmp = %s(&tmp=%p)\n", __FILE__, __LINE__, tmp, &tmp);
     printf("[%s:%d] tmp = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, tmp, tmp);
+//    printf("[%s:%d] tmp = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, (unsigned int)tmp, (unsigned int)tmp);
+//    printf("[%s:%d] tmp = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, (long)tmp, (long)tmp);
+//    printf("[%s:%d] tmp = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, tmp, tmp);
     printf("[%s:%d] str = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, str, str);
     printf("[%s:%d] &str = %%d=%d (%%p=%p)\n", __FILE__, __LINE__, &str, &str);
 
@@ -500,18 +504,18 @@ char** tokenize(char *str, const char *delim) {
         tmp++;
     }
 
-    printf("[%s:%d] count = %d\n", __FILE__, __LINE__, count);
+    printf("[%s:%d] count = %d\n", __FILE__, __LINE__, (int) count);
 
     printf("[%s:%d] &last_comma => %p(%%d=%d)\n",
-    					__FILE__, __LINE__, &last_comma, &last_comma);
-    printf("[%s:%d] &str => %p(%%d=%d)\n", __FILE__, __LINE__, &str, &str);
-    printf("[%s:%d] strlen(str) - 1 => %d\n", __FILE__, __LINE__, strlen(str) - 1);
+    					__FILE__, __LINE__, &last_comma, (int) &last_comma);
+    printf("[%s:%d] &str => %p(%%d=%d)\n", __FILE__, __LINE__, (void *)&str, (unsigned int)&str);
+    printf("[%s:%d] strlen(str) - 1 => %d\n", __FILE__, __LINE__, (int)strlen(str) - 1);
 //    printf("[%s:%d] str => %d\n", __FILE__, __LINE__, &str + strlen(str) - 1);
 
     printf("[%s:%d] str + strlen(str) - 1 => %s\n", __FILE__, __LINE__, str + strlen(str) - 1);
     printf("[%s:%d] str + strlen(str) - 2 => %s\n", __FILE__, __LINE__, str + strlen(str) - 2);
     printf("[%s:%d] last_comma - (str + strlen(str) - 1) => %%d=%d\n",
-    					__FILE__, __LINE__, last_comma - (str + strlen(str) - 1));
+    					__FILE__, __LINE__, (int)(last_comma - (str + strlen(str) - 1)));
 //    printf("[%s:%d] &(str + strlen(str) - 1) => %p\n",
 //    						__FILE__, __LINE__, (&str) + strlen(str) - 1));
 //    						__FILE__, __LINE__, &str + strlen(str) - 1));
@@ -631,7 +635,8 @@ char* join
 			printf("[%s:%d] str_Jointed = %s (len = %d)\n",
 							basename(__FILE__, '\\'),
 							__LINE__,
-							str_Jointed, strlen(str_Jointed));
+							str_Jointed, (int) strlen(str_Jointed));
+//							str_Jointed, strlen(str_Jointed));
 
 //			// joint
 //			str_Jointed[strlen(str_Jointed)] = joint;
@@ -688,3 +693,28 @@ int get_MaxVal_In_Array
 
 
 }//int get_MaxVal_In_Array(int *array, int numOf_Array)
+
+int get_random_integer(int start, int end, time_t seed) {
+//int get_random_integer(int start, int end) {
+
+	//ref http://www.sat.t.u-tokyo.ac.jp/~omi/random_variables_generation.html#Prepare_rand "1から6の整数の乱数が欲しい"
+//	int i;
+
+//	srand(NULL);
+//	srand(seed);
+//	srand(time(NULL));
+//	srand((unsigned)time(NULL));
+
+//	double rnd = rand();
+
+//	printf("[%s:%d] rnd => %f\n", basename(__FILE__, '\\'), __LINE__, rnd);
+//
+//	rnd = rand();
+//
+//	printf("[%s:%d] rnd => %f\n", basename(__FILE__, '\\'), __LINE__, rnd);
+
+
+
+	return rand() % end + start;
+
+}//get_random_integer(int start, int end)
