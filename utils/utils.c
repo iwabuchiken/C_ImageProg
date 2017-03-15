@@ -782,3 +782,109 @@ int get_random_integer(int start, int end, time_t seed) {
 	return rand() % end + start;
 
 }//get_random_integer(int start, int end)
+
+/*
+ * int is_numeric(char* string)
+ *
+ * date: 2017/03/15 17:30:42
+ *
+ * <memos>
+ * 	1. fractional numbers --> not yet implemented
+ *
+ * @return
+ * 		-1	a letter
+ * 		-2	neither a letter nor a number
+ * 		-3	no char in the string
+ * 		1	a number or '-'
+ *
+ */
+int is_numeric(char* string) {
+
+	char ch;
+
+	int i = 0;
+
+	ch = string[i];
+
+	/****************************
+	 *
+	 * first char => '-'?
+	 *
+	 *****************************/
+	if (ch == '\0') {
+
+		// no char in the string; return
+		return -3;
+
+	} else if (ch == '-') {	// '-' char as the first char
+
+		// no op --> a negative number; next char
+		i ++;
+
+		ch = string[i];
+
+	} else if (isdigit(ch)) {
+
+		// next char
+		i ++;
+
+		ch = string[i];
+
+	} else if(isalpha(ch)) {
+
+		printf("[%s:%d] isalpha => %c\n", basename(__FILE__, '\\'), __LINE__, ch);
+
+		return -1;
+
+	} else {	// neither a digit or alpha
+
+		printf("[%s:%d] neigher of the two => '%c'(%%d='%d')\n",
+
+				basename(__FILE__, '\\'), __LINE__, ch, ch);
+
+		return -2;
+
+	}
+
+	/****************************
+	 *
+	 * char at the second index and on
+	 *
+	 *****************************/
+	//ref http://stackoverflow.com/questions/7758017/how-do-i-check-for-numeric-value-in-c-language answered Oct 13 '11 at 17:34
+	while(ch != '\0') {
+//	while(ch != EOF) {
+
+		if(isalpha(ch)) {
+
+			printf("[%s:%d] isalpha => %c\n", basename(__FILE__, '\\'), __LINE__, ch);
+
+			return -1;
+
+		} else if(isdigit(ch)) {
+
+			printf("[%s:%d] isdigit => %c\n", basename(__FILE__, '\\'), __LINE__, ch);
+
+			// next char
+			i ++;
+
+			ch = string[i];
+
+			continue;
+
+		} else {
+
+			printf("[%s:%d] neigher of the two => '%c'(%%d='%d')\n",
+
+					basename(__FILE__, '\\'), __LINE__, ch, ch);
+
+			return -2;
+
+		}
+
+	}
+
+	return 1;
+
+}//is_numeric(char* string)
+

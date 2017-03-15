@@ -28,6 +28,11 @@
 #include <assert.h>
 #endif
 
+#ifndef CTYPE_H_
+#define CTYPE_H_
+#include <ctype.h>
+#endif
+
 char* get_Time_Label(char* time_label);
 //char* get_Time_Label(char* time_label) {
 //
@@ -57,6 +62,43 @@ int get_MaxVal_In_Array(int *array, int numOf_Array);
 //int get_random_integer(int start, int end);
 int get_random_integer(int start, int end, time_t seed);
 
+/*
+ * int is_numeric(char* string)
+ *
+ * @return
+ * 		-1	a letter
+ * 		-2	neither a letter nor a number
+ * 		1	a number or '-'
+ *
+ */
+int is_numeric(char* string);
+//int is_numeric(char* string) {
+//
+//	char ch;
+//
+//	ch = string[0];
+//
+//	while(ch != EOF) {
+//
+//		if(isalpha(ch)) {
+//
+//			return -1;
+//
+//		} else if(isdigit(ch)) {
+//
+//			continue;
+//
+//		} else {
+//
+//			return -2;
+//
+//		}
+//
+//	}
+//
+//	return 1;
+//
+//}//is_numeric(char* string)
 
 #endif /* UTILS_H_ */
 

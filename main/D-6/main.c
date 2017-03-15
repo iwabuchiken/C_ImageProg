@@ -7,6 +7,7 @@ pushd C:\WORKS_2\WS\Eclipse_Luna\C_ImageProg\main\D-6\
 gcc main.c
 a.exe
 
+pushd C:\WORKS_2\WS\Eclipse_Luna\C_ImageProg
 C:\WORKS_2\WS\Eclipse_Luna\C_ImageProg\Default\C_ImageProg.exe
 
 C:\mingw-w64\x86_64-6.2.0-posix-seh-rt_v5-rev1\mingw64\bin
@@ -42,6 +43,16 @@ C:\mingw-w64\x86_64-6.2.0-posix-seh-rt_v5-rev1\mingw64\bin
 #ifndef TIME_H_
 #define TIME_H_
 #include <time.h>
+#endif
+
+//#ifndef CTYPE_H_
+//#define CTYPE_H_
+//#include <ctype.h>
+//#endif
+
+#ifndef MAIN_H_
+#define MAIN_H_
+#include "main.h"
 #endif
 
 #ifndef MAIN_H_
@@ -165,6 +176,48 @@ void s_3_1_brighten( int n, int shift );
  * 		- C/P	=> to a spreadsheet
  *
  */
+
+void s_4_1_gets() {
+
+	//ref http://www1.cts.ne.jp/~clab/hsample/IO/IO16.html
+    char name[21];
+
+//    printf("your name?:\t");
+////    printf("お名前を入力して下さい\t");
+//    gets(name);
+//    printf("\nyour name is: '%s'\n", name);
+////    printf("\nあなたのお名前は %s です。\n", name);
+
+    /****************************
+	 *
+	 * number
+	 *
+	 *****************************/
+    printf("number?:\t");
+//    printf("お名前を入力して下さい\t");
+    gets(name);
+    printf("\nthe number is: '%s'\n", name);
+
+    //ref http://hitorilife.com/atoi.php
+    printf("\nthe number is (atoi): '%d'\n", atoi(name));
+
+    printf("\nthe twice is (atoi): '%d'\n", atoi(name) * 2);
+
+    printf("\nname[0] %%c => '%c'\n", name[0]);
+    printf("\n(char)name[0] %%d => '%d'\n", (char)name[0]);
+    printf("\nname[0] - '0' %%d => '%d'\n", name[0] - '0');
+
+    printf("\nis_numeric(name[0] - '0') %%d => '%d'\n", is_numeric(name));
+//    printf("\nis_numeric(name[0] - '0') %%d => '%d'\n", is_numeric(name[0] - '0'));
+
+//    printf("\ntis_numeric => '%d'\n", name);	//=> "expects argument of type 'int', but argument 2 has type 'char *'"
+//    printf("\ntis_numeric => '%d'\n", name[0]);	//=> '52'
+//    printf("\ntis_numeric => '%d'\n", is_numeric(name[0]));
+
+
+
+}//void s_4_1_gets()
+
 void s_3_1_brighten( int n, int shift ) {
 
 	//debug
@@ -322,12 +375,14 @@ int main(int argc, char *argv[]) {
 	// operations
 
 	///////////////////////
-	int image_num = 0;
-	int brighten_shift = 100;
+//	int image_num = 0;
+//	int brighten_shift = 100;
 
 	srand((unsigned)time(NULL));
 
-	s_3_1_brighten( image_num, brighten_shift );
+	s_4_1_gets();
+
+//	s_3_1_brighten( image_num, brighten_shift );
 
 //	s_2_1_brighten( image_num, brighten_shift );
 //	s_1_1_copyimage();
@@ -339,7 +394,7 @@ int main(int argc, char *argv[]) {
 	// closing messages
 
 	///////////////////////
-	printf("[%s:%d] processing...\n", __FILE__, __LINE__);
+//	printf("[%s:%d] processing...\n", __FILE__, __LINE__);
 
 	printf("[%s:%d] yes, done\n", basename(__FILE__, '\\'), __LINE__);
 
