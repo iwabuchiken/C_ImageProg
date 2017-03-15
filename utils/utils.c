@@ -863,7 +863,7 @@ int is_numeric(char* string) {
 
 		} else if(isdigit(ch)) {
 
-			printf("[%s:%d] isdigit => %c\n", basename(__FILE__, '\\'), __LINE__, ch);
+//			printf("[%s:%d] isdigit => %c\n", basename(__FILE__, '\\'), __LINE__, ch);
 
 			// next char
 			i ++;

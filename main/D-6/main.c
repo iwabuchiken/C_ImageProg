@@ -177,6 +177,75 @@ void s_3_1_brighten( int n, int shift );
  *
  */
 
+void s_4_1_2_brighten() {
+
+	//ref http://www1.cts.ne.jp/~clab/hsample/IO/IO16.html
+    char name[21];
+
+    int result;
+
+    /****************************
+	 *
+	 * number
+	 *
+	 *****************************/
+    printf("number?:\t");
+//    printf("お名前を入力して下さい\t");
+    gets(name);
+    printf("\nthe number is: '%s'\n", name);
+
+    // validate
+    result = is_numeric(name);
+
+    if (result == 1) {
+
+    	printf("[%s:%d] it's a number => '%s'\n", basename(__FILE__, '\\'), __LINE__, name);
+
+	} else {
+
+		printf("[%s:%d] it's not a number => '%s'\n", basename(__FILE__, '\\'), __LINE__, name);
+
+		return;
+
+	}
+
+    /****************************
+	 *
+	 * brighten
+	 *
+	 *****************************/
+    int image_num = 0;
+
+	int image_shift = atoi(name);
+
+
+    load_image( 0, "" ); /* �ｿｽ鞫廸o.0�ｿｽﾉフ�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ鞫懶ｿｽ�ｿｽﾇみ搾ｿｽ�ｿｽ�ｿｽ */
+
+//    //debug
+//    for (i = 0; i < 10; ++i) {
+//
+//    	printf("[%s:%d] image[0][0][%d] => %d\n", __FILE__, __LINE__,
+//    			i,
+//    			image[0][0][i]);
+//
+//	}
+//    printf("[%s:%d] image[0][0][0] => %d\n", __FILE__, __LINE__, image[0][0][0]);
+
+    /****************************
+	 *
+	 * brighten
+	 *
+	 *****************************/
+	printf("[%s:%d] brightening...\n", basename(__FILE__, '\\'), __LINE__);
+
+	brighten( image_num, image_shift);
+//	brighten( 0, 100);
+
+    save_image( 0, "" ); /* �ｿｽ鞫廸o.0�ｿｽﾌ画像�ｿｽ�ｿｽ�ｿｽt�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽﾉ出�ｿｽﾍゑｿｽ�ｿｽ�ｿｽ   */
+
+}//void s_4_1_2_brighten
+
+
 void s_4_1_gets() {
 
 	//ref http://www1.cts.ne.jp/~clab/hsample/IO/IO16.html
@@ -217,6 +286,7 @@ void s_4_1_gets() {
 
 
 }//void s_4_1_gets()
+
 
 void s_3_1_brighten( int n, int shift ) {
 
@@ -380,7 +450,8 @@ int main(int argc, char *argv[]) {
 
 	srand((unsigned)time(NULL));
 
-	s_4_1_gets();
+	s_4_1_2_brighten();
+//	s_4_1_gets();
 
 //	s_3_1_brighten( image_num, brighten_shift );
 
