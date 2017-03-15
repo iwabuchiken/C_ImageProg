@@ -33,6 +33,8 @@
 #include <ctype.h>
 #endif
 
+char* get_Time_Label__Now(void);
+
 char* get_Time_Label(char* time_label);
 //char* get_Time_Label(char* time_label) {
 //

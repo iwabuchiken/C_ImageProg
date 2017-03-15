@@ -177,6 +177,98 @@ void s_3_1_brighten( int n, int shift );
  *
  */
 
+/*
+ * 	date: 2017/03/15 18:21:53
+ *
+ * <usage>
+ * 	1. run the program
+ * 	2. enter the file name => "lena512.pgm" (at the root directory)
+ * 	3. then --> files will be auto generated
+ *
+ * <variables>
+ * 	numof_images	number of pgm files to be generated
+ *	bright_tick		the value by which the brightness changes
+ */
+void s_4_1_3_brighten_auto_generate() {
+
+	/********************************************************
+	 *
+	 * brighten
+	 *
+	*********************************************************/
+	/****************************
+	 *
+	 * load image
+	 *
+	 *****************************/
+    int image_num = 0;
+
+    load_image( image_num, "" ); /* �ｿｽ鞫廸o.0�ｿｽﾉフ�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ鞫懶ｿｽ�ｿｽﾇみ搾ｿｽ�ｿｽ�ｿｽ */
+
+//    //debug
+//    for (i = 0; i < 10; ++i) {
+//
+//    	printf("[%s:%d] image[0][0][%d] => %d\n", __FILE__, __LINE__,
+//    			i,
+//    			image[0][0][i]);
+//
+//	}
+//    printf("[%s:%d] image[0][0][0] => %d\n", __FILE__, __LINE__, image[0][0][0]);
+
+    /****************************
+	 *
+	 * brighten
+	 *
+	 *****************************/
+    int i;
+
+    int numof_images = 20;
+
+    char fname_dst[40];
+
+//    int brightness_diff;
+
+    int bright_tick = 2;
+
+	int image_shift = 0;
+
+	char* time_label = get_Time_Label__Now();
+
+	printf("[%s:%d] brightening...\n", basename(__FILE__, '\\'), __LINE__);
+
+    for (i = 1; i < numof_images + 1; ++i) {
+
+    	image_shift = bright_tick * i;
+//    	brightness_diff = image_shift +  bright_tick * i;
+
+    	brighten( image_num, image_shift);
+//    	brighten( image_num, brightness_diff);
+//    	brighten( image_num, image_shift * i);
+    //	brighten( 0, 100);
+
+    	// file name
+//    	sprintf(fname_dst, "s_4_1_3.brighten.+%d.%s.pgm",
+//    	sprintf(fname_dst, "images\\s_4_1_3.brighten.+%d.%s.pgm",
+    	sprintf(fname_dst, "images\\s_4_1_3.%s.i=lena.brighten.+%d.pgm",
+
+    			time_label, image_shift);
+//    			image_shift * i, get_Time_Label__Now());
+
+    	printf("[%s:%d] file name => '%s'\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+
+        save_image( image_num, fname_dst ); /* �ｿｽ鞫廸o.0�ｿｽﾌ画像�ｿｽ�ｿｽ�ｿｽt�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽﾉ出�ｿｽﾍゑｿｽ�ｿｽ�ｿｽ   */
+//        save_image( image_num, "" ); /* �ｿｽ鞫廸o.0�ｿｽﾌ画像�ｿｽ�ｿｽ�ｿｽt�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽﾉ出�ｿｽﾍゑｿｽ�ｿｽ�ｿｽ   */
+
+	}//for (i = 0; i < numof_images; ++i)
+
+
+//	brighten( image_num, image_shift);
+////	brighten( 0, 100);
+//
+//    save_image( 0, "" ); /* �ｿｽ鞫廸o.0�ｿｽﾌ画像�ｿｽ�ｿｽ�ｿｽt�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽﾉ出�ｿｽﾍゑｿｽ�ｿｽ�ｿｽ   */
+
+}//void s_4_1_3_brighten_auto_generate
+
 void s_4_1_2_brighten() {
 
 	//ref http://www1.cts.ne.jp/~clab/hsample/IO/IO16.html
@@ -450,7 +542,8 @@ int main(int argc, char *argv[]) {
 
 	srand((unsigned)time(NULL));
 
-	s_4_1_2_brighten();
+	s_4_1_3_brighten_auto_generate();
+//	s_4_1_2_brighten();
 //	s_4_1_gets();
 
 //	s_3_1_brighten( image_num, brighten_shift );
