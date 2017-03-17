@@ -181,6 +181,100 @@ int get_lowest_brightness(int image_num, char* file_name);
  *
  */
 
+void s_5_1_3_brighten_down() {
+
+	/****************************
+	 *
+	 * get the diff: lowest to 255
+	 *
+	 *****************************/
+//	int image_num = 0;
+//
+//	char* file_name = "lena512.pgm";
+//
+//	int bright_lowest = get_lowest_brightness(image_num, file_name);
+//
+//	int max_bright = 255;
+//
+//	int diff = max_bright - bright_lowest;
+//
+//	printf("[%s:%d] lowest => %d / diff => %d\n",
+//			basename(__FILE__, '\\'), __LINE__, bright_lowest, diff);
+
+	/****************************
+	 *
+	 * prep: number of files needed
+	 *
+	 *****************************/
+    int bright_tick = 1;
+//    int bright_tick = 10;
+
+    char fname_dst[40];
+
+    //debug
+    int diff = 25;
+    diff = 25;
+
+    int numof_images = diff / bright_tick;
+
+	int image_shift = 0;
+
+	char* time_label = get_Time_Label__Now();
+
+//	sprintf(fname_dst, "images\\s_5_1_1.%s.i=lena.brighten.+%d.pgm",
+//
+//			time_label, image_shift);
+
+	printf("[%s:%d] images needed: tick = %d / files = %d\n",
+			basename(__FILE__, '\\'), __LINE__, bright_tick, numof_images);
+
+	/****************************
+	 *
+	 * load image
+	 *
+	 *****************************/
+	int image_num = 0;
+
+	char* file_name = "lena512.pgm";
+
+    load_image( image_num, file_name ); /* �ｿｽ鞫廸o.0�ｿｽﾉフ�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ鞫懶ｿｽ�ｿｽﾇみ搾ｿｽ�ｿｽ�ｿｽ */
+
+	/****************************
+	 *
+	 * auto-generate
+	 *
+	 * 	==> see: void s_4_1_3_brighten_auto_generate()
+	 *
+	 *****************************/
+	int i;
+
+    for (i = 1; i < numof_images + 1; ++i) {
+
+    	image_shift = bright_tick * i * (-1);
+
+    	brighten( image_num, image_shift);
+
+    	// file name
+//    	sprintf(fname_dst, "images\\s_4_1_3.brighten.+%d.%s.pgm",
+//    	sprintf(fname_dst, "images\\s_5_1_1.%s.i=lena.brighten.minus.+%d.pgm",
+    	sprintf(fname_dst, "images\\s_5_1_1.%s.i=lena.brighten.minus.reverse.%d.pgm",
+//    	sprintf(fname_dst, "images\\s_5_1_1.%s.i=lena.brighten_minus.%d.pgm",
+//    	sprintf(fname_dst, "images\\s_5_1_1.%s.i=lena.brighten_minus-%d.pgm",
+//    	sprintf(fname_dst, "images\\s_5_1_1.%s.i=lena.brighten.minus-%d.pgm",
+//    	sprintf(fname_dst, "images\\s_5_1_1.%s.i=lena.brighten.%d.pgm",
+//    	sprintf(fname_dst, "images\\s_5_1_1.%s.i=lena.brighten.+%d.pgm",
+
+    				time_label, numof_images + 1 - abs(image_shift));
+//    				time_label, image_shift);
+
+    	printf("[%s:%d] file name => '%s'\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+
+        save_image( image_num, fname_dst ); /* �ｿｽ鞫廸o.0�ｿｽﾌ画像�ｿｽ�ｿｽ�ｿｽt�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽﾉ出�ｿｽﾍゑｿｽ�ｿｽ�ｿｽ   */
+
+	}//for (i = 0; i < numof_images; ++i)
+
+}//void s_5_1_3_brighten_down
+
 void s_5_1_1_lowest_brightness() {
 
 	/****************************
@@ -717,7 +811,8 @@ int main(int argc, char *argv[]) {
 
 	srand((unsigned)time(NULL));
 
-	s_5_1_1_lowest_brightness();
+	s_5_1_3_brighten_down();
+//	s_5_1_1_lowest_brightness();
 //	s_4_1_3_brighten_auto_generate();
 //	s_4_1_2_brighten();
 //	s_4_1_gets();
@@ -749,7 +844,9 @@ void brighten( int n, int shift )
     int x,y,brightness;
 
     for(y=0;y<height[n];y++)
+
         for(x=0;x<width[n];x++){
+
             brightness = image[n][x][y] + shift;
 
             if ( brightness > 255 ) brightness = 255;
@@ -757,5 +854,28 @@ void brighten( int n, int shift )
             if ( brightness < 0 ) brightness = 0;
 
             image[n][x][y] = brightness;
+
         }
 }
+
+void brighten_down( int n, int shift )
+/* 画像 No.n を shift だけ明るくする */
+{
+    int x,y,brightness;
+
+    for(y=0;y<height[n];y++)
+
+        for(x=0;x<width[n];x++){
+
+            brightness = image[n][x][y] - shift;
+//            brightness = image[n][x][y] + shift;
+
+            if ( brightness > 255 ) brightness = 255;
+
+            if ( brightness < 0 ) brightness = 0;
+
+            image[n][x][y] = brightness;
+
+        }
+
+}//void brighten_down( int n, int shift )
