@@ -471,7 +471,10 @@ void s_4_1_3_brighten_auto_generate() {
 	 *****************************/
     int image_num = 0;
 
-    load_image( image_num, "" ); /* �ｿｽ鞫廸o.0�ｿｽﾉフ�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ鞫懶ｿｽ�ｿｽﾇみ搾ｿｽ�ｿｽ�ｿｽ */
+    char* file_name = "lena512.pgm";
+
+    load_image( image_num, file_name ); /* �ｿｽ鞫廸o.0�ｿｽﾉフ�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ鞫懶ｿｽ�ｿｽﾇみ搾ｿｽ�ｿｽ�ｿｽ */
+//    load_image( image_num, "" ); /* �ｿｽ鞫廸o.0�ｿｽﾉフ�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ鞫懶ｿｽ�ｿｽﾇみ搾ｿｽ�ｿｽ�ｿｽ */
 
 //    //debug
 //    for (i = 0; i < 10; ++i) {
@@ -518,9 +521,10 @@ void s_4_1_3_brighten_auto_generate() {
     	// file name
 //    	sprintf(fname_dst, "s_4_1_3.brighten.+%d.%s.pgm",
 //    	sprintf(fname_dst, "images\\s_4_1_3.brighten.+%d.%s.pgm",
-    	sprintf(fname_dst, "images\\s_4_1_3.%s.i=lena.brighten.+%d.pgm",
+//    	sprintf(fname_dst, "images\\s_4_1_3.%s.i=lena.brighten.+%d.pgm",
+    	sprintf(fname_dst, "images\\s_5_1_4.%s.i=lena.brighten.reverse.+%d.pgm",
 
-    			time_label, image_shift);
+    			time_label, numof_images + 1 - image_shift);
 //    			image_shift * i, get_Time_Label__Now());
 
     	printf("[%s:%d] file name => '%s'\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
@@ -811,9 +815,9 @@ int main(int argc, char *argv[]) {
 
 	srand((unsigned)time(NULL));
 
-	s_5_1_3_brighten_down();
+//	s_5_1_3_brighten_down();
 //	s_5_1_1_lowest_brightness();
-//	s_4_1_3_brighten_auto_generate();
+	s_4_1_3_brighten_auto_generate();
 //	s_4_1_2_brighten();
 //	s_4_1_gets();
 
