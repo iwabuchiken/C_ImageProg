@@ -10,6 +10,8 @@ a.exe
 pushd C:\WORKS_2\WS\Eclipse_Luna\C_ImageProg
 C:\WORKS_2\WS\Eclipse_Luna\C_ImageProg\Default\C_ImageProg.exe
 
+file name: lena512.pgm
+
 C:\mingw-w64\x86_64-6.2.0-posix-seh-rt_v5-rev1\mingw64\bin
 
  *
@@ -73,6 +75,8 @@ void brighten( int n, int shift );
 void s_2_1_brighten( int n, int shift );
 
 void s_3_1_brighten( int n, int shift );
+
+int get_lowest_brightness(int image_num, char* file_name);
 
 
 ///////////////////////////////
@@ -177,6 +181,176 @@ void s_3_1_brighten( int n, int shift );
  *
  */
 
+void s_5_1_1_lowest_brightness() {
+
+	/****************************
+	 *
+	 * get the diff: lowest to 255
+	 *
+	 *****************************/
+	int image_num = 0;
+	char* file_name = "lena512.pgm";
+
+	int bright_lowest = get_lowest_brightness(image_num, file_name);
+
+	int max_bright = 255;
+
+	int diff = max_bright - bright_lowest;
+
+	printf("[%s:%d] lowest => %d / diff => %d\n",
+			basename(__FILE__, '\\'), __LINE__, bright_lowest, diff);
+
+	/****************************
+	 *
+	 * prep: number of files needed
+	 *
+	 *****************************/
+    int bright_tick = 1;
+//    int bright_tick = 10;
+
+    char fname_dst[40];
+
+    //debug
+    diff = 25;
+
+    int numof_images = diff / bright_tick;
+
+	int image_shift = 0;
+
+	char* time_label = get_Time_Label__Now();
+
+//	sprintf(fname_dst, "images\\s_5_1_1.%s.i=lena.brighten.+%d.pgm",
+//
+//			time_label, image_shift);
+
+	printf("[%s:%d] images needed: tick = %d / files = %d\n",
+			basename(__FILE__, '\\'), __LINE__, bright_tick, numof_images);
+
+	/****************************
+	 *
+	 * auto-generate
+	 *
+	 * 	==> see: void s_4_1_3_brighten_auto_generate()
+	 *
+	 *****************************/
+	int i;
+
+    for (i = 1; i < numof_images + 1; ++i) {
+
+    	image_shift = bright_tick * i;
+
+    	brighten( image_num, image_shift);
+
+    	// file name
+//    	sprintf(fname_dst, "images\\s_4_1_3.brighten.+%d.%s.pgm",
+    	sprintf(fname_dst, "images\\s_5_1_1.%s.i=lena.brighten.+%d.pgm",
+
+    				time_label, image_shift);
+
+    	printf("[%s:%d] file name => '%s'\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+
+        save_image( image_num, fname_dst ); /* �ｿｽ鞫廸o.0�ｿｽﾌ画像�ｿｽ�ｿｽ�ｿｽt�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽﾉ出�ｿｽﾍゑｿｽ�ｿｽ�ｿｽ   */
+
+	}//for (i = 0; i < numof_images; ++i)
+
+}//void s_5_1_1_lowest_brightness
+
+int get_lowest_brightness(int image_num, char* file_name) {
+
+	/****************************
+	 *
+	 * load image
+	 *
+	 *****************************/
+	load_image( image_num, file_name );
+
+	printf("[%s:%d] image loaded => %s (w = %d / h = %d)\n",
+			basename(__FILE__, '\\'), __LINE__, file_name, width[0], height[0]);
+
+	/****************************
+	 *
+	 * lowest brightness
+	 *
+	 *****************************/
+	int x, y;
+	int x_curr = 0, y_curr = 0;
+
+	int n = image_num;
+
+//	int counter = 0;
+//	int limit = 20;
+
+//	int bright_prev = 0;
+	int bright_curr = image[image_num][x_curr][y_curr];
+//	int bright_curr = image[image_num][0][0];
+
+	//debug
+	printf("[%s:%d] bright_curr = %d\n", basename(__FILE__, '\\'), __LINE__, bright_curr);
+
+//	int flag_break = 0;
+
+    for(y=0;y<height[n];y++) {
+
+        for(x=0;x<width[n];x++) {
+
+//            image[n][x][y] = (unsigned char)fgetc( fp );
+//        	printf("[%s:%d] image[%d][%d][%d] = %d\n",
+//        			basename(__FILE__, '\\'), __LINE__,
+//					image_num, x, y, image[image_num][x][y]);
+
+        	// calculate: brightness
+//        	bright_prev = bright_curr;
+
+        	/****************************
+			 *
+			 * if the current brightness is lower than the stored one
+			 * 		=> set the current one to the stored
+			 *
+			 *****************************/
+//        	if (bright_curr < image[image_num][x][y]) {
+        	if (bright_curr > image[image_num][x][y]) {
+
+				bright_curr = image[image_num][x][y];
+
+				x_curr = x; y_curr = y;
+
+			}
+
+//        	//debug
+//        	counter ++;
+//
+//            //debug
+//        	if (counter > limit) {
+//
+//        		flag_break = 1;
+//
+//        		break;
+//
+//        	}
+
+        }//for(x=0;x<width[n];x++)
+
+//        //debug
+//        if(flag_break == 1) {
+//
+//        	printf("[%s:%d] reached the limit of %d (x = %d / y = %d). break\n",
+//        			basename(__FILE__, '\\'), __LINE__, counter, x, y);
+//
+//        	break;
+//
+//        }
+
+    }//for(y=0;y<height[n];y++)
+
+    //debug
+    printf("[%s:%d] bright_curr is now => %d (at x = %d / y = %d)\n",
+    		basename(__FILE__, '\\'), __LINE__, bright_curr, x_curr, y_curr);
+
+	return bright_curr;
+//	return 0;
+
+}//get_lowest_brightness(int image_num, char* file_name)
+
 /*
  * 	date: 2017/03/15 18:21:53
  *
@@ -228,7 +402,8 @@ void s_4_1_3_brighten_auto_generate() {
 
 //    int brightness_diff;
 
-    int bright_tick = 2;
+    int bright_tick = 1;
+//    int bright_tick = 2;
 
 	int image_shift = 0;
 
@@ -542,7 +717,8 @@ int main(int argc, char *argv[]) {
 
 	srand((unsigned)time(NULL));
 
-	s_4_1_3_brighten_auto_generate();
+	s_5_1_1_lowest_brightness();
+//	s_4_1_3_brighten_auto_generate();
 //	s_4_1_2_brighten();
 //	s_4_1_gets();
 
