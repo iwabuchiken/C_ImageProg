@@ -694,6 +694,14 @@ int get_MaxVal_In_Array
 
 }//int get_MaxVal_In_Array(int *array, int numOf_Array)
 
+/*
+ * get_random_integer(int start, int end, time_t seed)
+ *
+ * <usage>
+ * 	example:
+ * 		get_random_integer(1, 10, time(NULL));
+ *
+ */
 int get_random_integer(int start, int end, time_t seed) {
 //int get_random_integer(int start, int end) {
 
