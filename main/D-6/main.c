@@ -181,6 +181,90 @@ int get_lowest_brightness(int image_num, char* file_name);
  *
  */
 
+void s_7_1_1_random_brightness_down() {
+
+	/****************************
+	 *
+	 * prep: number of files needed
+	 *
+	 *****************************/
+    int bright_tick = 1;
+//    int bright_tick = 10;
+
+    char fname_dst[40];
+
+    //debug
+    int diff = 25;
+
+    int numof_images = diff / bright_tick;
+
+	int image_shift = 0;
+
+	char* time_label = get_Time_Label__Now();
+
+	printf("[%s:%d] num of images: tick = %d / files = %d\n",
+			basename(__FILE__, '\\'), __LINE__, bright_tick, numof_images);
+
+	/****************************
+	 *
+	 * load image
+	 *
+	 *****************************/
+	int image_num = 0;
+
+	char* file_name = "lena512.pgm";
+
+//    load_image( image_num, file_name ); /* �ｿｽ鞫廸o.0�ｿｽﾉフ�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ�ｿｽ鞫懶ｿｽ�ｿｽﾇみ搾ｿｽ�ｿｽ�ｿｽ */
+
+	/****************************
+	 *
+	 * auto-generate
+	 *
+	 * 	==> see: void s_4_1_3_brighten_auto_generate()
+	 *
+	 *****************************/
+	int i;
+
+	int unit = 10;		// (1 unit) * (random integer) --> changes in brightness
+
+	int rnd_start = 1;
+	int rnd_end = 10;
+
+	int rnd_num;
+//	int rnd_num = get_random_integer(rnd_start, rnd_end, time(NULL));
+
+    for (i = 1; i < numof_images + 1; ++i) {
+
+    	// load image
+    	load_image( image_num, file_name );
+
+    	// random value
+    	rnd_num = get_random_integer(rnd_start, rnd_end, time(NULL));
+
+    	image_shift = unit * rnd_num * -1;
+//    	image_shift = unit * rnd_num;
+//    	image_shift = bright_tick * i * (-1);
+
+    	brighten( image_num, image_shift);
+
+    	// file name
+    	sprintf(fname_dst, "images\\s_7_1_1.i=lena.brighten.random.down.%s.(%d).%d.pgm",
+//    	sprintf(fname_dst, "images\\s_6_1_1.i=lena.brighten.random.%s.%d.pgm",
+//    	sprintf(fname_dst, "images\\s_6_1_1.i=lena.brighten.%s.%d.pgm",
+
+//    				time_label, numof_images + 1 - abs(image_shift));
+    				time_label, i, image_shift);
+
+    	printf("[%s:%d] file name => '%s'\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+
+        save_image( image_num, fname_dst ); /* �ｿｽ鞫廸o.0�ｿｽﾌ画像�ｿｽ�ｿｽ�ｿｽt�ｿｽ@�ｿｽC�ｿｽ�ｿｽ�ｿｽﾉ出�ｿｽﾍゑｿｽ�ｿｽ�ｿｽ   */
+
+	}//for (i = 0; i < numof_images; ++i)
+
+
+}//void s_7_1_1_random_brightness_down()
+
+
 void s_6_1_1_random_brightness() {
 
 	/****************************
@@ -897,7 +981,9 @@ int main(int argc, char *argv[]) {
 
 	srand((unsigned)time(NULL));
 
-	s_6_1_1_random_brightness();
+	s_7_1_1_random_brightness_down();
+
+//	s_6_1_1_random_brightness();
 
 //	s_5_1_3_brighten_down();
 //	s_5_1_1_lowest_brightness();
