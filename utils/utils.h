@@ -102,5 +102,16 @@ int is_numeric(char* string);
 //
 //}//is_numeric(char* string)
 
+/****************************
+ *
+ * image manipulations
+ *
+ *****************************/
+//void brighten( int n, int shift );
+//
+//void brighten_down( int n, int shift );
+//
+//void lr_reverse( int n1, int n2 );
+
 #endif /* UTILS_H_ */
 

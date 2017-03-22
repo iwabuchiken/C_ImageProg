@@ -19,9 +19,22 @@
 #include <time.h>
 #endif
 
+#ifndef ASSERT_H_
+#define ASSERT_H_
+#include <assert.h>
+#endif
+
 #ifndef UTILS_H_
+//#define UTILS_H_
 #include "utils.h"
 #endif
+
+//#ifndef PGMLIB_H_
+//#define PGMLIB_H_
+//#include "pgmlib.h"
+////#include "../../utils/pgmlib.h"
+//#endif
+
 
 char* get_Time_Label(char* time_label) {
 
@@ -896,3 +909,62 @@ int is_numeric(char* string) {
 
 }//is_numeric(char* string)
 
+
+/****************************
+ *
+ * image manipulations
+ *
+ *****************************/
+//void brighten( int n, int shift )
+///* 画像 No.n を shift だけ明るくする */
+//{
+//    int x,y,brightness;
+//
+//    for(y=0;y<height[n];y++)
+//
+//        for(x=0;x<width[n];x++){
+//
+//            brightness = image[n][x][y] + shift;
+//
+//            if ( brightness > 255 ) brightness = 255;
+//
+//            if ( brightness < 0 ) brightness = 0;
+//
+//            image[n][x][y] = brightness;
+//
+//        }
+//}
+//
+//void brighten_down( int n, int shift )
+///* 画像 No.n を shift だけ明るくする */
+//{
+//    int x,y,brightness;
+//
+//    for(y=0;y<height[n];y++)
+//
+//        for(x=0;x<width[n];x++){
+//
+//            brightness = image[n][x][y] - shift;
+////            brightness = image[n][x][y] + shift;
+//
+//            if ( brightness > 255 ) brightness = 255;
+//
+//            if ( brightness < 0 ) brightness = 0;
+//
+//            image[n][x][y] = brightness;
+//
+//        }
+//
+//}//void brighten_down( int n, int shift )
+//
+//void lr_reverse( int n1, int n2 )
+///* �摜 No.n1 �����E���]�����ĉ摜 No.n2 �� */
+//{
+//    int x,y;
+//
+//    width[n2]=width[n1];  height[n2]=height[n1];
+//    /* ���E���] */
+//    for(y=0;y<height[n1];y++)
+//        for(x=0;x<width[n1];x++)
+//            image[n2][x][y] = image[n1][width[n1]-1-x][y];
+//}

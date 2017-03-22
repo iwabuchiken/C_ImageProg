@@ -1,148 +1,168 @@
-/* ŠK’²‰æ‘œ(pgmŒ`Ž®)—pƒ‰ƒCƒuƒ‰ƒŠ pgmlib.h */
+/* ï¿½Kï¿½ï¿½ï¿½æ‘œ(pgmï¿½`ï¿½ï¿½)ï¿½pï¿½ï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½ pgmlib.h */
 #include<stdlib.h>
 #include<string.h>
 
-/* ’è”éŒ¾ */
-#define MAX_IMAGESIZE       1280 /* ‘z’è‚·‚écE‰¡‚ÌÅ‘å‰æ‘f” */
-#define MAX_BRIGHTNESS       255 /* ‘z’è‚·‚éÅ‘åŠK’²’l */
-#define GRAYLEVEL            256 /* ‘z’è‚·‚éŠK’²”(=Å‘åŠK’²’l+1) */
-#define MAX_FILENAME         256 /* ‘z’è‚·‚éƒtƒ@ƒCƒ‹–¼‚ÌÅ‘å’· */
-#define MAX_BUFFERSIZE       256 /* —˜—p‚·‚éƒoƒbƒtƒ@Å‘å’· */
-#define MAX_NUM_OF_IMAGES      5 /* —˜—p‚·‚é‰æ‘œ‚Ì–‡” */
+/* ï¿½è”ï¿½éŒ¾ */
+#define MAX_IMAGESIZE       1280 /* ï¿½zï¿½è‚·ï¿½ï¿½cï¿½Eï¿½ï¿½ï¿½ÌÅ‘ï¿½ï¿½fï¿½ï¿½ */
+#define MAX_BRIGHTNESS       255 /* ï¿½zï¿½è‚·ï¿½ï¿½Å‘ï¿½Kï¿½ï¿½ï¿½l */
+#define GRAYLEVEL            256 /* ï¿½zï¿½è‚·ï¿½ï¿½Kï¿½ï¿½ï¿½ï¿½(=ï¿½Å‘ï¿½Kï¿½ï¿½ï¿½l+1) */
+#define MAX_FILENAME         256 /* ï¿½zï¿½è‚·ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ÌÅ‘å’· */
+#define MAX_BUFFERSIZE       256 /* ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½oï¿½bï¿½tï¿½@ï¿½Å‘å’· */
+#define MAX_NUM_OF_IMAGES      5 /* ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½æ‘œï¿½Ì–ï¿½ï¿½ï¿½ */
 
-/* ‘åˆæ•Ï”‚ÌéŒ¾ */
-/* ‰æ‘œƒf[ƒ^ image[n][x][y] */
+/* ï¿½ï¿½ï¿½Ïï¿½ï¿½ÌéŒ¾ */
+/* ï¿½æ‘œï¿½fï¿½[ï¿½^ image[n][x][y] */
 unsigned char image[MAX_NUM_OF_IMAGES][MAX_IMAGESIZE][MAX_IMAGESIZE];
-/* image[n] ‚Ì‰¡•Ec• */
+/* image[n] ï¿½Ì‰ï¿½ï¿½ï¿½ï¿½Eï¿½cï¿½ï¿½ */
 int width[MAX_NUM_OF_IMAGES], height[MAX_NUM_OF_IMAGES];
 
-/* ŠÖ”‚Ìƒvƒƒgƒ^ƒCƒvéŒ¾ */
-/* ŠK’²‰æ‘œ‚ð“ü—Í‚·‚éŠÖ” */
+/* ï¿½Öï¿½ï¿½Ìƒvï¿½ï¿½ï¿½gï¿½^ï¿½Cï¿½vï¿½éŒ¾ */
+/* ï¿½Kï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½ï¿½Í‚ï¿½ï¿½ï¿½Öï¿½ */
 void load_image( int n, char name[] );
-  /* n:‰æ‘œ”Ô†Cname[]:ƒtƒ@ƒCƒ‹–¼i""‚Ì‚Æ‚«‚ÍƒL[ƒ{[ƒh“ü—Íj*/
-/* ŠK’²‰æ‘œ‚ðo—Í‚·‚éŠÖ”*/
+  /* n:ï¿½æ‘œï¿½Ôï¿½ï¿½Cname[]:ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½i""ï¿½Ì‚Æ‚ï¿½ï¿½ÍƒLï¿½[ï¿½{ï¿½[ï¿½hï¿½ï¿½ï¿½Íj*/
+/* ï¿½Kï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½oï¿½Í‚ï¿½ï¿½ï¿½Öï¿½*/
 void save_image( int n, char name[] );
-  /* n:‰æ‘œ”Ô†Cname[]:ƒtƒ@ƒCƒ‹–¼i""‚Ì‚Æ‚«‚ÍƒL[ƒ{[ƒh“ü—Íj*/
-/* ŠK’²‰æ‘œ‚ðƒRƒs[‚·‚éŠÖ”*/
+  /* n:ï¿½æ‘œï¿½Ôï¿½ï¿½Cname[]:ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½i""ï¿½Ì‚Æ‚ï¿½ï¿½ÍƒLï¿½[ï¿½{ï¿½[ï¿½hï¿½ï¿½ï¿½Íj*/
+/* ï¿½Kï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½Rï¿½sï¿½[ï¿½ï¿½ï¿½ï¿½Öï¿½*/
 void copy_image( int n1, int n2 );
-  /* ‰æ‘œNo.n1 ‚ð ‰æ‘œNo.n2‚ÉƒRƒs[‚·‚é */
-/* ŠK’²‰æ‘œ‚ð‰Šú‰»‚·‚éŠÖ”*/
+  /* ï¿½æ‘œNo.n1 ï¿½ï¿½ ï¿½æ‘œNo.n2ï¿½ÉƒRï¿½sï¿½[ï¿½ï¿½ï¿½ï¿½ */
+/* ï¿½Kï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½*/
 void init_image( int n, unsigned char value );
-  /* ‰æ‘œNo.n‚Ì‘S‰æ‘f‚ÌŠK’²’l‚ð‹­§“I‚Évalue(0`255)‚É‚·‚é */
+  /* ï¿½æ‘œNo.nï¿½Ì‘Sï¿½ï¿½fï¿½ÌŠKï¿½ï¿½ï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½value(0ï¿½`255)ï¿½É‚ï¿½ï¿½ï¿½ */
 
-/* ŠK’²‰æ‘œ‚ð“ü—Í‚·‚éŠÖ” */
+/* ï¿½Kï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½ï¿½Í‚ï¿½ï¿½ï¿½Öï¿½ */
 void load_image( int n, char name[] )
-/* n:‰æ‘œ”Ô†Cname[]:ƒtƒ@ƒCƒ‹–¼i""‚Ì‚Æ‚«‚ÍƒL[ƒ{[ƒh“ü—Íj*/
-/* ‰¡•Cc•‚Í‚»‚ê‚¼‚ê width[n], height[n] ‚É‘ã“ü‚·‚é */
+/* n:ç”»åƒç•ªå·ï¼Œname[]:ãƒ•ã‚¡ã‚¤ãƒ«åï¼ˆ""ã®ã¨ãã¯ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›ï¼‰*/
+/* æ¨ªå¹…ï¼Œç¸¦å¹…ã¯ãã‚Œãžã‚Œ width[n], height[n] ã«ä»£å…¥ã™ã‚‹ */
 {
-    char file_name[MAX_FILENAME]; /* ƒtƒ@ƒCƒ‹–¼—p‚Ì•¶Žš”z—ñ */
-    char buffer[MAX_BUFFERSIZE];  /* ƒf[ƒ^“Ç‚Ýž‚Ý—pì‹Æ•Ï” */
-    FILE *fp; /* ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^ */
-    int max_gray; /* Å‘åŠK’²’l */
-    int x, y; /* ƒ‹[ƒv•Ï” */
+    char file_name[MAX_FILENAME]; /* ãƒ•ã‚¡ã‚¤ãƒ«åç”¨ã®æ–‡å­—é…åˆ— */
+    char buffer[MAX_BUFFERSIZE];  /* ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿ç”¨ä½œæ¥­å¤‰æ•° */
+    FILE *fp; /* ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ */
+    int max_gray; /* æœ€å¤§éšŽèª¿å€¤ */
+    int x, y; /* ãƒ«ãƒ¼ãƒ—å¤‰æ•° */
 
-    /* “ü—Íƒtƒ@ƒCƒ‹‚ÌƒI[ƒvƒ“ */
+    /* å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ªãƒ¼ãƒ—ãƒ³ */
     if ( name[0] == '\0' ){
-        printf("“ü—Íƒtƒ@ƒCƒ‹–¼ (*.pgm) : ");
+        printf("input file name (*.pgm) : ");
+//        printf("å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«å (*.pgm) : ");
         scanf("%s",file_name);
     } else strcpy( file_name, name );
     if ( (fp = fopen( file_name, "rb" ))==NULL ){
-        printf("‚»‚Ì–¼‘O‚Ìƒtƒ@ƒCƒ‹‚Í‘¶Ý‚µ‚Ü‚¹‚ñD\n");
+
+        printf("file doesN8t exit.\n");
+//        printf("ãã®åå‰ã®ãƒ•ã‚¡ã‚¤ãƒ«ã¯å­˜åœ¨ã—ã¾ã›ã‚“ï¼Ž\n");
+
         exit(1);
     }
-    /* ƒtƒ@ƒCƒ‹ƒ^ƒCƒv(=P5)‚ÌŠm”F */
+    /* ãƒ•ã‚¡ã‚¤ãƒ«ã‚¿ã‚¤ãƒ—(=P5)ã®ç¢ºèª */
     fgets( buffer, MAX_BUFFERSIZE, fp );
     if ( buffer[0] != 'P' || buffer[1] != '5' ){
-        printf("ƒtƒ@ƒCƒ‹‚ÌƒtƒH[ƒ}ƒbƒg‚ª P5 ‚Æ‚ÍˆÙ‚È‚è‚Ü‚·D\n");
+        printf("ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆãŒ P5 ã¨ã¯ç•°ãªã‚Šã¾ã™ï¼Ž\n");
         exit(1);
     }
-    /* width[n], height[n] ‚Ì‘ã“üi#‚©‚çŽn‚Ü‚éƒRƒƒ“ƒg‚Í“Ç‚Ý”ò‚Î‚·j */
+    /* width[n], height[n] ã®ä»£å…¥ï¼ˆ#ã‹ã‚‰å§‹ã¾ã‚‹ã‚³ãƒ¡ãƒ³ãƒˆã¯èª­ã¿é£›ã°ã™ï¼‰ */
     width[n] = 0;    height[n] = 0;
     while ( width[n] == 0 || height[n] == 0 ){
         fgets( buffer, MAX_BUFFERSIZE, fp );
         if ( buffer[0] != '#' )
             sscanf( buffer, "%d %d", &width[n], &height[n] );
     }
-    /* max_gray ‚Ì‘ã“üi#‚©‚çŽn‚Ü‚éƒRƒƒ“ƒg‚Í“Ç‚Ý”ò‚Î‚·j */
+    /* max_gray ã®ä»£å…¥ï¼ˆ#ã‹ã‚‰å§‹ã¾ã‚‹ã‚³ãƒ¡ãƒ³ãƒˆã¯èª­ã¿é£›ã°ã™ï¼‰ */
     max_gray = 0;
     while ( max_gray == 0 ){
         fgets( buffer, MAX_BUFFERSIZE, fp );
         if ( buffer[0] != '#' )
             sscanf( buffer, "%d", &max_gray );
     }
-    /* ƒpƒ‰ƒ[ƒ^‚Ì‰æ–Ê‚Ö‚Ì•\Ž¦ */
-    printf("‰¡‚Ì‰æ‘f” = %d, c‚Ì‰æ‘f” = %d\n", width[n], height[n] );
-    printf("Å‘åŠK’²’l = %d\n",max_gray);
+    /* ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ç”»é¢ã¸ã®è¡¨ç¤º */
+    printf("pixels, horizon = %d, pixels, verti = %d\n", width[n], height[n] );
+//    printf("æ¨ªã®ç”»ç´ æ•° = %d, ç¸¦ã®ç”»ç´ æ•° = %d\n", width[n], height[n] );
+
+    printf("max brightness = %d\n",max_gray);
+//    printf("æœ€å¤§éšŽèª¿å€¤ = %d\n",max_gray);
+
     if ( width[n] > MAX_IMAGESIZE || height[n] > MAX_IMAGESIZE ){
-        printf("‘z’è’l %d x %d ‚ð’´‚¦‚Ä‚¢‚Ü‚·D\n", 
+
+        printf("expected size %d x %d => excessive\n",
+//        printf("æƒ³å®šå€¤ %d x %d ã‚’è¶…ãˆã¦ã„ã¾ã™ï¼Ž\n",
             MAX_IMAGESIZE, MAX_IMAGESIZE);
-        printf("‚à‚¤­‚µ¬‚³‚È‰æ‘œ‚ðŽg‚Á‚Ä‰º‚³‚¢D\n");
+
+        printf("use smaller files\n");
+//        printf("ã‚‚ã†å°‘ã—å°ã•ãªç”»åƒã‚’ä½¿ã£ã¦ä¸‹ã•ã„ï¼Ž\n");
         exit(1);
     }
     if ( max_gray != MAX_BRIGHTNESS ){
-        printf("Å‘åŠK’²’l‚ª•s“KØ‚Å‚·D\n");  exit(1);
+        printf("æœ€å¤§éšŽèª¿å€¤ãŒä¸é©åˆ‡ã§ã™ï¼Ž\n");  exit(1);
     }
-    /* ‰æ‘œƒf[ƒ^‚ð“Ç‚Ýž‚ñ‚Å‰æ‘œ—p”z—ñ‚É‘ã“ü‚·‚é */
+    /* ç”»åƒãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚“ã§ç”»åƒç”¨é…åˆ—ã«ä»£å…¥ã™ã‚‹ */
     for(y=0;y<height[n];y++)
         for(x=0;x<width[n];x++)
             image[n][x][y] = (unsigned char)fgetc( fp );
     fclose(fp);
-    printf("‰æ‘œ‚Í³í‚É“Ç‚Ýž‚Ü‚ê‚Ü‚µ‚½D\n");
+    printf("ç”»åƒã¯æ­£å¸¸ã«èª­ã¿è¾¼ã¾ã‚Œã¾ã—ãŸï¼Ž\n");
 }
 
-/* ŠK’²‰æ‘œ‚ðo—Í‚·‚éŠÖ”*/
+/* ï¿½Kï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½oï¿½Í‚ï¿½ï¿½ï¿½Öï¿½*/
 void save_image( int n, char name[] )
-/* n:‰æ‘œ”Ô†Cname[]:ƒtƒ@ƒCƒ‹–¼i""‚Ì‚Æ‚«‚ÍƒL[ƒ{[ƒh“ü—Íj*/
-/* ‰æ‘œ‚Ì‰¡•Cc•‚Í‚»‚ê‚¼‚ê width[n], height[n] ‚É‘ã“ü‚³‚ê‚Ä‚¢‚é‚à‚Ì‚Æ‚·‚é */
+/* n:ï¿½æ‘œï¿½Ôï¿½ï¿½Cname[]:ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½i""ï¿½Ì‚Æ‚ï¿½ï¿½ÍƒLï¿½[ï¿½{ï¿½[ï¿½hï¿½ï¿½ï¿½Íj*/
+/* ï¿½æ‘œï¿½Ì‰ï¿½ï¿½ï¿½ï¿½Cï¿½cï¿½ï¿½ï¿½Í‚ï¿½ï¿½ê‚¼ï¿½ï¿½ width[n], height[n] ï¿½É‘ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Æ‚ï¿½ï¿½ï¿½ */
 {
-    char file_name[MAX_FILENAME]; /* ƒtƒ@ƒCƒ‹–¼—p‚Ì•¶Žš”z—ñ */
-    FILE *fp; /* ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^ */
-    int x, y; /* ƒ‹[ƒv•Ï” */
+    char file_name[MAX_FILENAME]; /* ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½pï¿½Ì•ï¿½ï¿½ï¿½ï¿½zï¿½ï¿½ */
+    FILE *fp; /* ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½^ */
+    int x, y; /* ï¿½ï¿½ï¿½[ï¿½vï¿½Ïï¿½ */
 
-    /* o—Íƒtƒ@ƒCƒ‹‚ÌƒI[ƒvƒ“ */
+    /* ï¿½oï¿½Íƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ÌƒIï¿½[ï¿½vï¿½ï¿½ */
     if ( name[0] == '\0' ){
-        printf("o—Íƒtƒ@ƒCƒ‹–¼ (*.pgm) : ");
+        printf("output file name (*.pgm) : ");
+//        printf("ï¿½oï¿½Íƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ (*.pgm) : ");
         scanf("%s",file_name);
     } else strcpy( file_name, name );
     if ( (fp = fopen(file_name, "wb"))==NULL ){
-        printf("ƒtƒ@ƒCƒ‹‚ðƒI[ƒvƒ“‚Å‚«‚Ü‚¹‚ñD\n");
+
+    	//debug
+    	printf("[%s:%d] error\n", basename(__FILE__, '\\'), __LINE__);
+
+
+        printf("can't open the file\n");
+//        printf("ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½[ï¿½vï¿½ï¿½ï¿½Å‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½D\n");
+
         exit(1);
     }
-    /* ƒtƒ@ƒCƒ‹Ž¯•ÊŽq "P5" ‚ðæ“ª‚Éo—Í‚·‚é */
+    /* ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ÊŽq "P5" ï¿½ï¿½æ“ªï¿½Éoï¿½Í‚ï¿½ï¿½ï¿½ */
     fputs( "P5\n", fp );
-    /* # ‚ÅŽn‚Ü‚éƒRƒƒ“ƒgsiÈ—ª‰Â”\j */
+    /* # ï¿½ÅŽnï¿½Ü‚ï¿½Rï¿½ï¿½ï¿½ï¿½ï¿½gï¿½sï¿½iï¿½È—ï¿½ï¿½Â”\ï¿½j */
     fputs( "# Created by Image Processing\n", fp );
-    /* ‰æ‘œ‚Ì‰¡•Cc•‚Ìo—Í */
+    /* ï¿½æ‘œï¿½Ì‰ï¿½ï¿½ï¿½ï¿½Cï¿½cï¿½ï¿½ï¿½Ìoï¿½ï¿½ */
     fprintf( fp, "%d %d\n", width[n], height[n] );
-    /* Å‘åŠK’²’l‚Ìo—Í */
+    /* ï¿½Å‘ï¿½Kï¿½ï¿½ï¿½lï¿½Ìoï¿½ï¿½ */
     fprintf( fp, "%d\n", MAX_BRIGHTNESS );
-    /* ‰æ‘œƒf[ƒ^‚Ìo—Í */
+    /* ï¿½æ‘œï¿½fï¿½[ï¿½^ï¿½Ìoï¿½ï¿½ */
     for(y=0;y<height[n];y++)
         for(x=0;x<width[n];x++)
             fputc( image[n][x][y], fp );
     fclose(fp);
-    printf("‰æ‘œ‚Í³í‚Éo—Í‚³‚ê‚Ü‚µ‚½D\n");
+    printf("ï¿½æ‘œï¿½Íï¿½ï¿½ï¿½Éoï¿½Í‚ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½D\n");
 }
 
-/* ŠK’²‰æ‘œ‚ðƒRƒs[‚·‚éŠÖ”*/
+/* ï¿½Kï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½Rï¿½sï¿½[ï¿½ï¿½ï¿½ï¿½Öï¿½*/
 void copy_image( int n1, int n2 )
-/* ‰æ‘œNo.n1‚ð‰æ‘œNo.n2‚ÉƒRƒs[‚·‚é */
+/* ï¿½æ‘œNo.n1ï¿½ï¿½ï¿½æ‘œNo.n2ï¿½ÉƒRï¿½sï¿½[ï¿½ï¿½ï¿½ï¿½ */
 {
-    int x, y; /* ƒ‹[ƒv•Ï” */
+    int x, y; /* ï¿½ï¿½ï¿½[ï¿½vï¿½Ïï¿½ */
 
-    /* ‰¡•Cc•‚Ì‘ã“ü */
+    /* ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½cï¿½ï¿½ï¿½Ì‘ï¿½ï¿½ */
     width[n2] = width[n1];    height[n2] = height[n1];
-    /* ŠK’²ƒf[ƒ^‚ÌƒRƒs[ */
+    /* ï¿½Kï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ÌƒRï¿½sï¿½[ */
     for(y=0;y<height[n1];y++)
         for(x=0;x<width[n1];x++)
             image[n2][x][y] = image[n1][x][y];
 }
 
-/* ŠK’²‰æ‘œ‚ð‰Šú‰»‚·‚éŠÖ”*/
+/* ï¿½Kï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½*/
 void init_image( int n, unsigned char value )
-/* ‰æ‘œNo.n‚Ì‘S‰æ‘f‚ÌŠK’²’l‚ð‹­§“I‚Évalue(0`255)‚É‚·‚é */
+/* ï¿½æ‘œNo.nï¿½Ì‘Sï¿½ï¿½fï¿½ÌŠKï¿½ï¿½ï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½value(0ï¿½`255)ï¿½É‚ï¿½ï¿½ï¿½ */
 {
-    int x, y; /* ƒ‹[ƒv•Ï” */
+    int x, y; /* ï¿½ï¿½ï¿½[ï¿½vï¿½Ïï¿½ */
 
     for(y=0;y<height[n];y++)
         for(x=0;x<width[n];x++)
