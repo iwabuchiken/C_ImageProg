@@ -92,14 +92,21 @@ void load_image( int n, char name[] )
         exit(1);
     }
     if ( max_gray != MAX_BRIGHTNESS ){
-        printf("最大階調値が不適切です．\n");  exit(1);
+        printf("max brightness => improper (max_gray = %d / MAX_BRIGHTNESS = %d\n"
+        		, max_gray, MAX_BRIGHTNESS);
+
+        exit(1);
+//        printf("最大階調値が不適切です．\n");  exit(1);
     }
     /* 画像データを読み込んで画像用配列に代入する */
     for(y=0;y<height[n];y++)
         for(x=0;x<width[n];x++)
             image[n][x][y] = (unsigned char)fgetc( fp );
     fclose(fp);
-    printf("画像は正常に読み込まれました．\n");
+
+    printf("image => loaded properly.\n");
+//    printf("画像は正常に読み込まれました．\n");
+
 }
 
 /* �K���摜���o�͂���֐�*/
@@ -141,7 +148,10 @@ void save_image( int n, char name[] )
         for(x=0;x<width[n];x++)
             fputc( image[n][x][y], fp );
     fclose(fp);
-    printf("�摜�͐���ɏo�͂���܂����D\n");
+
+//    printf("image output => done properly\n");
+//    printf("�摜�͐���ɏo�͂���܂����D\n");
+
 }
 
 /* �K���摜���R�s�[����֐�*/

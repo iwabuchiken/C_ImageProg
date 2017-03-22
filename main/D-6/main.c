@@ -66,6 +66,7 @@ C:\mingw-w64\x86_64-6.2.0-posix-seh-rt_v5-rev1\mingw64\bin
 #include <sys/stat.h>
 #endif
 
+//ref http://www.ncad.co.jp/~komata/c-kouza14.htm
 #ifndef DIRENT_H_
 #define DIRENT_H_
 #include <dirent.h>
@@ -111,10 +112,11 @@ void s_8_1_1_left_right() {
 
 	char fname_dst[40];
 
-	char* dpath_dst = "8_1";
-//	char* dpath_dst = "images\\8_1";
+//	char* dpath_dst = "8_1";
+	char* dpath_dst = "images\\8_1";
 
-	char* fname_dst_skeleton = "images\\%s\\s_8_1_1.i=lena.left-right-reverse.%s.pgm";
+	char* fname_dst_skeleton = "%s\\s_8_1_1.i=lena.left-right-reverse.%s.pgm";
+//	char* fname_dst_skeleton = "images\\%s\\s_8_1_1.i=lena.left-right-reverse.%s.pgm";
 //	char* fname_dst_skeleton = "images\\s_8_1_1.i=lena.left-right-reverse.%s.pgm";
 
 	int image_num = 0;
@@ -128,6 +130,7 @@ void s_8_1_1_left_right() {
 	 *
 	 *****************************/
 	//ref http://stackoverflow.com/questions/9314586/c-faster-way-to-check-if-a-directory-exists answered Feb 16 '12 at 16:04
+	//ref http://www.loose-info.com/main/memolist/c/lib_sys_stat_mkdir.html
 	//	if (mkdir(dpath_dst)) {
 //
 //		printf("[%s:%d] dir created => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
@@ -141,8 +144,60 @@ void s_8_1_1_left_right() {
 //	}
 
 	//ref http://stackoverflow.com/questions/12510874/how-can-i-check-if-a-directory-exists answered Sep 20 '12 at 10:38
-	DIR* dir = opendir("mydir");
-aa
+	//ref http://www.ncad.co.jp/~komata/c-kouza14.htm
+	DIR* dir = opendir(dpath_dst);
+
+	if (dir)
+	{
+	    /* Directory exists. */
+	    closedir(dir);
+
+	    //ref error number http://qiita.com/docokano/items/be0dec6243fc5a99006d
+	    printf("[%s:%d] dir exists => '%s'; errno => %d\n",
+	    		basename(__FILE__, '\\'), __LINE__,
+
+				dpath_dst,
+				errno);
+
+//	    return;
+
+	}
+
+	else if (ENOENT == errno)
+
+	{
+	    /* Directory does not exist. */
+		printf("[%s:%d] dir not exist; errno => %d\n", basename(__FILE__, '\\'), __LINE__, errno);
+
+		// create a dir
+		int res = mkdir(dpath_dst);
+
+		printf("[%s:%d] mkdir() result => %d\n", basename(__FILE__, '\\'), __LINE__, res);
+
+		// result
+		if (res == 0) {
+
+			printf("[%s:%d] dir created => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
+
+		} else {
+
+			printf("[%s:%d] can't create dir! => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
+
+			return;
+
+		}
+
+//		return;
+
+	}
+	else
+	{
+	    /* opendir() failed for some other reason. */
+		printf("[%s:%d] unknown result; errno => %d\n", basename(__FILE__, '\\'), __LINE__, errno);
+
+		return;
+
+	}
 
 
 	/****************************
