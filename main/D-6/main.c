@@ -110,7 +110,8 @@ void s_9_1_1_left_right_multiple_images() {
 	 * prep
 	 *
 	 *****************************/
-	int numof_pairs = 25;
+	int numof_pairs = 50;
+//	int numof_pairs = 25;
 
 	int i;	// for loop
 
