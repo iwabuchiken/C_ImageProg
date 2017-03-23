@@ -92,6 +92,7 @@ C:\mingw-w64\x86_64-6.2.0-posix-seh-rt_v5-rev1\mingw64\bin
 // protos
 //
  ///////////////////////////////
+void brighten( int n, int shift );
 
 void lr_reverse( int n1, int n2 );
 
@@ -101,6 +102,190 @@ void lr_reverse( int n1, int n2 );
 // xxxx
 //
 ///////////////////////////////
+
+void s_9_1_1_left_right_multiple_images() {
+
+	/****************************
+	 *
+	 * prep
+	 *
+	 *****************************/
+	int numof_pairs = 25;
+
+	int i;	// for loop
+
+	char* time_label = get_Time_Label__Now();
+
+	char fname_dst[40];
+
+	char* dpath_dst = "images\\9_1";
+
+	// dir path, time label,serial num, left/right, brightness
+	char* fname_dst_skeleton = "%s\\s_9_1_1.i=lena.left-right-reverse.%s.(%d).%s.%d.pgm";
+
+	int image_num = 0;
+	int image_num_reversed = 1;
+
+	char* file_name = "lena512.pgm";
+
+	/****************************
+	 *
+	 * validate: directory
+	 *
+	 *****************************/
+	//ref http://stackoverflow.com/questions/9314586/c-faster-way-to-check-if-a-directory-exists answered Feb 16 '12 at 16:04
+	//ref http://www.loose-info.com/main/memolist/c/lib_sys_stat_mkdir.html
+	//	if (mkdir(dpath_dst)) {
+//
+//		printf("[%s:%d] dir created => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
+//
+//	} else {
+//
+//		printf("[%s:%d] can't create the directory => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
+//
+//		return;
+//
+//	}
+
+	//ref http://stackoverflow.com/questions/12510874/how-can-i-check-if-a-directory-exists answered Sep 20 '12 at 10:38
+	//ref http://www.ncad.co.jp/~komata/c-kouza14.htm
+	DIR* dir = opendir(dpath_dst);
+
+	if (dir)
+	{
+	    /* Directory exists. */
+	    closedir(dir);
+
+	    //ref error number http://qiita.com/docokano/items/be0dec6243fc5a99006d
+	    printf("[%s:%d] dir exists => '%s'; errno => %d\n",
+	    		basename(__FILE__, '\\'), __LINE__,
+
+				dpath_dst,
+				errno);
+
+//	    return;
+
+	}
+
+	else if (ENOENT == errno)
+
+	{
+	    /* Directory does not exist. */
+		printf("[%s:%d] dir not exist; errno => %d\n", basename(__FILE__, '\\'), __LINE__, errno);
+
+		// create a dir
+		int res = mkdir(dpath_dst);
+
+		printf("[%s:%d] mkdir() result => %d\n", basename(__FILE__, '\\'), __LINE__, res);
+
+		// result
+		if (res == 0) {
+
+			printf("[%s:%d] dir created => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
+
+		} else {
+
+			printf("[%s:%d] can't create dir! => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
+
+			return;
+
+		}
+
+//		return;
+
+	}
+	else
+	{
+	    /* opendir() failed for some other reason. */
+		printf("[%s:%d] unknown result; errno => %d\n", basename(__FILE__, '\\'), __LINE__, errno);
+
+		return;
+
+	}
+
+	/********************************************************
+	 *
+	 * generate images
+	 *
+	*********************************************************/
+	int rnd_num;
+	int plus_minus;
+
+	int rnd_start	= 1;
+	int rnd_end		= 40;
+//	int rnd_end		= 20;
+//	int rnd_end		= 10;
+
+	int image_shift = 0;
+
+	int unit = 5;		// (1 unit) * (random integer) --> changes in brightness
+//	int unit = 10;		// (1 unit) * (random integer) --> changes in brightness
+
+	for (i = 0; i < numof_pairs * 2; i = i + 2) {
+//	for (i = 0; i < numof_pairs; ++i) {
+
+		/****************************
+		 *
+		 * load image
+		 *
+		 *****************************/
+		load_image( image_num, file_name );
+
+		/****************************
+		 *
+		 * non-reverse image
+		 *
+		 *****************************/
+		rnd_num = get_random_integer(rnd_start, rnd_end, time(NULL));
+
+		plus_minus = get_random_integer(1, 2, time(NULL));
+
+    	// convert
+    	if (plus_minus == 1) {
+
+    		plus_minus = 1;
+
+		} else {
+
+			plus_minus = -1;
+
+		}
+
+    	image_shift = unit * rnd_num * plus_minus;
+
+		// file name
+	//	"%s\\s_9_1_1.i=lena.left-right-reverse.%s.(%d).%s.%d.pgm";
+	//	dir path, time label,serial num, left/right, brightness
+		sprintf(fname_dst,
+					fname_dst_skeleton,
+					dpath_dst,
+					time_label,
+					(i + 1),
+					"orig",
+					image_shift
+		);
+
+		//debug
+		printf("[%s:%d] fname_dst => \"%s\"\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+
+		// brighten up/down
+		brighten( image_num, image_shift);
+
+		// output image
+		save_image( image_num, fname_dst );
+
+
+
+
+	}//for (i = 0; i < numof_pairs; ++i)
+
+
+
+
+}//s_9_1_1_left_right_multiple_images
+
+
+
 void s_8_1_1_left_right() {
 
 	/****************************
@@ -227,7 +412,8 @@ void s_8_1_1_left_right() {
 	// save image
 	save_image(image_num_reversed, fname_dst);
 
-	printf("[%s:%d] image saved => '%s'\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+	printf("[%s:%d] image saved => \"%s\"\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+//	printf("[%s:%d] image saved => '%s'\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
 
 
 }//void s_8_1_1_left_right
@@ -289,12 +475,21 @@ void lr_reverse( int n1, int n2 )
 
 int main(int argc, char *argv[]) {
 
+	/****************************
+	 *
+	 * prep
+	 *
+	 *****************************/
+	srand((unsigned)time(NULL));
+
 	///////////////////////
 
 	// operations
 
 	///////////////////////
-	s_8_1_1_left_right();
+	s_9_1_1_left_right_multiple_images();
+
+//	s_8_1_1_left_right();
 
 
 	///////////////////////
