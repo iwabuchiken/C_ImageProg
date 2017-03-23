@@ -274,7 +274,48 @@ void s_9_1_1_left_right_multiple_images() {
 		// output image
 		save_image( image_num, fname_dst );
 
+		/****************************
+		 *
+		 * reverse image
+		 *
+		 *****************************/
+		lr_reverse( image_num, image_num_reversed );
 
+		// dst file name
+		rnd_num = get_random_integer(rnd_start, rnd_end, time(NULL));
+
+		plus_minus = get_random_integer(1, 2, time(NULL));
+
+    	// convert
+    	if (plus_minus == 1) {
+
+    		plus_minus = 1;
+
+		} else {
+
+			plus_minus = -1;
+
+		}
+
+    	image_shift = unit * rnd_num * plus_minus;
+
+		// file name
+	//	"%s\\s_9_1_1.i=lena.left-right-reverse.%s.(%d).%s.%d.pgm";
+	//	dir path, time label,serial num, left/right, brightness
+		sprintf(fname_dst,
+					fname_dst_skeleton,
+					dpath_dst,
+					time_label,
+					(i + 2),
+					"reverse",
+					image_shift
+		);
+
+		//debug
+		printf("[%s:%d] fname_dst => \"%s\"\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+
+		// output image
+		save_image( image_num_reversed, fname_dst );
 
 
 	}//for (i = 0; i < numof_pairs; ++i)
