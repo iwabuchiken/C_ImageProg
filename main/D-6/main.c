@@ -92,6 +92,8 @@ C:\mingw-w64\x86_64-6.2.0-posix-seh-rt_v5-rev1\mingw64\bin
 // protos
 //
  ///////////////////////////////
+void rotate_image( int n1, int n2 );
+
 void brighten( int n, int shift );
 
 void lr_reverse( int n1, int n2 );
@@ -102,6 +104,118 @@ void lr_reverse( int n1, int n2 );
 // xxxx
 //
 ///////////////////////////////
+
+void s_10_1_1_rotate_images() {
+
+	char* time_label = get_Time_Label__Now();
+
+	char fname_dst[40];
+
+	char* dpath_dst = "images\\10_1";
+
+	// dir path, time label,serial num, left/right, brightness
+	char* fname_dst_skeleton = "%s\\s_10_1_1.i=lena.rotate.%s.pgm";
+
+	int image_num = 0;
+	int image_num_rotated = 1;
+
+	char* file_name = "lena512.pgm";
+
+	/****************************
+	 *
+	 * validate: directory
+	 *
+	 *****************************/
+	//ref http://stackoverflow.com/questions/12510874/how-can-i-check-if-a-directory-exists answered Sep 20 '12 at 10:38
+	//ref http://www.ncad.co.jp/~komata/c-kouza14.htm
+	DIR* dir = opendir(dpath_dst);
+
+	if (dir)
+	{
+	    /* Directory exists. */
+	    closedir(dir);
+
+	    //ref error number http://qiita.com/docokano/items/be0dec6243fc5a99006d
+	    printf("[%s:%d] dir exists => '%s'; errno => %d\n",
+	    		basename(__FILE__, '\\'), __LINE__,
+
+				dpath_dst,
+				errno);
+
+	}
+
+	else if (ENOENT == errno)
+
+	{
+	    /* Directory does not exist. */
+		printf("[%s:%d] dir not exist; errno => %d\n", basename(__FILE__, '\\'), __LINE__, errno);
+
+		// create a dir
+		int res = mkdir(dpath_dst);
+
+		printf("[%s:%d] mkdir() result => %d\n", basename(__FILE__, '\\'), __LINE__, res);
+
+		// result
+		if (res == 0) {
+
+			printf("[%s:%d] dir created => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
+
+		} else {
+
+			printf("[%s:%d] can't create dir! => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
+
+			return;
+
+		}
+
+//		return;
+
+	}
+	else
+	{
+	    /* opendir() failed for some other reason. */
+		printf("[%s:%d] unknown result; errno => %d\n", basename(__FILE__, '\\'), __LINE__, errno);
+
+		return;
+
+	}
+
+	/****************************
+	 *
+	 * load image
+	 *
+	 *****************************/
+	load_image( image_num, file_name );
+
+
+	/****************************
+	 *
+	 * rotate
+	 *
+	 *****************************/
+	rotate_image( image_num, image_num_rotated );
+
+	printf("[%s:%d] rotation => done\n", basename(__FILE__, '\\'), __LINE__);
+
+	/****************************
+	 *
+	 * save image
+	 *
+	 *****************************/
+	sprintf(fname_dst,
+
+				fname_dst_skeleton,
+				dpath_dst,
+				time_label
+	);
+
+	save_image( image_num_rotated, fname_dst );
+
+	//report
+	printf("[%s:%d] image saved => \"%s\"\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+
+
+}//void s_10_1_1_rotate_images()
 
 void s_9_1_1_left_right_multiple_images() {
 
@@ -515,6 +629,20 @@ void lr_reverse( int n1, int n2 )
             image[n2][x][y] = image[n1][width[n1]-1-x][y];
 }
 
+void rotate_image( int n1, int n2 )
+/* �摜 No.n1 ��90�x��]�����ĉ摜 No.n2 �� */
+{
+    int x,y;
+
+    width[n2]=height[n1];  height[n2]=width[n1];
+    /* ���E���] */
+    for(y=0;y<height[n1];y++){
+        for(x=0;x<width[n1];x++){
+            image[n2][y][height[n2]-x] = image[n1][x][y];
+        }
+    }
+}
+
 int main(int argc, char *argv[]) {
 
 	/****************************
@@ -529,7 +657,9 @@ int main(int argc, char *argv[]) {
 	// operations
 
 	///////////////////////
-	s_9_1_1_left_right_multiple_images();
+	s_10_1_1_rotate_images();
+
+//	s_9_1_1_left_right_multiple_images();
 
 //	s_8_1_1_left_right();
 
