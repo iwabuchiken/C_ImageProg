@@ -105,6 +105,353 @@ void lr_reverse( int n1, int n2 );
 //
 ///////////////////////////////
 
+void s_11_1_1_rotate_images_multiple_times__V2() {
+
+	char* time_label = get_Time_Label__Now();
+
+	char fname_dst[40];
+
+	char* dpath_dst = "images\\11_1";
+
+	// dir path, time label,serial num, degrees
+	char* fname_dst_skeleton = "%s\\s_11_1_1.i=lena.rotate-multiple.%s.(%d).%d-degrees.pgm";
+
+	int image_num = 0;
+//	int image_num_rotated = 1;
+
+	char* file_name = "lena512.pgm";
+
+	/****************************
+	 *
+	 * validate: directory
+	 *
+	 *****************************/
+	//ref http://stackoverflow.com/questions/12510874/how-can-i-check-if-a-directory-exists answered Sep 20 '12 at 10:38
+	//ref http://www.ncad.co.jp/~komata/c-kouza14.htm
+	DIR* dir = opendir(dpath_dst);
+
+	if (dir)
+	{
+	    /* Directory exists. */
+	    closedir(dir);
+
+	    //ref error number http://qiita.com/docokano/items/be0dec6243fc5a99006d
+	    printf("[%s:%d] dir exists => '%s'; errno => %d\n",
+	    		basename(__FILE__, '\\'), __LINE__,
+
+				dpath_dst,
+				errno);
+
+	}
+
+	else if (ENOENT == errno)
+
+	{
+	    /* Directory does not exist. */
+		printf("[%s:%d] dir not exist; errno => %d\n", basename(__FILE__, '\\'), __LINE__, errno);
+
+		// create a dir
+		int res = mkdir(dpath_dst);
+
+		printf("[%s:%d] mkdir() result => %d\n", basename(__FILE__, '\\'), __LINE__, res);
+
+		// result
+		if (res == 0) {
+
+			printf("[%s:%d] dir created => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
+
+		} else {
+
+			printf("[%s:%d] can't create dir! => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
+
+			return;
+
+		}
+
+//		return;
+
+	}
+	else
+	{
+	    /* opendir() failed for some other reason. */
+		printf("[%s:%d] unknown result; errno => %d\n", basename(__FILE__, '\\'), __LINE__, errno);
+
+		return;
+
+	}
+
+	/****************************
+	 *
+	 * load image
+	 *
+	 *****************************/
+	load_image( image_num, file_name );
+
+	/****************************
+	 *
+	 * rotate
+	 *
+	 *****************************/
+	/****************************
+	 *
+	 * rotate
+	 *
+	 *****************************/
+	int image_num_current = image_num;
+
+	int image_num_final = image_num_current + 1;
+
+//	int i;			// index for "for" loop
+
+
+	image_num_current = 0;
+	image_num_final = image_num_current + 1;
+//	image_num_final = image_num_current + 1;
+
+	// rotate
+	rotate_image( image_num_current, image_num_final );
+
+	//debug
+	printf("[%s:%d] current = %d / final = %d\n",
+			basename(__FILE__, '\\'), __LINE__,
+			image_num_current, image_num_final);
+
+	/****************************
+	 *
+	 * save image
+	 *
+	 *****************************/
+	// "%s\\s_11_1_1.i=lena.rotate-multiple.%s.(%d).%d-degrees.pgm";
+	sprintf(fname_dst,
+
+				fname_dst_skeleton,
+				dpath_dst,
+				time_label,
+				image_num_final,
+				90 * image_num_final
+	);
+
+//	save_image( image_num_final, fname_dst );
+
+	//report
+	printf("[%s:%d] image saved => \"%s\"\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+
+//	for (i = 0; i < 3; ++i) {
+////	for (i = 1; i < 4; ++i) {
+//
+//		// assign numbers
+//		image_num_current = i;
+//		image_num_final = image_num_current + 1;
+//
+//		//debug
+//		printf("[%s:%d] current = %d / final = %d\n",
+//				basename(__FILE__, '\\'), __LINE__,
+//				image_num_current, image_num_final);
+//
+////		image_num_final = image_num_current + 1;
+////		image_num_final = image_num_current + i;
+//
+////		rotate_image( image_num_current, image_num_final );
+//
+////		// current --> update
+////		image_num_current = image_num_final;
+////
+////		// final --> increment
+////		image_num_final ++;
+////
+////		//debug
+////		printf("[%s:%d] now, current = %d / final = %d\n",
+////				basename(__FILE__, '\\'), __LINE__,
+////				image_num_current, image_num_final);
+//
+//		/****************************
+//		 *
+//		 * save image
+//		 *
+//		 *****************************/
+//		// "%s\\s_11_1_1.i=lena.rotate-multiple.%s.(%d).%d-degrees.pgm";
+//		sprintf(fname_dst,
+//
+//					fname_dst_skeleton,
+//					dpath_dst,
+//					time_label,
+//					i,
+//					90 * i
+//		);
+//
+//		save_image( image_num_final, fname_dst );
+//
+//		//report
+//		printf("[%s:%d] image saved => \"%s\"\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+//
+//	}//for (i = 0; i < 3; ++i)
+
+//	rotate_image( image_num, image_num_rotated );
+
+	printf("[%s:%d] rotation => done\n", basename(__FILE__, '\\'), __LINE__);
+
+
+
+
+}//void s_11_1_1_rotate_images_multiple_times__V2
+
+void s_11_1_1_rotate_images_multiple_times() {
+
+	char* time_label = get_Time_Label__Now();
+
+	char fname_dst[40];
+
+	char* dpath_dst = "images\\11_1";
+
+	// dir path, time label,serial num, degrees
+	char* fname_dst_skeleton = "%s\\s_11_1_1.i=lena.rotate-multiple.%s.(%d).%d-degrees.pgm";
+
+	int image_num = 0;
+//	int image_num_rotated = 1;
+
+	char* file_name = "lena512.pgm";
+
+	/****************************
+	 *
+	 * validate: directory
+	 *
+	 *****************************/
+	//ref http://stackoverflow.com/questions/12510874/how-can-i-check-if-a-directory-exists answered Sep 20 '12 at 10:38
+	//ref http://www.ncad.co.jp/~komata/c-kouza14.htm
+	DIR* dir = opendir(dpath_dst);
+
+	if (dir)
+	{
+	    /* Directory exists. */
+	    closedir(dir);
+
+	    //ref error number http://qiita.com/docokano/items/be0dec6243fc5a99006d
+	    printf("[%s:%d] dir exists => '%s'; errno => %d\n",
+	    		basename(__FILE__, '\\'), __LINE__,
+
+				dpath_dst,
+				errno);
+
+	}
+
+	else if (ENOENT == errno)
+
+	{
+	    /* Directory does not exist. */
+		printf("[%s:%d] dir not exist; errno => %d\n", basename(__FILE__, '\\'), __LINE__, errno);
+
+		// create a dir
+		int res = mkdir(dpath_dst);
+
+		printf("[%s:%d] mkdir() result => %d\n", basename(__FILE__, '\\'), __LINE__, res);
+
+		// result
+		if (res == 0) {
+
+			printf("[%s:%d] dir created => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
+
+		} else {
+
+			printf("[%s:%d] can't create dir! => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
+
+			return;
+
+		}
+
+//		return;
+
+	}
+	else
+	{
+	    /* opendir() failed for some other reason. */
+		printf("[%s:%d] unknown result; errno => %d\n", basename(__FILE__, '\\'), __LINE__, errno);
+
+		return;
+
+	}
+
+	/****************************
+	 *
+	 * load image
+	 *
+	 *****************************/
+	load_image( image_num, file_name );
+
+	/****************************
+	 *
+	 * rotate
+	 *
+	 *****************************/
+	/****************************
+	 *
+	 * rotate
+	 *
+	 *****************************/
+	int image_num_current = image_num;
+
+	int image_num_final = image_num_current + 1;
+
+	int i;			// index for "for" loop
+
+	for (i = 0; i < 3; ++i) {
+//	for (i = 1; i < 4; ++i) {
+
+		// assign numbers
+		image_num_current = i;
+		image_num_final = image_num_current + 1;
+
+		//debug
+		printf("[%s:%d] current = %d / final = %d\n",
+				basename(__FILE__, '\\'), __LINE__,
+				image_num_current, image_num_final);
+
+//		image_num_final = image_num_current + 1;
+//		image_num_final = image_num_current + i;
+
+//		rotate_image( image_num_current, image_num_final );
+
+//		// current --> update
+//		image_num_current = image_num_final;
+//
+//		// final --> increment
+//		image_num_final ++;
+//
+//		//debug
+//		printf("[%s:%d] now, current = %d / final = %d\n",
+//				basename(__FILE__, '\\'), __LINE__,
+//				image_num_current, image_num_final);
+
+		/****************************
+		 *
+		 * save image
+		 *
+		 *****************************/
+		// "%s\\s_11_1_1.i=lena.rotate-multiple.%s.(%d).%d-degrees.pgm";
+		sprintf(fname_dst,
+
+					fname_dst_skeleton,
+					dpath_dst,
+					time_label,
+					i,
+					90 * i
+		);
+
+		save_image( image_num_final, fname_dst );
+
+		//report
+		printf("[%s:%d] image saved => \"%s\"\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+
+	}//for (i = 0; i < 3; ++i)
+
+//	rotate_image( image_num, image_num_rotated );
+
+	printf("[%s:%d] rotation => done\n", basename(__FILE__, '\\'), __LINE__);
+
+
+
+
+}//s_11_1_1_rotate_images_multiple_times
+
 void s_10_1_1_rotate_images() {
 
 	char* time_label = get_Time_Label__Now();
@@ -657,7 +1004,11 @@ int main(int argc, char *argv[]) {
 	// operations
 
 	///////////////////////
-	s_10_1_1_rotate_images();
+	s_11_1_1_rotate_images_multiple_times__V2();
+
+//	s_11_1_1_rotate_images_multiple_times();
+
+//	s_10_1_1_rotate_images();
 
 //	s_9_1_1_left_right_multiple_images();
 
