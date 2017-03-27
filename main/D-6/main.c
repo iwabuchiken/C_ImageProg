@@ -109,7 +109,8 @@ void s_11_1_1_rotate_images_multiple_times__V2() {
 
 	char* time_label = get_Time_Label__Now();
 
-	char fname_dst[40];
+	char fname_dst[100];
+//	char fname_dst[40];
 
 	char* dpath_dst = "images\\11_1";
 
@@ -222,6 +223,9 @@ void s_11_1_1_rotate_images_multiple_times__V2() {
 	 *
 	 *****************************/
 	// "%s\\s_11_1_1.i=lena.rotate-multiple.%s.(%d).%d-degrees.pgm";
+//	// dir path, time label,serial num, degrees
+//	char* fname_dst_skeleton = "%s\\s_11_1_1.i=lena.rotate-multiple.%s.(%d).%d-degrees.pgm";
+
 	sprintf(fname_dst,
 
 				fname_dst_skeleton,
@@ -231,7 +235,8 @@ void s_11_1_1_rotate_images_multiple_times__V2() {
 				90 * image_num_final
 	);
 
-//	save_image( image_num_final, fname_dst );
+
+	save_image( image_num_final, fname_dst );
 
 	//report
 	printf("[%s:%d] image saved => \"%s\"\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
