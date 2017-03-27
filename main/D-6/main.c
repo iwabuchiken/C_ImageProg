@@ -273,6 +273,37 @@ void s_11_1_1_rotate_images_multiple_times__V2() {
 	//report
 	printf("[%s:%d] image saved => \"%s\"\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
 
+	/********************************************************
+	 *
+	 * rotation: 3rd times
+	 *
+	*********************************************************/
+	image_num_current ++;
+	image_num_final = image_num_current + 1;
+//	image_num_final = image_num_current + 1;
+
+	// rotate
+	rotate_image( image_num_current, image_num_final );
+
+	//debug
+	printf("[%s:%d] current = %d / final = %d\n",
+			basename(__FILE__, '\\'), __LINE__,
+			image_num_current, image_num_final);
+
+	sprintf(fname_dst,
+
+				fname_dst_skeleton,
+				dpath_dst,
+				time_label,
+				image_num_final,
+				90 * image_num_final
+	);
+
+
+	save_image( image_num_final, fname_dst );
+
+	//report
+	printf("[%s:%d] image saved => \"%s\"\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
 
 //	for (i = 0; i < 3; ++i) {
 ////	for (i = 1; i < 4; ++i) {
