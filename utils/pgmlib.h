@@ -8,7 +8,8 @@
 #define GRAYLEVEL            256 /* �z�肷��K����(=�ő�K���l+1) */
 #define MAX_FILENAME         256 /* �z�肷��t�@�C�����̍ő咷 */
 #define MAX_BUFFERSIZE       256 /* ���p����o�b�t�@�ő咷 */
-#define MAX_NUM_OF_IMAGES      5 /* ���p����摜�̖��� */
+#define MAX_NUM_OF_IMAGES   1000 /* ���p����摜�̖��� */
+//#define MAX_NUM_OF_IMAGES      5 /* ���p����摜�̖��� */
 
 /* ���ϐ��̐錾 */
 /* �摜�f�[�^ image[n][x][y] */

@@ -1591,19 +1591,23 @@ void rotate_image_x_times( int n1, int n2, int times ) {
 	int numof_rotation = times;
 //	int numof_rotation = 6;
 
+//	int image_num_current = 4;
+	int image_num_current = 999;
 
+	// copy n1 image to --> current
+	copy_image(n1, image_num_current);
 
-	int image_num_current	= n1;
+//	int image_num_current	= n1;
 	int image_num_final		= n2;
 
 	int i;		// iterator
 
 	for (i = 0; i < numof_rotation; ++i) {
 
-		//debug
-		printf("[%s:%d] current = %d / final = %d\n",
-				basename(__FILE__, '\\'), __LINE__,
-				image_num_current, image_num_final);
+//		//debug
+//		printf("[%s:%d] current = %d / final = %d\n",
+//				basename(__FILE__, '\\'), __LINE__,
+//				image_num_current, image_num_final);
 
 		rotate_image( image_num_current, image_num_final );
 
@@ -1611,12 +1615,18 @@ void rotate_image_x_times( int n1, int n2, int times ) {
 		copy_image(image_num_final, image_num_current);
 
 
-		//report
-		printf("[%s:%d] rotation => done (%d times)\n",
-				basename(__FILE__, '\\'), __LINE__,
-				numof_rotation);
+//		//report
+//		printf("[%s:%d] rotation => done (%d times)\n",
+//				basename(__FILE__, '\\'), __LINE__,
+//				numof_rotation);
 
 	}//for (i = 0; i < 3; ++i)
+
+	//report
+	printf("[%s:%d] rotation => done (%d times)\n",
+			basename(__FILE__, '\\'), __LINE__,
+			numof_rotation);
+
 
 }//void rotate_image_x_times( int n1, int n2, int times )
 
@@ -1634,8 +1644,8 @@ int main(int argc, char *argv[]) {
 	// operations
 
 	///////////////////////
-	int numof_rotation = 12;
-//	int numof_rotation = 6;
+//	int numof_rotation = 12;
+	int numof_rotation = 6;
 	s_12_1_2_rotate_images_x_times(numof_rotation);
 
 //	s_12_1_1_rotate_images_multiple_times__use_2_image_objects();
