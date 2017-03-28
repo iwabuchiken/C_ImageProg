@@ -94,6 +94,8 @@ C:\mingw-w64\x86_64-6.2.0-posix-seh-rt_v5-rev1\mingw64\bin
  ///////////////////////////////
 void rotate_image( int n1, int n2 );
 
+void rotate_image_x_times( int n1, int n2, int times );
+
 void brighten( int n, int shift );
 
 void lr_reverse( int n1, int n2 );
@@ -199,41 +201,10 @@ void s_12_1_2_rotate_images_x_times(int times) {
 	 *****************************/
 	load_image( image_num_current, file_name );
 
-	int numof_rotation = times;
-//	int numof_rotation = 6;
+	// rotate image
+	for (i = 0; i < times; ++i) {
 
-	for (i = 0; i < numof_rotation; ++i) {
-//	for (i = 0; i < 3; ++i) {
-
-
-
-//		// assign numbers
-//		image_num_current = i;
-//		image_num_final = image_num_current + 1;
-
-		//debug
-		printf("[%s:%d] current = %d / final = %d\n",
-				basename(__FILE__, '\\'), __LINE__,
-				image_num_current, image_num_final);
-
-//		image_num_final = image_num_current + 1;
-//		image_num_final = image_num_current + i;
-
-		rotate_image( image_num_current, image_num_final );
-
-		// copy --> rotated image onto the original one
-		copy_image(image_num_final, image_num_current);
-
-//		// current --> update
-//		image_num_current = image_num_final;
-//
-//		// final --> increment
-//		image_num_final ++;
-//
-//		//debug
-//		printf("[%s:%d] now, current = %d / final = %d\n",
-//				basename(__FILE__, '\\'), __LINE__,
-//				image_num_current, image_num_final);
+		rotate_image_x_times( image_num_current, image_num_final, i + 1 );
 
 		/****************************
 		 *
@@ -259,7 +230,71 @@ void s_12_1_2_rotate_images_x_times(int times) {
 		//report
 		printf("[%s:%d] image saved => \"%s\"\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
 
-	}//for (i = 0; i < 3; ++i)
+	}//for (i = 0; i < times; ++i)
+
+
+
+//	int numof_rotation = times;
+////	int numof_rotation = 6;
+//
+//	for (i = 0; i < numof_rotation; ++i) {
+////	for (i = 0; i < 3; ++i) {
+//
+//
+//
+////		// assign numbers
+////		image_num_current = i;
+////		image_num_final = image_num_current + 1;
+//
+//		//debug
+//		printf("[%s:%d] current = %d / final = %d\n",
+//				basename(__FILE__, '\\'), __LINE__,
+//				image_num_current, image_num_final);
+//
+////		image_num_final = image_num_current + 1;
+////		image_num_final = image_num_current + i;
+//
+//		rotate_image( image_num_current, image_num_final );
+//
+//		// copy --> rotated image onto the original one
+//		copy_image(image_num_final, image_num_current);
+//
+////		// current --> update
+////		image_num_current = image_num_final;
+////
+////		// final --> increment
+////		image_num_final ++;
+////
+////		//debug
+////		printf("[%s:%d] now, current = %d / final = %d\n",
+////				basename(__FILE__, '\\'), __LINE__,
+////				image_num_current, image_num_final);
+//
+//		/****************************
+//		 *
+//		 * save image
+//		 *
+//		 *****************************/
+//		// "%s\\s_11_1_1.i=lena.rotate-multiple.%s.(%d).%d-degrees.pgm";
+//		sprintf(fname_dst,
+//
+//					fname_dst_skeleton,
+//					dpath_dst,
+//					time_label,
+////					image_num_final,
+////					image_num_final * i
+////					i,
+////					90 * i
+//					i + 1,
+//					90 * (i + 1)
+//		);
+//
+//		save_image( image_num_final, fname_dst );
+//
+//		//report
+//		printf("[%s:%d] image saved => \"%s\"\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+//
+//	}//for (i = 0; i < 3; ++i)
 
 //	rotate_image( image_num, image_num_rotated );
 
@@ -1550,6 +1585,40 @@ void rotate_image( int n1, int n2 )
         }
     }
 }
+
+void rotate_image_x_times( int n1, int n2, int times ) {
+
+	int numof_rotation = times;
+//	int numof_rotation = 6;
+
+
+
+	int image_num_current	= n1;
+	int image_num_final		= n2;
+
+	int i;		// iterator
+
+	for (i = 0; i < numof_rotation; ++i) {
+
+		//debug
+		printf("[%s:%d] current = %d / final = %d\n",
+				basename(__FILE__, '\\'), __LINE__,
+				image_num_current, image_num_final);
+
+		rotate_image( image_num_current, image_num_final );
+
+		// copy --> rotated image onto the original one
+		copy_image(image_num_final, image_num_current);
+
+
+		//report
+		printf("[%s:%d] rotation => done (%d times)\n",
+				basename(__FILE__, '\\'), __LINE__,
+				numof_rotation);
+
+	}//for (i = 0; i < 3; ++i)
+
+}//void rotate_image_x_times( int n1, int n2, int times )
 
 int main(int argc, char *argv[]) {
 
