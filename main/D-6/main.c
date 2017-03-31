@@ -18,6 +18,7 @@ C:\mingw-w64\x86_64-6.2.0-posix-seh-rt_v5-rev1\mingw64\bin
  *
  */
 
+
 #ifndef STDIO_H_
 #define STDIO_H_
 #include <stdio.h>
@@ -106,6 +107,213 @@ void lr_reverse( int n1, int n2 );
 // xxxx
 //
 ///////////////////////////////
+
+void s_13_1_2_test() {
+
+	printf("[%s:%d] s_13_1_2_test\n", basename(__FILE__, '\\'), __LINE__);
+
+}//void s_13_1_2_test
+
+void s_13_1_1_rotate_images_x_times(int times) {
+//void s_13_1_1_rotate_images_x_times_smaller_or_equal_than_360(int times) {
+
+	char* time_label = get_Time_Label__Now();
+
+	char fname_dst[100];
+//	char fname_dst[40];
+
+	char* dpath_dst = "images\\13_1";
+
+	// dir path, time label,serial num, degrees
+	char* fname_dst_skeleton = "%s\\s_13_1_1.i=lena.rotate-multiple.use-2-image-objects%s.(%d).%d-degrees.pgm";
+
+//	int image_num = 0;
+//	int image_num_rotated = 1;
+
+	char* file_name = "lena512.pgm";
+
+	/****************************
+	 *
+	 * validate: directory
+	 *
+	 *****************************/
+	//ref http://stackoverflow.com/questions/12510874/how-can-i-check-if-a-directory-exists answered Sep 20 '12 at 10:38
+	//ref http://www.ncad.co.jp/~komata/c-kouza14.htm
+	DIR* dir = opendir(dpath_dst);
+
+	if (dir)
+	{
+	    /* Directory exists. */
+	    closedir(dir);
+
+	    //ref error number http://qiita.com/docokano/items/be0dec6243fc5a99006d
+	    printf("[%s:%d] dir exists => '%s'; errno => %d\n",
+	    		basename(__FILE__, '\\'), __LINE__,
+
+				dpath_dst,
+				errno);
+
+	}
+
+	else if (ENOENT == errno)
+
+	{
+	    /* Directory does not exist. */
+		printf("[%s:%d] dir not exist; errno => %d\n", basename(__FILE__, '\\'), __LINE__, errno);
+
+		// create a dir
+		int res = mkdir(dpath_dst);
+
+		printf("[%s:%d] mkdir() result => %d\n", basename(__FILE__, '\\'), __LINE__, res);
+
+		// result
+		if (res == 0) {
+
+			printf("[%s:%d] dir created => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
+
+		} else {
+
+			printf("[%s:%d] can't create dir! => '%s'\n", basename(__FILE__, '\\'), __LINE__, dpath_dst);
+
+			return;
+
+		}
+
+//		return;
+
+	}
+	else
+	{
+	    /* opendir() failed for some other reason. */
+		printf("[%s:%d] unknown result; errno => %d\n", basename(__FILE__, '\\'), __LINE__, errno);
+
+		return;
+
+	}
+
+	/********************************************************
+	 *
+	 * rotate
+	 *
+	*********************************************************/
+	int image_num_current	= 0;
+
+	int image_num_final		= 1;
+
+	int i;
+
+	/****************************
+	 *
+	 * load image
+	 *
+	 *****************************/
+	load_image( image_num_current, file_name );
+
+	// rotate image
+	for (i = 0; i < times; ++i) {
+
+		rotate_image_x_times( image_num_current, image_num_final, i + 1 );
+
+		/****************************
+		 *
+		 * save image
+		 *
+		 *****************************/
+		// "%s\\s_11_1_1.i=lena.rotate-multiple.%s.(%d).%d-degrees.pgm";
+		sprintf(fname_dst,
+
+					fname_dst_skeleton,
+					dpath_dst,
+					time_label,
+//					image_num_final,
+//					image_num_final * i
+//					i,
+//					90 * i
+					i + 1,
+//					90 * (i + 1)
+//					((90 * (i + 1) / 9) % 4) * 90
+					(90 * (i + 1)) % 360
+		);
+
+		save_image( image_num_final, fname_dst );
+
+		//report
+		printf("[%s:%d] image saved => \"%s\"\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+
+	}//for (i = 0; i < times; ++i)
+
+
+
+//	int numof_rotation = times;
+////	int numof_rotation = 6;
+//
+//	for (i = 0; i < numof_rotation; ++i) {
+////	for (i = 0; i < 3; ++i) {
+//
+//
+//
+////		// assign numbers
+////		image_num_current = i;
+////		image_num_final = image_num_current + 1;
+//
+//		//debug
+//		printf("[%s:%d] current = %d / final = %d\n",
+//				basename(__FILE__, '\\'), __LINE__,
+//				image_num_current, image_num_final);
+//
+////		image_num_final = image_num_current + 1;
+////		image_num_final = image_num_current + i;
+//
+//		rotate_image( image_num_current, image_num_final );
+//
+//		// copy --> rotated image onto the original one
+//		copy_image(image_num_final, image_num_current);
+//
+////		// current --> update
+////		image_num_current = image_num_final;
+////
+////		// final --> increment
+////		image_num_final ++;
+////
+////		//debug
+////		printf("[%s:%d] now, current = %d / final = %d\n",
+////				basename(__FILE__, '\\'), __LINE__,
+////				image_num_current, image_num_final);
+//
+//		/****************************
+//		 *
+//		 * save image
+//		 *
+//		 *****************************/
+//		// "%s\\s_11_1_1.i=lena.rotate-multiple.%s.(%d).%d-degrees.pgm";
+//		sprintf(fname_dst,
+//
+//					fname_dst_skeleton,
+//					dpath_dst,
+//					time_label,
+////					image_num_final,
+////					image_num_final * i
+////					i,
+////					90 * i
+//					i + 1,
+//					90 * (i + 1)
+//		);
+//
+//		save_image( image_num_final, fname_dst );
+//
+//		//report
+//		printf("[%s:%d] image saved => \"%s\"\n", basename(__FILE__, '\\'), __LINE__, fname_dst);
+//
+//	}//for (i = 0; i < 3; ++i)
+
+//	rotate_image( image_num, image_num_rotated );
+
+	printf("[%s:%d] rotation => done\n", basename(__FILE__, '\\'), __LINE__);
+
+
+
+
+}//s_13_1_1_rotate_images_x_times_smaller_or_equal_than_360
 
 void s_12_1_2_rotate_images_x_times(int times) {
 
@@ -1644,9 +1852,17 @@ int main(int argc, char *argv[]) {
 	// operations
 
 	///////////////////////
+//	s_13_1_2_test();
+
+//	int numof_rotation = 6;
+	int numof_rotation = 12;
+
+	s_13_1_1_rotate_images_x_times(numof_rotation);
+
 //	int numof_rotation = 12;
-	int numof_rotation = 6;
-	s_12_1_2_rotate_images_x_times(numof_rotation);
+//	int numof_rotation = 6;
+////
+//	s_12_1_2_rotate_images_x_times(numof_rotation);
 
 //	s_12_1_1_rotate_images_multiple_times__use_2_image_objects();
 
