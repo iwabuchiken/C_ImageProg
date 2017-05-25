@@ -58,7 +58,10 @@ void load_color_image( int n, char name[] )
     }
     /* パラメータの画面への表示 */
     printf("width：%d, height：%d\n", width[n], height[n] );
-    printf("最大階調値 = %d\n",max_gray);
+
+    printf("max tone = %d\n",max_gray);
+//    printf("最大階調値 = %d\n",max_gray);
+
     if ( width[n] > MAX_IMAGESIZE || height[n] >
         MAX_IMAGESIZE ||
         max_gray != MAX_BRIGHTNESS ){
