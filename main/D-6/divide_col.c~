@@ -1,0 +1,28 @@
+/* divide_col.c  このプログラムの名前 */
+#include<stdio.h>
+#include"ppmlib.h"
+void make_col_image( int n, int work );
+
+int main(void)
+{
+    load_color_image( 0, "" ); /* ファイル → 画像No.0 */
+    make_col_image( 0, 1 );    /* 画像No.0を色分解する */
+    return 0;
+}
+
+void make_col_image( int n, int work )
+/* 画像No.nを色分解して保存する */
+{
+    int i,x,y,col;
+    char iro[3][10]={"Red","Green","Blue"};
+
+    for(i=0;i<3;i++){
+        copy_color_image( n, work );
+        for(y=0;y<height[n];y++)
+            for(x=0;x<width[n];x++)
+                for(col=0;col<3;col++)
+                    if (col!=i) image[work][x][y][col]=0;
+        printf("%s成分の画像を保存します\n",iro[i]);
+        save_color_image( work, "" );
+    }
+}

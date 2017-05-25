@@ -1,0 +1,23 @@
+/* reverse2.c  このプログラムの名前 */
+#include<stdio.h>
+#include"ppmlib.h"
+void reverse_color( int n );
+
+int main(void)
+{
+    load_color_image( 0, "" );   /* ファイル → 画像No.0 */
+    reverse_color( 0 );        /* カラー画像をネガにする */
+    save_color_image( 0, "" );   /* 画像No.0 → ファイル */
+    return 0;
+}
+
+void reverse_color( int n )
+/* 画像No.nのカラー画像の色を反転させる */
+{
+    int x,y,col;
+    
+    for(y=0;y<height[n];y++)
+        for(x=0;x<width[n];x++)
+            for(col=0;col<3;col++)
+                image[n][x][y][col] = 255 - image[n][x][y][col];
+}

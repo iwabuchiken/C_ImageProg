@@ -1857,7 +1857,10 @@ int main(int argc, char *argv[]) {
 //	int numof_rotation = 6;
 	int numof_rotation = 12;
 
-	s_13_1_1_rotate_images_x_times(numof_rotation);
+	printf("[%s:%d] done\n", __FILE__, __LINE__);
+
+
+//	s_13_1_1_rotate_images_x_times(numof_rotation);
 
 //	int numof_rotation = 12;
 //	int numof_rotation = 6;

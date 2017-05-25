@@ -1,0 +1,25 @@
+/*
+ * main.h
+ *
+ *  Created on: 2015/09/14
+ *      Author: kbuchi
+ */
+
+#ifndef MAIN_H_
+#define MAIN_H_
+
+const int MAX_BMP_VAL	= 255;
+
+void reverse_color( int n )
+/* 画像No.nのカラー画像の色を反転させる */
+{
+    int x,y,col;
+
+    for(y=0;y<height[n];y++)
+        for(x=0;x<width[n];x++)
+            for(col=0;col<3;col++)
+                image[n][x][y][col] = 255 - image[n][x][y][col];
+}
+
+
+#endif /* MAIN_H_ */
