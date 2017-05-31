@@ -5,8 +5,12 @@
  *
  * 	<usage>
 pushd C:\WORKS_2\WS\Eclipse_Luna\C_ImageProg\main\D-6\
-gcc main.c
+gcc main.c -o main.exe
+main.exe
 a.exe
+
+gcc color_histogram.c -o color_histogram.exe
+
 
 pushd C:\WORKS_2\WS\Eclipse_Luna\C_ImageProg
 C:\WORKS_2\WS\Eclipse_Luna\C_ImageProg\Default\C_ImageProg.exe
@@ -90,8 +94,23 @@ C:\mingw-w64\x86_64-6.2.0-posix-seh-rt_v5-rev1\mingw64\bin
 #include "include/ppmlib.h"
 #endif
 
+long int hist[256][3]; /* ヒストグラム用配列 */
+
+/********************************************************
+ *
+ * protos
+ *
+*********************************************************/
 void reverse_color( int n );
 void make_col_image( int n, int work );
+void make_histogram_image( int n1, int n2, int h );
+
+/********************************************************
+ *
+ * functions
+ *
+*********************************************************/
+
 
 void make_col_image( int n, int work )
 /* 画像No.nを色分解して保存する */
@@ -149,14 +168,20 @@ int main(int argc, char *argv[]) {
 	 * operations
 	 *
 	*********************************************************/
+
+
     load_color_image( 0, "" );   /* ファイル → 画像No.0 */
 
-//    reverse_color( 0 );        /* カラー画像をネガにする */
-    make_col_image_Omit_One( 0, 1 );
-//    make_col_image( 0, 1 );
+    make_histogram_image( 0, 1, 256 );
 
-    save_color_image( 0, "" );   /* 画像No.0 → ファイル */
-//    return 0;
+//
+////    reverse_color( 0 );        /* カラー画像をネガにする */
+//    make_col_image_Omit_One( 0, 1 );
+////    make_col_image( 0, 1 );
+//
+    save_color_image( 1, "" );   /* 画像No.0 → ファイル */
+//    save_color_image( 0, "" );   /* 画像No.0 → ファイル */
+////    return 0;
 
 
 
@@ -173,3 +198,40 @@ int main(int argc, char *argv[]) {
 
 }
 
+void make_histogram_image( int n1, int n2, int h )
+/* 画像No.n1のカラーヒストグラムを画像化(横256×縦h画素) */
+/* して画像No.n2に記録する */
+{
+    int i,j,x,y;  /* 制御変数 */
+    long int max; /* 最大頻度 */
+    int takasa;   /* 各階調値の頻度の高さ */
+
+    /* ヒストグラムの初期化 */
+    for(i=0;i<256;i++) for(j=0;j<3;j++) hist[i][j] = 0;
+    /* 画像をラスタスキャンしてグラフを作る */
+    for(y=0;y<height[n1];y++)
+        for(x=0;x<width[n1];x++)
+            for(j=0;j<3;j++)
+                hist[ image[n1][x][y][j] ][j]++; /* 累積を１増加 */
+    /* 画像の縦・横の値の入力と初期化 */
+    width[n2]=256;  height[n2]=h;  init_color_image( n2, 0, 0, 0 );
+    /* ヒストグラムの最大頻度maxを求める */
+    max=0;
+    for(i=0;i<256;i++)
+        for(j=0;j<3;j++)
+            if ( hist[i][j] > max ) max = hist[i][j];
+    /* 縦幅をh画素に正規化しながら画像に値を代入 */
+    for(i=0;i<3;i++)
+        for(x=0;x<width[n2];x++){
+            takasa = (int)( h / (double)max * hist[x][i] );
+            if ( takasa > h ) takasa = h;
+            for(y=0;y<h;y++)
+                if ( y < takasa ) image[n2][x][h-1-y][i] = 255;
+        }
+
+    //debug
+    printf("[%s:%d] make_histogram_image => done\n", __FILE__, __LINE__);
+
+
+
+}
